@@ -8,7 +8,25 @@ async function seed() {
 
   const Wines = await Promise.all(
     wineData.map((wine, i) => {
-      if (i >= 36247 && i < 66000) {
+      if (i >= 0 && i < 30000) {
+        return Wine.create(wine);
+      }
+    }),
+
+    wineData.map((wine, i) => {
+      if (i >= 30001 && i < 60000) {
+        return Wine.create(wine);
+      }
+    }),
+
+    wineData.map((wine, i) => {
+      if (i >= 60001 && i < 90000) {
+        return Wine.create(wine);
+      }
+    }),
+
+    wineData.map((wine, i) => {
+      if (i >= 90001 && i < 130000) {
         return Wine.create(wine);
       }
     })
