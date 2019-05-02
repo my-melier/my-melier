@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
 const db = require('../db');
 
-module.exports = db.define('wine', {
+const Wine = db.define('wine', {
   points: {
     type: Sequelize.INTEGER,
   },
@@ -30,3 +30,5 @@ module.exports = db.define('wine', {
     type: Sequelize.STRING,
   },
 });
+
+module.exports = Wine;

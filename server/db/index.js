@@ -1,6 +1,6 @@
 const db = require('./db');
 
 // register models
-require('./models');
+const Wine = require('./models/Wine');
 
-module.exports = db;
+module.exports = { db, Wine };
