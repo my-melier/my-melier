@@ -8,7 +8,6 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use('/api', require('./api'));
-console.log('in index.js server');
 
 db.sync().then(() => {
   app.listen(8080, () => console.log('listening on port 8080'));
