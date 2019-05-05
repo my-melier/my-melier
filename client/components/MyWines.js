@@ -11,11 +11,7 @@ export default class MyWines extends Component {
             <Button title="Thumbs Up" onPress={() => this.filter(thumbsUp)} />
             <Button title="Thumbs Down" onPress={() => this.filter(thumbsUp)} />
           </View>
-          <View style={styles.wineContainer}>
-            {wines.map(wine => {
-              return <Text key={wine.id}>{wine}</Text>;
-            })}
-          </View>
+          <View style={styles.wineContainer} />
         </View>
       </ScrollView>
     );
