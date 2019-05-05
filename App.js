@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View, Button } from 'react-native';
 import axios from 'axios';
+import CameraPage from './client/components/CameraPage';
 // import { ocrToUrlTitle } from './utils';
 
 const ocrToUrlTitle = string => {
@@ -27,17 +28,19 @@ export default class App extends React.Component {
 
   render() {
     return (
-      <View style={styles.container}>
-        <Text>Open up App.js to start working on your app!</Text>
-        <Button
-          title="Click me!"
-          onPress={() =>
-            this.handlePress(
-              ocrToUrlTitle('Aconcagua 2005 Reserve Malbec (Mendoza)')
-            )
-          }
-        />
-      </View>
+      <CameraPage />
+      // <View style={styles.container}>
+      //   <Text>Open up App.js to start working on your app!</Text>
+      //   <Button
+      //     title="Click me!"
+      //     onPress={() =>
+      //       this.handlePress(
+      //         ocrToUrlTitle('Aconcagua 2005 Reserve Malbec (Mendoza)')
+      //       )
+      //     }
+      //   />
+
+      // </View>
     );
   }
 }
