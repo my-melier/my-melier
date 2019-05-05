@@ -1,6 +1,17 @@
 import React from 'react';
 import { StyleSheet, Text, View, Button } from 'react-native';
 import axios from 'axios';
+// import { ocrToUrlTitle } from './utils';
+
+const ocrToUrlTitle = string => {
+  const characters = '.,!/1234567890()$!@#%^&*+';
+  return string
+    .split('')
+    .filter(char => !characters.includes(char))
+    .join('')
+    .replace(/-/g, ' ')
+    .replace(/ /g, '_');
+};
 
 export default class App extends React.Component {
   constructor() {
@@ -9,7 +20,7 @@ export default class App extends React.Component {
   }
   async handlePress(title) {
     const { data } = await axios.get(
-      `http://172.16.25.122:8080/api/wine/${title}`
+      `http://192.168.145.78:8080/api/wine/${title}`
     );
     console.log(data);
   }
@@ -20,7 +31,11 @@ export default class App extends React.Component {
         <Text>Open up App.js to start working on your app!</Text>
         <Button
           title="Click me!"
-          onPress={() => this.handlePress('J_Vineyards_Sparkling_Blend')}
+          onPress={() =>
+            this.handlePress(
+              ocrToUrlTitle('Aconcagua 2005 Reserve Malbec (Mendoza)')
+            )
+          }
         />
       </View>
     );
