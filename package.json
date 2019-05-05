@@ -15,13 +15,17 @@
     "data-forge-fs": "0.0.6",
     "expo": "^32.0.0",
     "express": "^4.16.4",
+    "heroku": "^7.24.1",
     "node-fetch": "^2.5.0",
     "nodemon": "^1.19.0",
-    "heroku": "^7.24.1",
     "pg": "^7.10.0",
     "pg-hstore": "^2.3.2",
     "react": "16.5.0",
     "react-native": "https://github.com/expo/react-native/archive/sdk-32.0.0.tar.gz",
+    "react-redux": "^7.0.3",
+    "redux": "^4.0.1",
+    "redux-logger": "^3.0.6",
+    "redux-thunk": "^2.3.0",
     "sequelize": "^5.8.1"
   },
   "devDependencies": {
