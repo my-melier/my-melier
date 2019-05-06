@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { StyleSheet, Dimensions, Text, View, Image } from 'react-native';
-import { Camera, Permissions, FileSystem } from 'expo';
+import { Camera, Permissions } from 'expo';
 import Toolbar from './CameraToolbar';
 import CropImage from './CropImage';
 

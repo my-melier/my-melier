@@ -1,14 +1,9 @@
 /* eslint-disable react/display-name */
-import React, { Component } from 'react';
+import React from 'react';
 import { Camera } from 'expo';
 import { Ionicons } from '@expo/vector-icons';
 import { Col, Row, Grid } from 'react-native-easy-grid';
-import {
-  View,
-  TouchableWithoutFeedback,
-  TouchableOpacity,
-  StyleSheet,
-} from 'react-native';
+import { View, TouchableOpacity, StyleSheet } from 'react-native';
 
 const { FlashMode: CameraFlashModes } = Camera.Constants;
 

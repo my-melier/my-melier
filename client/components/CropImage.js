@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Dimensions, Button, ImageBackground, StyleSheet } from 'react-native';
 import { ImageManipulator } from 'expo-image-crop';
-import 'react-native-fs';
 
 export default class CropImage extends Component {
   constructor(props) {
@@ -13,19 +12,7 @@ export default class CropImage extends Component {
     };
   }
 
-  async sendToGoogle(uri) {
-    const vision = require('@google-cloud/vision');
-
-    // Creates a client
-    const client = new vision.ImageAnnotatorClient({
-      keyFilename: '../../secrets.json',
-    });
-
-    const [result] = await client.textDetection(uri);
-    const detections = result.textAnnotations;
-    console.log('Text:');
-    detections.forEach(text => console.log(text.description));
-  }
+  async sendToGoogle(uri) {}
 
   onToggleModal = () => {
     const { isVisible } = this.state;
