@@ -1,25 +1,46 @@
 import React, { Component } from 'react';
-import { StyleSheet, Dimensions, Text, View } from 'react-native';
-import { Camera, Permissions } from 'expo';
+import { StyleSheet, Dimensions, Text, View, Image } from 'react-native';
+import { Camera, Permissions, FileSystem } from 'expo';
+import Toolbar from './CameraToolbar';
+import CropImage from './CropImage';
 
 export default class CameraPage extends Component {
-  camera = null;
+  constructor() {
+    super();
+    this.camera = null;
 
-  state = {
-    hasCameraPermission: null,
-  };
+    this.state = {
+      image: null,
+      flashMode: Camera.Constants.FlashMode.off,
+      capturing: null,
+      hasCameraPermission: null,
+    };
+    this.handleShortCapture = this.handleShortCapture.bind(this);
+    this.setFlashMode = this.setFlashMode.bind(this);
+  }
 
   async componentDidMount() {
     const camera = await Permissions.askAsync(Permissions.CAMERA);
-    const audio = await Permissions.askAsync(Permissions.AUDIO_RECORDING);
-    const hasCameraPermission =
-      camera.status === 'granted' && audio.status === 'granted';
+    const hasCameraPermission = camera.status === 'granted';
 
     this.setState({ hasCameraPermission });
   }
 
+  setFlashMode(flashMode) {
+    this.setState({ flashMode });
+  }
+
+  async handleShortCapture() {
+    const photoData = await this.camera.takePictureAsync();
+    this.setState({
+      capturing: false,
+      image: photoData,
+    });
+    console.log(photoData);
+  }
+
   render() {
-    const { hasCameraPermission } = this.state;
+    const { hasCameraPermission, flashMode, capturing, image } = this.state;
 
     if (hasCameraPermission === null) {
       return <View />;
@@ -27,10 +48,27 @@ export default class CameraPage extends Component {
       return <Text>Access to camera has been denied.</Text>;
     }
 
+    if (image) {
+      return <CropImage image={image} />;
+      // return <Image source={{ uri: image }} style={styles.galleryImage} />;
+    }
+
     return (
-      <View>
-        <Camera style={styles.preview} ref={camera => (this.camera = camera)} />
-      </View>
+      <React.Fragment>
+        <View>
+          <Camera
+            flashMode={flashMode}
+            style={styles.preview}
+            ref={camera => (this.camera = camera)}
+          />
+        </View>
+        <Toolbar
+          capturing={capturing}
+          flashMode={flashMode}
+          setFlashMode={this.setFlashMode}
+          onShortCapture={this.handleShortCapture}
+        />
+      </React.Fragment>
     );
   }
 }
@@ -46,5 +84,9 @@ const styles = StyleSheet.create({
     top: 0,
     right: 0,
     bottom: 0,
+  },
+  galleryImage: {
+    width: winWidth,
+    height: winHeight,
   },
 });

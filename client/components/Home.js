@@ -19,7 +19,7 @@ export default class Home extends Component {
   }
   async handlePress(title) {
     const { data } = await axios.get(
-      `http://192.168.145.78:8080/api/wine/${title}`
+      `http://172.16.25.122:8080/api/wine/${title}`
     );
     console.log(data);
   }
