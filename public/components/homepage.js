@@ -1,12 +1,30 @@
-import React from 'react'
-import {View, Text} from 'react-native'
+import React, {Component} from 'react'
+import {Text, StyleSheet, View} from 'react-native'
+import {TabNavigator} from './TabNavigator'
 
-class HomePage extends React.Component {
+export default class HomePage extends Component {
   render() {
     return (
-      <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-        <Text>Homepage Goes Here!</Text>
+      <View>
+        <View style={styles.container}>
+          <Text> myMelier </Text>
+          <Text>
+            Instructions: Choose a color. Uncork. Pour out a glass. Enjoy!
+          </Text>
+        </View>
+        <View styles={styles.navBar}>
+          <TabNavigator />
+        </View>
       </View>
     )
   }
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1
+  },
+  navBar: {
+    flex: 1
+  }
+})
