@@ -1,110 +1,82 @@
+import { ImagePicker, Permissions } from 'expo';
 import React, { Component } from 'react';
-import {
-  StyleSheet,
-  Dimensions,
-  Text,
-  View,
-  ImageBackground,
-  Button,
-} from 'react-native';
-import { Camera, Permissions } from 'expo';
-import Toolbar from './CameraToolbar';
-import CropImage from './CropImage';
+import { StyleSheet, View, Button } from 'react-native';
 import sendToGoogle from '../../googleVision/textDetection';
 
-export default class CameraPage extends Component {
+export default class Camera extends Component {
   constructor() {
     super();
-    this.camera = null;
-
     this.state = {
       image: null,
-      flashMode: Camera.Constants.FlashMode.off,
-      capturing: null,
-      hasCameraPermission: null,
+      uploading: false,
+      googleResponse: null,
     };
-    this.handleShortCapture = this.handleShortCapture.bind(this);
-    this.setFlashMode = this.setFlashMode.bind(this);
+    this.takePhoto = this.takePhoto.bind(this);
+    this.handleImagePicked = this.handleImagePicked.bind(this);
+    this.pickPhoto = this.pickPhoto.bind(this);
   }
 
   async componentDidMount() {
-    const camera = await Permissions.askAsync(Permissions.CAMERA);
-    const hasCameraPermission = camera.status === 'granted';
-
-    this.setState({ hasCameraPermission });
+    await Permissions.askAsync(Permissions.CAMERA_ROLL);
+    await Permissions.askAsync(Permissions.CAMERA);
   }
 
-  setFlashMode(flashMode) {
-    this.setState({ flashMode });
-  }
-
-  async handleShortCapture() {
-    const options = {
+  async takePhoto() {
+    let pickerResult = await ImagePicker.launchCameraAsync({
       base64: true,
-    };
-    const photoData = await this.camera.takePictureAsync(options);
-    this.setState({
-      capturing: false,
-      image: photoData,
+      allowsEditing: true,
+      aspect: [4, 1],
     });
-    // console.log(photoData);
+
+    this.handleImagePicked(pickerResult);
+  }
+
+  async pickPhoto() {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      allowsEditing: true,
+      aspect: [4, 3],
+      base64: true,
+    });
+
+    if (!result.cancelled) {
+      this.setState({ image: result });
+    }
+
+    console.log(this.state.image);
+  }
+
+  async handleImagePicked(pickerResult) {
+    try {
+      this.setState({ uploading: true });
+
+      if (!pickerResult.cancelled) {
+        let image = pickerResult;
+        this.setState({ image: image, uploading: false });
+        this.cropImage(image);
+      }
+    } catch (err) {
+      console.error(err);
+    }
   }
 
   render() {
-    const { hasCameraPermission, flashMode, capturing, image } = this.state;
-
-    if (hasCameraPermission === null) {
-      return <View />;
-    } else if (hasCameraPermission === false) {
-      return <Text>Access to camera has been denied.</Text>;
-    }
-
-    if (image) {
-      // return <CropImage image={image} />;
-      return (
-        <ImageBackground
-          source={{ uri: image.uri }}
-          style={styles.galleryImage}
-        >
-          <Button title="submit" onPress={() => sendToGoogle(image.base64)} />
-        </ImageBackground>
-      );
-    }
-
     return (
-      <React.Fragment>
-        <View>
-          <Camera
-            flashMode={flashMode}
-            style={styles.preview}
-            ref={camera => (this.camera = camera)}
-          />
-        </View>
-        <Toolbar
-          capturing={capturing}
-          flashMode={flashMode}
-          setFlashMode={this.setFlashMode}
-          onShortCapture={this.handleShortCapture}
+      <View style={styles.container}>
+        <Button onPress={this.takePhoto} title="Take a photo" color="#1985bc" />
+        <Button onPress={this.pickPhoto} title="Pick a photo" color="#1985bc" />
+        <Button
+          style={{ marginBottom: 10 }}
+          onPress={sendToGoogle}
+          title="Analyze!"
         />
-      </React.Fragment>
+      </View>
     );
   }
 }
 
-const { width: winWidth, height: winHeight } = Dimensions.get('window');
-
 const styles = StyleSheet.create({
-  preview: {
-    height: winHeight,
-    width: winWidth,
-    position: 'absolute',
-    left: 0,
-    top: 0,
-    right: 0,
-    bottom: 0,
-  },
-  galleryImage: {
-    width: winWidth,
-    height: winHeight,
+  container: {
+    flex: 1,
+    justifyContent: 'center',
   },
 });

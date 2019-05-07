@@ -1,28 +1,39 @@
 import googleVisionConfig from '../googleVisionConfig.js';
-import axios from 'axios';
 
-export default async function sendToGoogle(uri) {
+export default async function sendToGoogle() {
   try {
     console.log('starting....');
-    // console.log('URI', uri);
+    this.setState({ uploading: true });
+    let { image } = this.state;
     let body = JSON.stringify({
       requests: [
         {
           features: [{ type: 'TEXT_DETECTION', maxResults: 1 }],
           image: {
-            content: uri,
+            content: image.base64,
           },
         },
       ],
     });
-    let response = await axios.post(
+    let response = await fetch(
       'https://vision.googleapis.com/v1/images:annotate?key=' +
         googleVisionConfig.API_KEY,
-      body
+      {
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        method: 'POST',
+        body: body,
+      }
     );
     let responseJson = await response.json();
-    console.log(responseJson);
+    this.setState({
+      googleResponse: responseJson,
+      uploading: false,
+    });
+    console.log(this.state.googleResponse.responses[0].fullTextAnnotation.text);
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
 }
