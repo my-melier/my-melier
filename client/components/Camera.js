@@ -2,12 +2,14 @@ import { ImagePicker, Permissions } from 'expo';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { StyleSheet, View, Button } from 'react-native';
+import { withNavigation } from 'react-navigation';
 import {
   setImage,
   loadingGoogleResponse,
   gotGoogleResponse,
 } from '../store/reducers/googleVisionReducer';
 import googleVisionConfig from '../../googleVisionConfig.js';
+import ConfirmWine from './ConfirmWine';
 
 class Camera extends Component {
   constructor(props) {
@@ -16,6 +18,7 @@ class Camera extends Component {
     this.handleImagePicked = this.handleImagePicked.bind(this);
     this.pickPhoto = this.pickPhoto.bind(this);
     this.sendToGoogle = this.sendToGoogle.bind(this);
+    this.handlePress = this.handlePress.bind(this);
   }
 
   async componentDidMount() {
@@ -89,6 +92,14 @@ class Camera extends Component {
     }
   }
 
+  async handlePress() {
+    await this.sendToGoogle();
+    if (this.props.response) {
+      console.log('in the if');
+      return this.props.navigation.navigate('ConfirmWine');
+    }
+  }
+
   render() {
     return (
       <View style={styles.container}>
@@ -96,7 +107,7 @@ class Camera extends Component {
         <Button onPress={this.pickPhoto} title="Pick a photo" color="#1985bc" />
         <Button
           style={{ marginBottom: 10 }}
-          onPress={this.sendToGoogle}
+          onPress={this.handlePress}
           title="Analyze!"
         />
       </View>
@@ -122,7 +133,9 @@ const mapDispatch = dispatch => ({
   googleResponse: response => dispatch(gotGoogleResponse(response)),
 });
 
-export default connect(
-  mapState,
-  mapDispatch
-)(Camera);
+export default withNavigation(
+  connect(
+    mapState,
+    mapDispatch
+  )(Camera)
+);

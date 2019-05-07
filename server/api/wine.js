@@ -6,24 +6,23 @@ const { urlToWords } = require('../../utils');
 module.exports = router;
 
 router.get('/:title', async (req, res, next) => {
-  let varieties = ['Merlot', 'Cabernet', 'Pinot Noir', 'Chardonnay', 'Malbec'];
-  let years = ['2000', '2005'];
-  const arr = req.params.title.split('_').filter(word => word !== '');
-  console.log(arr);
-  let variety;
+  // let varieties = ['Merlot', 'Cabernet', 'Pinot Noir', 'Chardonnay', 'Malbec'];
+  // let years = ['2000', '2005'];
+  // const arr = req.params.title.split('_').filter(word => word !== '');
+  // console.log(arr);
+  // let variety;
 
-  for (let i = 0; i < arr.length; i++) {
-    if (varieties.includes(arr[i])) {
-      variety = arr[i];
-    }
-  }
+  // for (let i = 0; i < arr.length; i++) {
+  //   if (varieties.includes(arr[i])) {
+  //     variety = arr[i];
+  //   }
+  // }
 
   try {
     const wine = await Wine.findAll({
       where: {
-        variety: variety,
         title: {
-          [Op.substring]: arr[0],
+          [Op.substring]: req.params.title,
         },
       },
     });
