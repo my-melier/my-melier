@@ -9,16 +9,14 @@ export default class CropImage extends Component {
     this.state = {
       isVisible: false,
       uri: image.uri,
+      uploading: false,
+      googleResponse: null,
     };
   }
-
-  async sendToGoogle(uri) {}
-
   onToggleModal = () => {
     const { isVisible } = this.state;
     this.setState({ isVisible: !isVisible });
   };
-
   render() {
     const { uri, isVisible } = this.state;
     const { width, height } = Dimensions.get('window');
@@ -50,5 +48,4 @@ export default class CropImage extends Component {
     );
   }
 }
-
 const styles = StyleSheet.create({});

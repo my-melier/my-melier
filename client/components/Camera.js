@@ -1,8 +1,16 @@
 import React, { Component } from 'react';
-import { StyleSheet, Dimensions, Text, View, Image } from 'react-native';
+import {
+  StyleSheet,
+  Dimensions,
+  Text,
+  View,
+  ImageBackground,
+  Button,
+} from 'react-native';
 import { Camera, Permissions } from 'expo';
 import Toolbar from './CameraToolbar';
 import CropImage from './CropImage';
+import sendToGoogle from '../../googleVision/textDetection';
 
 export default class CameraPage extends Component {
   constructor() {
@@ -31,12 +39,15 @@ export default class CameraPage extends Component {
   }
 
   async handleShortCapture() {
-    const photoData = await this.camera.takePictureAsync();
+    const options = {
+      base64: true,
+    };
+    const photoData = await this.camera.takePictureAsync(options);
     this.setState({
       capturing: false,
       image: photoData,
     });
-    console.log(photoData);
+    // console.log(photoData);
   }
 
   render() {
@@ -49,8 +60,15 @@ export default class CameraPage extends Component {
     }
 
     if (image) {
-      return <CropImage image={image} />;
-      // return <Image source={{ uri: image }} style={styles.galleryImage} />;
+      // return <CropImage image={image} />;
+      return (
+        <ImageBackground
+          source={{ uri: image.uri }}
+          style={styles.galleryImage}
+        >
+          <Button title="submit" onPress={() => sendToGoogle(image.base64)} />
+        </ImageBackground>
+      );
     }
 
     return (

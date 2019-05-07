@@ -5,11 +5,12 @@ import { Ionicons } from '@expo/vector-icons';
 import Home from './Home';
 import MyWines from './MyWines';
 import Camera from './Camera';
+import CameraComponent from './CameraComponent';
 
 const TabNavigator = createBottomTabNavigator(
   {
     Home: Home,
-    Camera: Camera,
+    Camera: CameraComponent,
     myWines: MyWines,
   },
   {
