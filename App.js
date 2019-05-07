@@ -1,10 +1,16 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
+import { Provider } from 'react-redux';
+import store from './client/store';
 import AppContainer from './client/components/TabNavigator';
 
 export default class App extends React.Component {
   render() {
-    return <AppContainer />;
+    return (
+      <Provider store={store}>
+        <AppContainer />
+      </Provider>
+    );
   }
 }
 
