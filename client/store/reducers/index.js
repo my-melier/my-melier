@@ -1,4 +1,6 @@
 import { combineReducers } from 'redux';
-const rootReducer = combineReducers({});
+import googleVisionReducer from './googleVisionReducer';
+
+const rootReducer = combineReducers({ googleVision: googleVisionReducer });
 
 export default rootReducer;
