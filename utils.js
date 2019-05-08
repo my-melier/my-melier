@@ -1,13 +1,18 @@
-// export const ocrToUrlTitle = string => {
-//   const characters = '.,!/1234567890()$!@#%^&*+';
-//   return string
-//     .split('')
-//     .filter(char => !characters.includes(char))
-//     .join('')
-//     .replace(/-/g, ' ')
-//     .replace(/ /g, '_');
-// };
+function ocrToUrlTitle(string) {
+  const characters = '.,!/()$!@#%^&*+';
+  return string
+    .split('')
+    .filter(char => !characters.includes(char))
+    .join('')
+    .replace(/-/g, ' ')
+    .replace(/ /g, '_');
+}
 
-// export const urlToWords = string => {
-//   return string.split('_').filter(word => word !== '');
-// };
+function urlToQueryString(string) {
+  return string
+    .split('_')
+    .filter(word => word !== '')
+    .join('%');
+}
+
+module.exports = { ocrToUrlTitle, urlToQueryString };
