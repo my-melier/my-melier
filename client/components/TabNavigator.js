@@ -1,17 +1,26 @@
 /* eslint-disable react/display-name */
 import React from 'react';
-import { createBottomTabNavigator, createAppContainer } from 'react-navigation';
+import {
+  createBottomTabNavigator,
+  createAppContainer,
+  createStackNavigator,
+} from 'react-navigation';
 import { Ionicons } from '@expo/vector-icons';
 import Home from './Home';
 import MyWines from './MyWines';
 import Camera from './Camera';
 import ConfirmWine from './ConfirmWine';
 
+const CameraStack = createStackNavigator({
+  Camera: Camera,
+  ConfirmWine: ConfirmWine,
+});
+
 const TabNavigator = createBottomTabNavigator(
   {
     Home: Home,
-    Camera: Camera,
-    myWines: ConfirmWine,
+    Camera: CameraStack,
+    myWines: MyWines,
   },
   {
     defaultNavigationOptions: ({ navigation }) => ({

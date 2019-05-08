@@ -1,7 +1,7 @@
 import { ImagePicker, Permissions } from 'expo';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { StyleSheet, View, Button } from 'react-native';
+import { StyleSheet, View, Button, ActivityIndicator } from 'react-native';
 import { withNavigation } from 'react-navigation';
 import {
   setImage,
@@ -9,7 +9,6 @@ import {
   gotGoogleResponse,
 } from '../store/reducers/googleVisionReducer';
 import googleVisionConfig from '../../googleVisionConfig.js';
-import ConfirmWine from './ConfirmWine';
 
 class Camera extends Component {
   constructor(props) {
@@ -58,9 +57,8 @@ class Camera extends Component {
   }
 
   async sendToGoogle() {
-    const { image, response, loading, googleResponse } = this.props;
+    const { image, loading, googleResponse } = this.props;
     try {
-      console.log('loading google response....');
       loading();
       let body = JSON.stringify({
         requests: [
@@ -86,7 +84,6 @@ class Camera extends Component {
       );
       let responseJson = await data.json();
       googleResponse(responseJson);
-      // console.log(response.responses[0].fullTextAnnotation.text);
     } catch (error) {
       console.error(error);
     }
@@ -94,13 +91,13 @@ class Camera extends Component {
 
   async handlePress() {
     await this.sendToGoogle();
-    if (this.props.response) {
-      console.log('in the if');
-      return this.props.navigation.navigate('ConfirmWine');
-    }
+    return this.props.navigation.navigate('ConfirmWine');
   }
 
   render() {
+    if (this.props.loadingGoogleRes) {
+      return <ActivityIndicator />;
+    }
     return (
       <View style={styles.container}>
         <Button onPress={this.takePhoto} title="Take a photo" color="#1985bc" />
@@ -125,6 +122,7 @@ const styles = StyleSheet.create({
 const mapState = state => ({
   image: state.googleVision.image,
   response: state.googleVision.response,
+  loadingGoogleRes: state.googleVision.loading,
 });
 
 const mapDispatch = dispatch => ({

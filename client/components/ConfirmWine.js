@@ -6,27 +6,16 @@ import {
   confirmedWine,
   gettingWines,
 } from '../store/reducers/dbReducer';
+import { ocrToUrlTitle } from '../../utils';
 
 class ConfirmWine extends Component {
   constructor(props) {
     super(props);
   }
 
-  ocrToUrlTitle = string => {
-    const characters = '.,!/1234567890()$!@#%^&*+';
-    return string
-      .split('')
-      .filter(char => !characters.includes(char))
-      .join('')
-      .replace(/-/g, ' ')
-      .replace(/ /g, '_');
-  };
-
   componentDidMount() {
     const { googleResponse, fetchWine } = this.props;
-    const queryString = this.ocrToUrlTitle(
-      googleResponse.responses[0].fullTextAnnotation.text
-    );
+    const queryString = ocrToUrlTitle(googleResponse);
     fetchWine(queryString);
   }
 
@@ -38,10 +27,14 @@ class ConfirmWine extends Component {
     }
     return (
       <View style={styles.container}>
-        {wines.map(wine => (
-          <Text key={wine.id}>{wine.title}</Text>
-        ))}
         <Text> Please Confirm Your Wine! </Text>
+        {wines.map(wine => (
+          <View key={wine.id}>
+            <Text>{wine.title}</Text>
+            <Text>{wine.description}</Text>
+            <Text>{wine.points}</Text>
+          </View>
+        ))}
       </View>
     );
   }
