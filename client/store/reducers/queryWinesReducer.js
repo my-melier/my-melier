@@ -34,7 +34,7 @@ const initialState = {
 };
 
 //reducer
-export default (dbReducer = (state = initialState, action) => {
+export default (queryWinesReducer = (state = initialState, action) => {
   switch (action.type) {
     case GETTING_WINES:
       return { ...state, loading: true };
