@@ -10,10 +10,12 @@ import Home from './Home';
 import MyWines from './MyWines';
 import Camera from './Camera';
 import ConfirmWine from './ConfirmWine';
+import Comparisons from './Comparisons';
 
 const CameraStack = createStackNavigator({
   Camera: Camera,
   ConfirmWine: ConfirmWine,
+  Comparisons: Comparisons,
 });
 
 const TabNavigator = createBottomTabNavigator(

@@ -17,13 +17,11 @@ export const gotWines = wines => ({
 //thunks
 export const fetchingWinesFromDb = googleResFormatted => async dispatch => {
   try {
-    console.log('FETCH WINE ACTION TOP');
     dispatch(gettingWines());
     const { data } = await axios.get(
-      `http://172.16.25.122:8080/api/wine/${googleResFormatted}`
+      `http://172.16.26.6:8080/api/wine/${googleResFormatted}`
     );
     dispatch(gotWines(data));
-    console.log('FETCH WINE ACTION BOTTOM');
   } catch (error) {
     console.error(error);
   }
@@ -41,9 +39,17 @@ export default (dbReducer = (state = initialState, action) => {
     case GETTING_WINES:
       return { ...state, loading: true };
     case GOT_WINES:
+      let uniqueValues = [];
+      let uniqueTitles = [];
+      for (let i = 0; i < action.wines.length; i++) {
+        if (!uniqueTitles.includes(action.wines[i].title)) {
+          uniqueTitles.push(action.wines[i].title);
+          uniqueValues.push(action.wines[i]);
+        }
+      }
       return {
         ...state,
-        results: action.wines,
+        results: uniqueValues,
         loading: false,
       };
     default:
