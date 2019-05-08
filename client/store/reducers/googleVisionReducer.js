@@ -32,7 +32,15 @@ export default (googleVisionReducer = (state = initialState, action) => {
     case LOADING_GOOGLE_RESPONSE:
       return { ...state, loading: true };
     case GOT_GOOGLE_REPSONSE:
-      return { ...state, response: action.response, loading: false };
+      return {
+        ...state,
+        response: action.response.responses[0].fullTextAnnotation.text.slice(
+          0,
+          -1
+        ),
+        loading: false,
+      };
+
     default:
       return state;
   }

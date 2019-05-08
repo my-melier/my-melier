@@ -1,7 +1,8 @@
 import { ImagePicker, Permissions } from 'expo';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { StyleSheet, View, Button } from 'react-native';
+import { StyleSheet, View, Button, ActivityIndicator } from 'react-native';
+import { withNavigation } from 'react-navigation';
 import {
   setImage,
   loadingGoogleResponse,
@@ -16,6 +17,7 @@ class Camera extends Component {
     this.handleImagePicked = this.handleImagePicked.bind(this);
     this.pickPhoto = this.pickPhoto.bind(this);
     this.sendToGoogle = this.sendToGoogle.bind(this);
+    this.handlePress = this.handlePress.bind(this);
   }
 
   async componentDidMount() {
@@ -55,9 +57,8 @@ class Camera extends Component {
   }
 
   async sendToGoogle() {
-    const { image, response, loading, googleResponse } = this.props;
+    const { image, loading, googleResponse } = this.props;
     try {
-      console.log('loading google response....');
       loading();
       let body = JSON.stringify({
         requests: [
@@ -83,20 +84,27 @@ class Camera extends Component {
       );
       let responseJson = await data.json();
       googleResponse(responseJson);
-      // console.log(response.responses[0].fullTextAnnotation.text);
     } catch (error) {
       console.error(error);
     }
   }
 
+  async handlePress() {
+    await this.sendToGoogle();
+    return this.props.navigation.navigate('ConfirmWine');
+  }
+
   render() {
+    if (this.props.loadingGoogleRes) {
+      return <ActivityIndicator />;
+    }
     return (
       <View style={styles.container}>
         <Button onPress={this.takePhoto} title="Take a photo" color="#1985bc" />
         <Button onPress={this.pickPhoto} title="Pick a photo" color="#1985bc" />
         <Button
           style={{ marginBottom: 10 }}
-          onPress={this.sendToGoogle}
+          onPress={this.handlePress}
           title="Analyze!"
         />
       </View>
@@ -114,6 +122,7 @@ const styles = StyleSheet.create({
 const mapState = state => ({
   image: state.googleVision.image,
   response: state.googleVision.response,
+  loadingGoogleRes: state.googleVision.loading,
 });
 
 const mapDispatch = dispatch => ({
@@ -122,7 +131,9 @@ const mapDispatch = dispatch => ({
   googleResponse: response => dispatch(gotGoogleResponse(response)),
 });
 
-export default connect(
-  mapState,
-  mapDispatch
-)(Camera);
+export default withNavigation(
+  connect(
+    mapState,
+    mapDispatch
+  )(Camera)
+);
