@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import { Text, StyleSheet, View, ScrollView, Button } from 'react-native';
-// import { connect } from 'react-redux';
-// import { selectedWine } from '../store/reducers/comparisonReducer';
 
 export default class SelectedWine extends Component {
   render() {
@@ -22,13 +20,3 @@ const styles = StyleSheet.create({
     flex: 1,
   },
 });
-
-// const mapState = state => ({
-//   selectedWine: state.comparisons.selectedWine,
-// });
-
-// //   const mapDispatch = dispatch => ({
-// //     selectedWine: wine => dispatch(selectedWine(wine)),
-// //   });
-
-// export default connect(mapState)(SelectedWine);

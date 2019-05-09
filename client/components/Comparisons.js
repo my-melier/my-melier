@@ -10,7 +10,6 @@ class Comparisons extends Component {
   }
 
   handleSelect(wine) {
-    console.log('THIS IS WINE!', wine);
     const { selectedWine, navigation } = this.props;
     selectedWine(wine);
     return navigation.navigate('SelectedWine');
