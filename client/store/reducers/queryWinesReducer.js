@@ -1,4 +1,5 @@
 import axios from 'axios';
+import myIPaddress from '../../../IPaddress';
 
 //action types
 const GETTING_WINES = 'GETTING_WINES';
@@ -19,7 +20,7 @@ export const fetchingWinesFromDb = googleResFormatted => async dispatch => {
   try {
     dispatch(gettingWines());
     const { data } = await axios.get(
-      `http://172.16.26.6:8080/api/wine/${googleResFormatted}`
+      `http://${myIPaddress.IP}:8080/api/wine/${googleResFormatted}`
     );
     dispatch(gotWines(data));
   } catch (error) {

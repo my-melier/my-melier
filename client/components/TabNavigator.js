@@ -11,11 +11,13 @@ import MyWines from './MyWines';
 import Camera from './Camera';
 import ConfirmWine from './ConfirmWine';
 import Comparisons from './Comparisons';
+import SelectedWine from './SelectedWine';
 
 const CameraStack = createStackNavigator({
   Camera: Camera,
   ConfirmWine: ConfirmWine,
   Comparisons: Comparisons,
+  SelectedWine: SelectedWine,
 });
 
 const TabNavigator = createBottomTabNavigator(

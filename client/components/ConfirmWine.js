@@ -12,7 +12,7 @@ import {
   fetchingWinesFromDb,
   confirmedWine,
   gettingWines,
-} from '../store/reducers/dbReducer';
+} from '../store/reducers/queryWinesReducer';
 import { addedToComparisons } from '../store/reducers/comparisonReducer';
 import { ocrToUrlTitle } from '../../utils';
 
