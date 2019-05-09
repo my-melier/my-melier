@@ -20,7 +20,6 @@ class ConfirmWine extends Component {
   constructor(props) {
     super(props);
     this.handlePress = this.handlePress.bind(this);
-    this.navigate = this.navigate.bind(this);
   }
 
   componentDidMount() {
