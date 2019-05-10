@@ -34,15 +34,15 @@ class ConfirmWine extends Component {
     if (comparisons.length === 0) {
       addedToComparisons(wine);
     } else {
-      comparisons.map(comparison => {
-        if (comparison.id === wine.id) {
-          return Alert.alert(null, 'You already added this wine!', [
+      for (let i = 0; i < comparisons.length; i++) {
+        if (comparisons[i].id === wine.id) {
+          Alert.alert(null, 'You already added this wine!', [
             { text: 'OK', style: 'cancel' },
           ]);
-        } else {
-          addedToComparisons(wine);
+          return navigation.navigate('Comparisons');
         }
-      });
+      }
+      addedToComparisons(wine);
     }
     return navigation.navigate('Comparisons');
   }
@@ -58,12 +58,18 @@ class ConfirmWine extends Component {
       const singleWine = wines[0];
       return (
         <View style={styles.container}>
-          <Text>Please confirm this is the correct wine:</Text>
-          <Text style={styles.wineTitle}>{singleWine.title}</Text>
-          <View style={styles.button}>
-            <TouchableOpacity onPress={() => this.handlePress(singleWine)}>
-              <Text style={styles.buttonText}>confirm</Text>
-            </TouchableOpacity>
+          <Text style={styles.headerText}>
+            Please confirm this is the correct wine:
+          </Text>
+          <View style={styles.wine}>
+            <View style={styles.titleContainer}>
+              <Text style={styles.wineTitle}>{singleWine.title}</Text>
+            </View>
+            <View style={styles.button}>
+              <TouchableOpacity onPress={() => this.handlePress(singleWine)}>
+                <Text style={styles.buttonText}>confirm</Text>
+              </TouchableOpacity>
+            </View>
           </View>
         </View>
       );
@@ -72,7 +78,9 @@ class ConfirmWine extends Component {
     return (
       <ScrollView>
         <View style={styles.container}>
-          <Text>Please confirm which wine is correct:</Text>
+          <Text style={styles.headerText}>
+            Please confirm which wine is correct:
+          </Text>
           {wines.map(wine => (
             <View key={wine.id} style={styles.wine}>
               <View style={styles.titleContainer}>
@@ -96,6 +104,10 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     padding: 5,
+  },
+  headerText: {
+    fontSize: 17,
+    fontWeight: 'bold',
   },
   titleContainer: {
     width: '60%',
