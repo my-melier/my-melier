@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { withNavigation } from 'react-navigation';
 
 // SWITCH IP ADDRESS
 import myIPaddress from '../../../IPaddress';
@@ -27,7 +26,6 @@ export const me = () => async dispatch => {
 
 export const auth = (email, password, method) => async dispatch => {
   let res;
-
   try {
     res = await axios.post(`http://${myIPaddress.IP}:8080/auth/${method}`, {
       email,
