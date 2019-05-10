@@ -99,6 +99,25 @@ class ConfirmWine extends Component {
   }
 }
 
+const mapState = state => ({
+  loading: state.database.loading,
+  wines: state.database.results,
+  googleResponse: state.googleVision.response,
+  comparisons: state.comparisons.comparisons,
+});
+
+const mapDispatch = dispatch => ({
+  fetchWine: googleResFormatted =>
+    dispatch(fetchingWinesFromDb(googleResFormatted)),
+  confirmedWine: wine => dispatch(confirmedWine(wine)),
+  addedToComparisons: wine => dispatch(addedToComparisons(wine)),
+});
+
+export default connect(
+  mapState,
+  mapDispatch
+)(ConfirmWine);
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -134,22 +153,3 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
 });
-
-const mapState = state => ({
-  loading: state.database.loading,
-  wines: state.database.results,
-  googleResponse: state.googleVision.response,
-  comparisons: state.comparisons.comparisons,
-});
-
-const mapDispatch = dispatch => ({
-  fetchWine: googleResFormatted =>
-    dispatch(fetchingWinesFromDb(googleResFormatted)),
-  confirmedWine: wine => dispatch(confirmedWine(wine)),
-  addedToComparisons: wine => dispatch(addedToComparisons(wine)),
-});
-
-export default connect(
-  mapState,
-  mapDispatch
-)(ConfirmWine);
