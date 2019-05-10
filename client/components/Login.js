@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
+import React, {Component} from 'react'
+import {connect} from 'react-redux'
 import {
   Text,
   StyleSheet,
@@ -7,25 +7,27 @@ import {
   View,
   TextInput,
   KeyboardAvoidingView,
-  Keyboard,
-  TouchableOpacity,
-} from 'react-native';
-import { auth } from '../store/reducers/userReducer';
+  Keyboard
+} from 'react-native'
+import {auth} from '../store/reducers/userReducer'
 
 class Login extends Component {
   constructor(props) {
-    super(props);
+    super(props)
     this.state = {
       email: '',
-      password: '',
-    };
-    this.login = this.login.bind(this);
+      password: ''
+    }
+    this.login = this.login.bind(this)
   }
 
-  login() {
-    const { auth } = this.props;
-    const { email, password } = this.state;
-    auth(email, password, 'login');
+  async login() {
+    const {auth} = this.props
+    const {email, password} = this.state
+    await auth(email, password, 'login')
+    if (this.props.user) {
+      return this.props.navigation.navigate('App')
+    }
   }
 
   render() {
@@ -33,50 +35,54 @@ class Login extends Component {
       <KeyboardAvoidingView behavior="padding">
         <View style={styles.container}>
           <Text>myMelier</Text>
+          <Text>Login here:</Text>
         </View>
         <View style={styles.inputContainer}>
           <TextInput
             placeholder="Email"
             onBlur={Keyboard.dismiss}
-            onChangeText={email => this.setState({ email })}
+            onChangeText={email => this.setState({email})}
           />
         </View>
         <View style={styles.inputContainer}>
           <TextInput
             placeholder="Password"
             onBlur={Keyboard.dismiss}
-            onChangeText={password => this.setState({ password })}
+            secureTextEntry
+            onChangeText={password => this.setState({password})}
           />
+          <View style={styles.inputContainer}>
+            <Button title="Login" onPress={this.login} />
+          </View>
         </View>
-        <Button title="login" onPress={this.login} />
         <Button
-          title="new here? sign up"
+          title="New here? Sign up"
           onPress={() => this.props.navigation.navigate('Signup')}
         />
       </KeyboardAvoidingView>
-    );
+    )
   }
 }
-// return {
-//   handleSubmit(evt) {
-//     evt.preventDefault();
-//     const { userName, password } = this.state;
-//     dispatch(auth(userName, password, 'login', null));
-//   },
-// };
+
+const mapLogin = state => ({
+  user: state.user
+})
 
 const mapDispatch = dispatch => ({
-  auth: (email, password, method) => dispatch(auth(email, password, method)),
-});
+  auth: (email, password, method) => dispatch(auth(email, password, method))
+})
 
 export default connect(
-  null,
+  mapLogin,
   mapDispatch
-)(Login);
+)(Login)
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    height: 40,
+    marginBottom: 30,
+    paddingHorizontal: 10,
+    fontSize: 18
   },
   inputContainer: {
     height: 40,
@@ -84,6 +90,6 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     color: '#FFF',
     paddingHorizontal: 10,
-    fontSize: 16,
-  },
-});
+    fontSize: 16
+  }
+})

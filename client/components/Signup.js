@@ -1,42 +1,48 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
+import React, {Component} from 'react'
+import {connect} from 'react-redux'
 import {
   StyleSheet,
   TextInput,
   KeyboardAvoidingView,
   ActivityIndicator,
   Button,
-  View,
-} from 'react-native';
-import { auth } from '../store/reducers/userReducer';
+  View
+} from 'react-native'
+import {auth} from '../store/reducers/userReducer'
 
 class Signup extends Component {
   constructor(props) {
-    super(props);
+    super(props)
     this.state = {
       loading: false,
       email: '',
       password: '',
-      error: '',
-    };
+      error: ''
+    }
+    this.signup = this.signup.bind(this)
   }
+
   signup() {
-    const { auth } = this.props;
-    const { email, password } = this.state;
-    auth(email, password, 'signup');
+    console.log('state above', this.state)
+    console.log('email state', this.state.email)
+    const {email, password} = this.state
+    this.props.auth(email, password, 'signup')
+    if (this.props.user) {
+      return this.props.navigation.navigate('App')
+    }
   }
 
   render() {
     if (this.state.loading) {
-      return <ActivityIndicator />;
+      return <ActivityIndicator />
     }
     return (
       <KeyboardAvoidingView behavior="padding">
         <View style={styles.container}>
           <View style={styles.inputContainer}>
             <TextInput
-              placeholder="email"
-              onChangeText={email => this.setState({ email })}
+              placeholder="Email"
+              onChangeText={email => this.setState({email})}
               value={this.state.email}
               returnKeyType="next"
               keyboardType="email-address"
@@ -46,8 +52,8 @@ class Signup extends Component {
           </View>
           <View style={styles.inputContainer}>
             <TextInput
-              placeholder="password"
-              onChangeText={password => this.setState({ password })}
+              placeholder="Password"
+              onChangeText={password => this.setState({password})}
               value={this.state.password}
               returnKeyType="go"
               secureTextEntry
@@ -59,32 +65,37 @@ class Signup extends Component {
           </View>
         </View>
       </KeyboardAvoidingView>
-    );
+    )
   }
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flex: 1
   },
   inputContainer: {
     height: 40,
     backgroundColor: 'rgba(255,255,255,0.2)',
+    marginTop: 20,
     marginBottom: 20,
     color: '#FFF',
     paddingHorizontal: 10,
-    fontSize: 16,
+    fontSize: 16
   },
   button: {
-    height: 40,
-  },
-});
+    height: 40
+  }
+})
+
+const mapSignup = state => ({
+  user: state.user
+})
 
 const mapDispatch = dispatch => ({
-  auth: (email, password, method) => dispatch(auth(email, password, method)),
-});
+  auth: (email, password, method) => dispatch(auth(email, password, method))
+})
 
 export default connect(
-  null,
+  mapSignup,
   mapDispatch
-)(Signup);
+)(Signup)
