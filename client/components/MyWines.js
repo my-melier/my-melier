@@ -19,11 +19,7 @@ class MyWines extends Component {
     const { fetchingWinesFromDb, user } = this.props;
     fetchingWinesFromDb(user.id);
   }
-  filter(variable) {
-    const { savedWines } = this.props;
-    let filteredWines = savedWines;
-    return filteredWines.wines.filter(wine => wine.savedWine.like === variable);
-  }
+  filter() {}
   render() {
     const { loading, savedWines } = this.props;
     if (loading) {
@@ -42,8 +38,8 @@ class MyWines extends Component {
           <Text> myWines </Text>
           <View style={styles.buttonContainer}>
             <Text> Filter by: </Text>
-            <Button title="Like" onPress={() => this.filter(true)} />
-            <Button title="Dislike" onPress={() => this.filter(false)} />
+            <Button title="Like" onPress={() => this.filter()} />
+            <Button title="Dislike" onPress={() => this.filter()} />
           </View>
           {savedWines.wines.map(wine => (
             <View key={wine.id}>
