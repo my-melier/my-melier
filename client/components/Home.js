@@ -15,8 +15,8 @@ export default class Home extends Component {
 
   render() {
     return (
-      <View>
-        <View style={styles.container}>
+      <View style={styles.container}>
+        <View style={styles.text}>
           <Text>Click the Camera to Scan an Item on a Wine Menu!</Text>
         </View>
         <View style={styles.button}>
@@ -30,7 +30,6 @@ export default class Home extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    height: 50,
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center'
@@ -38,5 +37,8 @@ const styles = StyleSheet.create({
   button: {
     height: 40,
     backgroundColor: '#ff6347'
+  },
+  text: {
+    height: 50
   }
 })
