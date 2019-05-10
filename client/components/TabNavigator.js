@@ -47,9 +47,9 @@ const TabNavigator = createBottomTabNavigator(
         let IconComponent = Ionicons;
         let iconName;
         if (routeName === 'Home') {
+          iconName = 'ios-home';
+        } else if (routeName === 'myWines') {
           iconName = 'ios-wine';
-        } else if (routeName === 'Account') {
-          iconName = 'md-person';
         } else if (routeName === 'Camera') {
           iconName = 'ios-camera';
         }
