@@ -7,6 +7,7 @@ import {
   Button,
   Alert,
   ScrollView,
+  TouchableOpacity,
 } from 'react-native';
 import { connect } from 'react-redux';
 import {
@@ -53,14 +54,35 @@ class ConfirmWine extends Component {
       return <ActivityIndicator />;
     }
 
+    if (wines.length === 1) {
+      const singleWine = wines[0];
+      return (
+        <View style={styles.container}>
+          <Text>Please confirm this is the correct wine:</Text>
+          <Text style={styles.wineTitle}>{singleWine.title}</Text>
+          <View style={styles.button}>
+            <TouchableOpacity onPress={() => this.handlePress(singleWine)}>
+              <Text style={styles.buttonText}>confirm</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      );
+    }
+
     return (
       <ScrollView>
         <View style={styles.container}>
-          <Text> Please Confirm Your Wine! </Text>
+          <Text>Please confirm which wine is correct:</Text>
           {wines.map(wine => (
-            <View key={wine.id}>
-              <Text>{wine.title}</Text>
-              <Button title="confirm" onPress={() => this.handlePress(wine)} />
+            <View key={wine.id} style={styles.wine}>
+              <View style={styles.titleContainer}>
+                <Text style={styles.wineTitle}>{wine.title}</Text>
+              </View>
+              <View style={styles.button}>
+                <TouchableOpacity onPress={() => this.handlePress(wine)}>
+                  <Text style={styles.buttonText}>confirm</Text>
+                </TouchableOpacity>
+              </View>
             </View>
           ))}
         </View>
@@ -73,6 +95,31 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
+    padding: 5,
+  },
+  titleContainer: {
+    width: '60%',
+  },
+  wineTitle: {
+    fontSize: 15,
+  },
+  wine: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    marginTop: 10,
+    marginBottom: 10,
+  },
+  button: {
+    backgroundColor: 'gray',
+    borderRadius: 20,
+    padding: 5,
+    height: 30,
+    width: 75,
+  },
+  buttonText: {
+    color: 'black',
+    textAlign: 'center',
   },
 });
 
