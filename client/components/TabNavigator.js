@@ -4,6 +4,7 @@ import {
   createBottomTabNavigator,
   createAppContainer,
   createStackNavigator,
+  createSwitchNavigator,
 } from 'react-navigation';
 import { Ionicons } from '@expo/vector-icons';
 import Home from './Home';
@@ -12,6 +13,19 @@ import Camera from './Camera';
 import ConfirmWine from './ConfirmWine';
 import Comparisons from './Comparisons';
 import SelectedWine from './SelectedWine';
+import Signup from './Signup';
+import Login from './Login';
+import MyAccount from './MyAccount';
+
+const AuthStack = createStackNavigator({
+  Login: Login,
+  Signup: Signup,
+});
+
+const HomeStack = createStackNavigator({
+  Home: Home,
+  MyAccount: MyAccount,
+});
 
 const CameraStack = createStackNavigator({
   Camera: Camera,
@@ -22,7 +36,7 @@ const CameraStack = createStackNavigator({
 
 const TabNavigator = createBottomTabNavigator(
   {
-    Home: Home,
+    Home: HomeStack,
     Camera: CameraStack,
     myWines: MyWines,
   },
@@ -50,6 +64,17 @@ const TabNavigator = createBottomTabNavigator(
   }
 );
 
-const AppContainer = createAppContainer(TabNavigator);
+const AppContainer = createAppContainer(
+  createSwitchNavigator(
+    {
+      App: TabNavigator,
+      Auth: AuthStack,
+    },
+    {
+      initialRouteName: 'Auth',
+    }
+  )
+);
+// const AppContainer = createAppContainer(TabNavigator);
 
 export default AppContainer;

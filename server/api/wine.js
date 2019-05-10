@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const Wine = require('../db/models');
+const { Wine } = require('../db/models');
 const Sequelize = require('sequelize');
 const Op = Sequelize.Op;
 module.exports = router;

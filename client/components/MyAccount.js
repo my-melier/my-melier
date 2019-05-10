@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { Text, StyleSheet, View, Button } from 'react-native';
+import { Text, StyleSheet, View } from 'react-native';
 
-export default class Home extends Component {
+export default class MyAccount extends Component {
   constructor() {
     super();
   }
@@ -9,7 +9,7 @@ export default class Home extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text>Click the Camera to </Text>
+        <Text>Welcome to your account</Text>
       </View>
     );
   }

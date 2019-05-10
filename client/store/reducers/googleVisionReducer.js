@@ -25,7 +25,7 @@ const initialState = {
   response: null,
 };
 
-export default (googleVisionReducer = (state = initialState, action) => {
+export default (state = initialState, action) => {
   switch (action.type) {
     case SET_IMAGE:
       return { ...state, image: action.image };
@@ -44,4 +44,4 @@ export default (googleVisionReducer = (state = initialState, action) => {
     default:
       return state;
   }
-});
+};

@@ -35,7 +35,7 @@ const initialState = {
 };
 
 //reducer
-export default (queryWinesReducer = (state = initialState, action) => {
+export default (state = initialState, action) => {
   switch (action.type) {
     case GETTING_WINES:
       return { ...state, loading: true };
@@ -56,4 +56,4 @@ export default (queryWinesReducer = (state = initialState, action) => {
     default:
       return state;
   }
-});
+};
