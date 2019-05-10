@@ -20,18 +20,26 @@ router.get('/:title', async (req, res, next) => {
   }
 });
 
-router.get('/:userId', async (req, res, next) => {
+router.get('/saved/:userId', async (req, res, next) => {
   try {
-    const wines = await SavedWine.findAll({
-      where: { userId: req.user.id },
+    const savedWines = await User.findOne({
+      where: { id: req.user.id },
       include: { model: Wine },
     });
-    res.send(wines);
+    res.send(savedWines);
   } catch (err) {
     next(err);
   }
 });
 
+router.post('/saved/:userId', async (req, res, next) => {
+  try {
+    await SavedWine.create(req.body);
+    res.send('Sucess!');
+  } catch (error) {
+    next(error);
+  }
+});
 // let varieties = ['Merlot', 'Cabernet', 'Pinot Noir', 'Chardonnay', 'Malbec'];
 // let variety;
 

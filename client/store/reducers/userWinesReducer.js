@@ -5,6 +5,7 @@ import myIPaddress from '../../../IPaddress';
 //action types
 const GETTING_WINES = 'GETTING_WINES';
 const GOT_WINES = 'GOT_WINES';
+const SAVE_WINE = 'SAVE_WINE';
 
 //action creators
 export const gettingWines = () => ({
@@ -16,14 +17,33 @@ export const gotWines = wines => ({
   wines,
 });
 
+const savedWine = wine => ({
+  type: SAVE_WINE,
+  wine,
+});
+
 //thunks
-export const fetchingWinesFromDb = user => async dispatch => {
+export const fetchingWinesFromDb = userId => async dispatch => {
   try {
     dispatch(gettingWines());
+
     const { data } = await axios.get(
-      `http://${myIPaddress.IP}:8080/api/wine/${user.id}`
+      `http://${myIPaddress.IP}:8080/api/wine/saved/${userId}`
     );
+
     dispatch(gotWines(data));
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const saveWineToDb = (userId, wineId) => async dispatch => {
+  try {
+    const { data } = await axios.post(
+      `http://${myIPaddress.IP}:8080/api/wine/saved/${userId}`,
+      { userId, wineId }
+    );
+    dispatch(savedWine(data));
   } catch (error) {
     console.error(error);
   }
@@ -32,7 +52,7 @@ export const fetchingWinesFromDb = user => async dispatch => {
 //initial state
 const initialState = {
   loading: false,
-  wines: [],
+  savedWines: [],
 };
 
 export default (state = initialState, action) => {
@@ -42,7 +62,7 @@ export default (state = initialState, action) => {
     case GOT_WINES:
       return {
         ...state,
-        wines: action.wines,
+        savedWines: action.wines,
         loading: false,
       };
     default:
