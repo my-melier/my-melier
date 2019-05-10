@@ -31,8 +31,15 @@ class Comparisons extends Component {
         <View style={styles.container}>
           <Text style={styles.myMenu}>myMenu</Text>
           <Text style={styles.headerText}>
-            Please select which wine you decide to order:
+            Please select which wine you decide to order
           </Text>
+          <Text style={styles.headerText}>OR</Text>
+          <TouchableOpacity
+            onPress={() => navigate('Camera')}
+            style={styles.button}
+          >
+            <Text style={styles.buttonText}>Add another wine</Text>
+          </TouchableOpacity>
           <View>
             {comparisons.map(wine => (
               <View key={wine.id} style={styles.wine}>
@@ -48,10 +55,6 @@ class Comparisons extends Component {
               </View>
             ))}
           </View>
-          <Button
-            title="Add another wine from menu"
-            onPress={() => navigate('Camera')}
-          />
         </View>
       </ScrollView>
     );
@@ -84,6 +87,9 @@ const styles = StyleSheet.create({
   headerText: {
     fontSize: 17,
     fontWeight: 'bold',
+    marginLeft: 40,
+    marginRight: 40,
+    textAlign: 'center',
   },
   wineTitle: {
     fontSize: 17,
@@ -95,6 +101,8 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     padding: 10,
     margin: 10,
+    marginLeft: 25,
+    marginRight: 25,
   },
   centerText: {
     textAlign: 'center',
@@ -115,8 +123,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     padding: 5,
     height: 40,
-    // width: 75,
-    margin: 20,
+    margin: 10,
     marginLeft: 75,
     marginRight: 75,
     justifyContent: 'center',
