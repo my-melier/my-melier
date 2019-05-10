@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { withNavigation } from 'react-navigation';
 
 // SWITCH IP ADDRESS
 import myIPaddress from '../../../IPaddress';
@@ -20,12 +21,13 @@ export const me = () => async dispatch => {
     const res = await axios.get(`http://${myIPaddress.IP}:8080/auth/me`);
     dispatch(getUser(res.data || defaultUser));
   } catch (err) {
-    console.error(err);
+    next(err);
   }
 };
 
 export const auth = (email, password, method) => async dispatch => {
   let res;
+
   try {
     res = await axios.post(`http://${myIPaddress.IP}:8080/auth/${method}`, {
       email,
@@ -37,8 +39,9 @@ export const auth = (email, password, method) => async dispatch => {
 
   try {
     dispatch(getUser(res.data));
+    // return this.navigation.navigate('App')
   } catch (dispatchOrHistoryErr) {
-    console.error(dispatchOrHistoryErr);
+    next(dispatchOrHistoryErr);
   }
 };
 
@@ -47,7 +50,7 @@ export const logout = () => async dispatch => {
     await axios.post(`http://${myIPaddress.IP}:8080/auth/logout`);
     dispatch(removeUser());
   } catch (err) {
-    console.error(err);
+    next(err);
   }
 };
 

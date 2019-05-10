@@ -1,11 +1,22 @@
 import React, { Component } from 'react';
 import { Text, StyleSheet, View, ScrollView, Button } from 'react-native';
 import { connect } from 'react-redux';
-import selectedWine from '../store/reducers/comparisonReducer';
+import { selectedWine } from '../store/reducers/comparisonReducer';
 
 class Comparisons extends Component {
+  constructor(props) {
+    super(props);
+    this.handleSelect = this.handleSelect.bind(this);
+  }
+
+  handleSelect(wine) {
+    const { selectedWine, navigation } = this.props;
+    selectedWine(wine);
+    return navigation.navigate('SelectedWine');
+  }
+
   render() {
-    const { comparisons, selectedWine } = this.props;
+    const { comparisons } = this.props;
     const { navigate } = this.props.navigation;
 
     return (
@@ -13,16 +24,17 @@ class Comparisons extends Component {
         <View style={styles.container}>
           <Text> myMenu </Text>
           <View style={styles.container}>
-            {comparisons.map(wine => {
-              return (
-                <View key={wine.id}>
-                  <Text>{wine.title}</Text>
-                  <Text>{wine.description}</Text>
-                  <Text>{wine.score}</Text>
-                  <Button title="Select" onPress={() => selectedWine(wine)} />
-                </View>
-              );
-            })}
+            {comparisons.map(wine => (
+              <View key={wine.id}>
+                <Text>{wine.title}</Text>
+                <Text>{wine.description}</Text>
+                <Text>{wine.points}</Text>
+                <Button
+                  title="Select"
+                  onPress={() => this.handleSelect(wine)}
+                />
+              </View>
+            ))}
           </View>
           <Button
             title="Add another wine from menu"

@@ -6,12 +6,12 @@ import {
   ActivityIndicator,
   Button,
   Alert,
+  ScrollView,
 } from 'react-native';
 import { connect } from 'react-redux';
 import {
   fetchingWinesFromDb,
   confirmedWine,
-  gettingWines,
 } from '../store/reducers/queryWinesReducer';
 import { addedToComparisons } from '../store/reducers/comparisonReducer';
 import { ocrToUrlTitle } from '../../utils';
@@ -52,18 +52,19 @@ class ConfirmWine extends Component {
     if (loading) {
       return <ActivityIndicator />;
     }
+
     return (
-      <View style={styles.container}>
-        <Text> Please Confirm Your Wine! </Text>
-        {wines.map(wine => (
-          <View key={wine.id}>
-            <Text>{wine.title}</Text>
-            <Text>{wine.description}</Text>
-            <Text>{wine.points}</Text>
-            <Button title="confirm" onPress={() => this.handlePress(wine)} />
-          </View>
-        ))}
-      </View>
+      <ScrollView>
+        <View style={styles.container}>
+          <Text> Please Confirm Your Wine! </Text>
+          {wines.map(wine => (
+            <View key={wine.id}>
+              <Text>{wine.title}</Text>
+              <Button title="confirm" onPress={() => this.handlePress(wine)} />
+            </View>
+          ))}
+        </View>
+      </ScrollView>
     );
   }
 }
@@ -86,7 +87,6 @@ const mapDispatch = dispatch => ({
   fetchWine: googleResFormatted =>
     dispatch(fetchingWinesFromDb(googleResFormatted)),
   confirmedWine: wine => dispatch(confirmedWine(wine)),
-  gettingWines: () => dispatch(gettingWines()),
   addedToComparisons: wine => dispatch(addedToComparisons(wine)),
 });
 

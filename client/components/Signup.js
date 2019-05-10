@@ -19,11 +19,17 @@ class Signup extends Component {
       password: '',
       error: '',
     };
+    this.signup = this.signup.bind(this);
   }
+
   signup() {
-    const { auth } = this.props;
+    console.log('state above', this.state);
+    console.log('email state', this.state.email);
     const { email, password } = this.state;
-    auth(email, password, 'signup');
+    this.props.auth(email, password, 'signup');
+    if (this.props.user) {
+      return this.props.navigation.navigate('App');
+    }
   }
 
   render() {
@@ -35,7 +41,7 @@ class Signup extends Component {
         <View style={styles.container}>
           <View style={styles.inputContainer}>
             <TextInput
-              placeholder="email"
+              placeholder="Email"
               onChangeText={email => this.setState({ email })}
               value={this.state.email}
               returnKeyType="next"
@@ -46,7 +52,7 @@ class Signup extends Component {
           </View>
           <View style={styles.inputContainer}>
             <TextInput
-              placeholder="password"
+              placeholder="Password"
               onChangeText={password => this.setState({ password })}
               value={this.state.password}
               returnKeyType="go"
@@ -70,6 +76,7 @@ const styles = StyleSheet.create({
   inputContainer: {
     height: 40,
     backgroundColor: 'rgba(255,255,255,0.2)',
+    marginTop: 20,
     marginBottom: 20,
     color: '#FFF',
     paddingHorizontal: 10,
@@ -80,11 +87,15 @@ const styles = StyleSheet.create({
   },
 });
 
+const mapSignup = state => ({
+  user: state.user,
+});
+
 const mapDispatch = dispatch => ({
   auth: (email, password, method) => dispatch(auth(email, password, method)),
 });
 
 export default connect(
-  null,
+  mapSignup,
   mapDispatch
 )(Signup);

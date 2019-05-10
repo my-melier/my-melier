@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, StyleSheet, View } from 'react-native';
+import { Text, StyleSheet, View, Button } from 'react-native';
 
 export default class Home extends Component {
   constructor() {
@@ -9,7 +9,7 @@ export default class Home extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text>Open up App.js to start working on your app!</Text>
+        <Text>Click the Camera to </Text>
       </View>
     );
   }

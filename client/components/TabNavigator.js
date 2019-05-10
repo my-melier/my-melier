@@ -12,9 +12,15 @@ import MyWines from './MyWines';
 import Camera from './Camera';
 import ConfirmWine from './ConfirmWine';
 import Comparisons from './Comparisons';
+import SelectedWine from './SelectedWine';
 import Signup from './Signup';
 import Login from './Login';
 import MyAccount from './MyAccount';
+
+const AuthStack = createStackNavigator({
+  Login: Login,
+  Signup: Signup,
+});
 
 const HomeStack = createStackNavigator({
   Home: Home,
@@ -25,11 +31,7 @@ const CameraStack = createStackNavigator({
   Camera: Camera,
   ConfirmWine: ConfirmWine,
   Comparisons: Comparisons,
-});
-
-const AuthStack = createStackNavigator({
-  Login: Login,
-  Signup: Signup,
+  SelectedWine: SelectedWine,
 });
 
 const TabNavigator = createBottomTabNavigator(
@@ -62,17 +64,17 @@ const TabNavigator = createBottomTabNavigator(
   }
 );
 
-// const AppContainer = createAppContainer(
-//   createSwitchNavigator(
-//     {
-//       App: TabNavigator,
-//       Auth: AuthStack,
-//     },
-//     {
-//       initialRouteName: 'Auth',
-//     }
-//   )
-// );
-const AppContainer = createAppContainer(TabNavigator);
+const AppContainer = createAppContainer(
+  createSwitchNavigator(
+    {
+      App: TabNavigator,
+      Auth: AuthStack,
+    },
+    {
+      initialRouteName: 'Auth',
+    }
+  )
+);
+// const AppContainer = createAppContainer(TabNavigator);
 
 export default AppContainer;
