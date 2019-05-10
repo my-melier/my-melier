@@ -7,6 +7,7 @@ import {
   Button,
   Alert,
   ScrollView,
+  TouchableOpacity,
 } from 'react-native';
 import { connect } from 'react-redux';
 import {
@@ -33,15 +34,15 @@ class ConfirmWine extends Component {
     if (comparisons.length === 0) {
       addedToComparisons(wine);
     } else {
-      comparisons.map(comparison => {
-        if (comparison.id === wine.id) {
-          return Alert.alert(null, 'You already added this wine!', [
+      for (let i = 0; i < comparisons.length; i++) {
+        if (comparisons[i].id === wine.id) {
+          Alert.alert(null, 'You already added this wine!', [
             { text: 'OK', style: 'cancel' },
           ]);
-        } else {
-          addedToComparisons(wine);
+          return navigation.navigate('Comparisons');
         }
-      });
+      }
+      addedToComparisons(wine);
     }
     return navigation.navigate('Comparisons');
   }
@@ -53,14 +54,43 @@ class ConfirmWine extends Component {
       return <ActivityIndicator />;
     }
 
+    if (wines.length === 1) {
+      const singleWine = wines[0];
+      return (
+        <View style={styles.container}>
+          <Text style={styles.headerText}>
+            Please confirm this is the correct wine:
+          </Text>
+          <View style={styles.wine}>
+            <View style={styles.titleContainer}>
+              <Text style={styles.wineTitle}>{singleWine.title}</Text>
+            </View>
+            <View style={styles.button}>
+              <TouchableOpacity onPress={() => this.handlePress(singleWine)}>
+                <Text style={styles.buttonText}>confirm</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </View>
+      );
+    }
+
     return (
       <ScrollView>
         <View style={styles.container}>
-          <Text> Please Confirm Your Wine! </Text>
+          <Text style={styles.headerText}>
+            Please confirm which wine is correct:
+          </Text>
           {wines.map(wine => (
-            <View key={wine.id}>
-              <Text>{wine.title}</Text>
-              <Button title="confirm" onPress={() => this.handlePress(wine)} />
+            <View key={wine.id} style={styles.wine}>
+              <View style={styles.titleContainer}>
+                <Text style={styles.wineTitle}>{wine.title}</Text>
+              </View>
+              <View style={styles.button}>
+                <TouchableOpacity onPress={() => this.handlePress(wine)}>
+                  <Text style={styles.buttonText}>confirm</Text>
+                </TouchableOpacity>
+              </View>
             </View>
           ))}
         </View>
@@ -73,6 +103,35 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
+    padding: 5,
+  },
+  headerText: {
+    fontSize: 17,
+    fontWeight: 'bold',
+  },
+  titleContainer: {
+    width: '60%',
+  },
+  wineTitle: {
+    fontSize: 15,
+  },
+  wine: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    marginTop: 10,
+    marginBottom: 10,
+  },
+  button: {
+    backgroundColor: 'gray',
+    borderRadius: 20,
+    padding: 5,
+    height: 30,
+    width: 75,
+  },
+  buttonText: {
+    color: 'black',
+    textAlign: 'center',
   },
 });
 
