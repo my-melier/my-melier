@@ -12,6 +12,7 @@ import MyWines from './MyWines'
 import Camera from './Camera'
 import ConfirmWine from './ConfirmWine'
 import Comparisons from './Comparisons'
+import SelectedWine from './SelectedWine'
 import Signup from './Signup'
 import Login from './Login'
 import MyAccount from './MyAccount'
@@ -24,7 +25,8 @@ const HomeStack = createStackNavigator({
 const CameraStack = createStackNavigator({
   Camera: Camera,
   ConfirmWine: ConfirmWine,
-  Comparisons: Comparisons
+  Comparisons: Comparisons,
+  SelectedWine: SelectedWine
 })
 
 const AuthStack = createStackNavigator({
