@@ -1,44 +1,61 @@
-import React, {Component} from 'react'
-import {Text, StyleSheet, View, Button} from 'react-native'
-import {logout} from '../store/reducers/userReducer'
+import React, { Component } from 'react';
+import { Text, StyleSheet, View, Button, TouchableOpacity } from 'react-native';
+import { logout } from '../store/reducers/userReducer';
 
 export default class Home extends Component {
   constructor(props) {
-    super(props)
-    this.logout = this.logout.bind(this)
+    super(props);
+    this.logout = this.logout.bind(this);
   }
 
   logout() {
-    logout()
-    return this.props.navigation.navigate('Auth')
+    logout();
+    return this.props.navigation.navigate('Auth');
   }
 
   render() {
     return (
       <View style={styles.container}>
         <View style={styles.text}>
-          <Text>Click the Camera to Scan an Item on a Wine Menu!</Text>
+          <Text style={styles.logo}>
+            <Text style={styles.bold}>my</Text>Melier
+          </Text>
         </View>
-        <View style={styles.button}>
-          <Button title="Logout" onPress={this.logout} />
-        </View>
+        <TouchableOpacity onPress={this.logout} style={styles.button}>
+          <Text style={styles.buttonText}>Logout</Text>
+        </TouchableOpacity>
       </View>
-    )
+    );
   }
 }
 
 const styles = StyleSheet.create({
+  bold: {
+    fontWeight: 'bold',
+  },
+  logo: {
+    fontSize: 50,
+    padding: 10,
+  },
   container: {
     flex: 1,
     backgroundColor: '#fff',
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   button: {
+    backgroundColor: 'gray',
+    borderRadius: 20,
+    padding: 5,
     height: 40,
-    backgroundColor: '#ff6347'
+    margin: 10,
+    marginLeft: 75,
+    marginRight: 75,
+    justifyContent: 'center',
   },
-  text: {
-    height: 50
-  }
-})
+  buttonText: {
+    color: 'black',
+    textAlign: 'center',
+    padding: 5,
+  },
+});
