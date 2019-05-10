@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 // SWITCH IP ADDRESS
-import myIpAddress from '../../../IPaddress';
+import myIPaddress from '../../../IPaddress';
 
 // action types
 const GET_USER = 'GET_USER';
@@ -17,7 +17,7 @@ const removeUser = () => ({ type: REMOVE_USER });
 // thunks
 export const me = () => async dispatch => {
   try {
-    const res = await axios.get(`http://${myIpAddress.IP}:8080/auth/me`);
+    const res = await axios.get(`http://${myIPaddress.IP}:8080/auth/me`);
     dispatch(getUser(res.data || defaultUser));
   } catch (err) {
     console.error(err);
@@ -27,7 +27,7 @@ export const me = () => async dispatch => {
 export const auth = (email, password, method) => async dispatch => {
   let res;
   try {
-    res = await axios.post(`http://${myIpAddress.IP}:8080/auth/${method}`, {
+    res = await axios.post(`http://${myIPaddress.IP}:8080/auth/${method}`, {
       email,
       password,
     });
@@ -44,7 +44,7 @@ export const auth = (email, password, method) => async dispatch => {
 
 export const logout = () => async dispatch => {
   try {
-    await axios.post(`http://${myIpAddress.IP}:8080/auth/logout`);
+    await axios.post(`http://${myIPaddress.IP}:8080/auth/logout`);
     dispatch(removeUser());
   } catch (err) {
     console.error(err);
