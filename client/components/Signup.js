@@ -23,8 +23,6 @@ class Signup extends Component {
   }
 
   signup() {
-    console.log('state above', this.state);
-    console.log('email state', this.state.email);
     const { email, password } = this.state;
     this.props.auth(email, password, 'signup');
     if (this.props.user) {
