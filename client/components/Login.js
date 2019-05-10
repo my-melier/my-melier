@@ -25,7 +25,7 @@ class Login extends Component {
     const {auth} = this.props
     const {email, password} = this.state
     await auth(email, password, 'login')
-    if (this.props.user) {
+    if (this.props.user.id) {
       return this.props.navigation.navigate('App')
     }
   }
