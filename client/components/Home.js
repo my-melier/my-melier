@@ -25,6 +25,7 @@ export default class Home extends Component {
           <Text>Instructions:</Text>
           <Text>Open the camera to scan a menu</Text>
           <Text>Click on myWines to see previously saved wines</Text>
+          <Text>Only drink wine you like - life is too short!</Text>
         </View>
         <TouchableOpacity onPress={this.logout} style={styles.button}>
           <Text style={styles.buttonText}>Logout</Text>
