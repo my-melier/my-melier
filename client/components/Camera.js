@@ -50,6 +50,7 @@ class Camera extends Component {
       if (!imageData.cancelled) {
         let image = imageData;
         this.props.setImage(image);
+        this.handlePress();
       }
     } catch (err) {
       console.error(err);
@@ -101,11 +102,10 @@ class Camera extends Component {
     return (
       <View style={styles.container}>
         <Button onPress={this.takePhoto} title="Take a photo" color="#1985bc" />
-        <Button onPress={this.pickPhoto} title="Pick a photo" color="#1985bc" />
         <Button
-          style={{ marginBottom: 10 }}
-          onPress={this.handlePress}
-          title="Analyze!"
+          onPress={this.pickPhoto}
+          title="Choose from camera roll"
+          color="#1985bc"
         />
       </View>
     );
