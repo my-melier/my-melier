@@ -25,9 +25,7 @@ class Signup extends Component {
   signup() {
     const {email, password} = this.state
     if (email && password) {
-      console.log('before auth')
       this.props.auth(email, password, 'signup')
-      console.log('after auth')
       return this.props.navigation.navigate('App')
     }
   }
