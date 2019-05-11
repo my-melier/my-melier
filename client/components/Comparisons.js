@@ -9,6 +9,7 @@ import {
 import { connect } from 'react-redux';
 import {
   selectedWine,
+  removedWine,
   clearedComparisons,
 } from '../store/reducers/comparisonReducer';
 
@@ -62,12 +63,20 @@ class Comparisons extends Component {
                 <Text style={styles.wineTitle}>{wine.title}</Text>
                 <Text style={styles.description}>{wine.description}</Text>
                 <Text style={styles.score}>Score: {wine.points}</Text>
-                <TouchableOpacity
-                  onPress={() => this.handleSelect(wine)}
-                  style={styles.button}
-                >
-                  <Text style={styles.buttonText}>select</Text>
-                </TouchableOpacity>
+                <View style={styles.mainButtonView}>
+                  <TouchableOpacity
+                    onPress={() => this.handleSelect(wine)}
+                    style={styles.button}
+                  >
+                    <Text style={styles.buttonText}>select</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    onPress={() => this.props.removedWine(wine.id)}
+                    style={styles.button}
+                  >
+                    <Text style={styles.buttonText}>remove</Text>
+                  </TouchableOpacity>
+                </View>
               </View>
             ))}
           </View>
@@ -83,6 +92,7 @@ const mapState = state => ({
 
 const mapDispatch = dispatch => ({
   selectedWine: wine => dispatch(selectedWine(wine)),
+  removedWine: wineId => dispatch(removedWine(wineId)),
   clearedComparisons: () => dispatch(clearedComparisons()),
 });
 
@@ -134,6 +144,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: 15,
     fontWeight: 'bold',
+    paddingBottom: 10,
   },
   mainButtonView: {
     flex: 1,
@@ -154,9 +165,8 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     padding: 5,
     height: 40,
-    margin: 10,
-    marginLeft: 75,
-    marginRight: 75,
+    width: 100,
+    margin: 5,
     justifyContent: 'center',
   },
   buttonText: {
