@@ -4,7 +4,6 @@ import {
   StyleSheet,
   View,
   ScrollView,
-  Button,
   TouchableOpacity,
 } from 'react-native';
 import { connect } from 'react-redux';
@@ -27,7 +26,7 @@ class Comparisons extends Component {
   }
 
   handleClear() {
-    const { clearedComparisons, navigation } = this.props;
+    const { clearedComparisons } = this.props;
     return clearedComparisons();
   }
 
@@ -43,15 +42,20 @@ class Comparisons extends Component {
             Please select which wine you decide to order
           </Text>
           <Text style={styles.headerText}>OR</Text>
-          <TouchableOpacity
-            onPress={() => navigate('Camera')}
-            style={styles.button}
-          >
-            <Text style={styles.buttonText}>Add another wine</Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={this.handleClear} style={styles.button}>
-            <Text style={styles.buttonText}>Clear all wines</Text>
-          </TouchableOpacity>
+          <View style={styles.mainButtonView}>
+            <TouchableOpacity
+              onPress={() => navigate('Camera')}
+              style={styles.mainButton}
+            >
+              <Text style={styles.buttonText}>Add another wine</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={this.handleClear}
+              style={styles.mainButton}
+            >
+              <Text style={styles.buttonText}>Clear all wines</Text>
+            </TouchableOpacity>
+          </View>
           <View>
             {comparisons.map(wine => (
               <View key={wine.id} style={styles.wine}>
@@ -130,6 +134,20 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: 15,
     fontWeight: 'bold',
+  },
+  mainButtonView: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'center',
+  },
+  mainButton: {
+    backgroundColor: 'gray',
+    borderRadius: 20,
+    padding: 5,
+    height: 40,
+    width: 150,
+    margin: 5,
+    justifyContent: 'center',
   },
   button: {
     backgroundColor: 'gray',
