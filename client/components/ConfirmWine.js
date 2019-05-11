@@ -17,6 +17,7 @@ import {
 import {addedToComparisons} from '../store/reducers/comparisonReducer'
 import {ocrToUrlTitle} from '../../utils'
 import ErrorWine from './ErrorWine'
+import LoadingPage from './LoadingPage'
 
 class ConfirmWine extends Component {
   constructor(props) {
@@ -52,7 +53,7 @@ class ConfirmWine extends Component {
     const {loading, wines} = this.props
 
     if (loading) {
-      return <ActivityIndicator />
+      return <LoadingPage />
     }
 
     if (!wines[0]) {
