@@ -8,18 +8,27 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import { connect } from 'react-redux';
-import { selectedWine } from '../store/reducers/comparisonReducer';
+import {
+  selectedWine,
+  clearedComparisons,
+} from '../store/reducers/comparisonReducer';
 
 class Comparisons extends Component {
   constructor(props) {
     super(props);
     this.handleSelect = this.handleSelect.bind(this);
+    this.handleClear = this.handleClear.bind(this);
   }
 
   handleSelect(wine) {
     const { selectedWine, navigation } = this.props;
     selectedWine(wine);
     return navigation.navigate('SelectedWine');
+  }
+
+  handleClear() {
+    const { clearedComparisons, navigation } = this.props;
+    return clearedComparisons();
   }
 
   render() {
@@ -39,6 +48,9 @@ class Comparisons extends Component {
             style={styles.button}
           >
             <Text style={styles.buttonText}>Add another wine</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={this.handleClear} style={styles.button}>
+            <Text style={styles.buttonText}>Clear all wines</Text>
           </TouchableOpacity>
           <View>
             {comparisons.map(wine => (
@@ -67,6 +79,7 @@ const mapState = state => ({
 
 const mapDispatch = dispatch => ({
   selectedWine: wine => dispatch(selectedWine(wine)),
+  clearedComparisons: () => dispatch(clearedComparisons()),
 });
 
 export default connect(

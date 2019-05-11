@@ -1,6 +1,7 @@
 //action types
 const ADDED_TO_COMPARISONS = 'ADDED_TO_COMPARISONS';
 const SELECTED_WINE = 'SELECTED_WINE';
+const CLEARED_COMPARISONS = 'CLEARED COMPARISONS';
 
 //action creators
 export const addedToComparisons = wine => ({
@@ -11,6 +12,10 @@ export const addedToComparisons = wine => ({
 export const selectedWine = wine => ({
   type: SELECTED_WINE,
   wine,
+});
+
+export const clearedComparisons = () => ({
+  type: CLEARED_COMPARISONS,
 });
 
 //thunks
@@ -31,6 +36,8 @@ export default (comparisonReducer = (state = initialState, action) => {
       };
     case SELECTED_WINE:
       return { ...state, selectedWine: action.wine };
+    case CLEARED_COMPARISONS:
+      return { ...state, comparisons: [] };
     default:
       return state;
   }
