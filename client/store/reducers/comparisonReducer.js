@@ -27,7 +27,7 @@ export default (comparisonReducer = (state = initialState, action) => {
     case ADDED_TO_COMPARISONS:
       return {
         ...state,
-        comparisons: [...state.comparisons, action.wine],
+        comparisons: [action.wine, ...state.comparisons],
       };
     case SELECTED_WINE:
       return { ...state, selectedWine: action.wine };
