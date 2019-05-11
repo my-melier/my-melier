@@ -1,16 +1,20 @@
 import React, { Component } from 'react';
 import { Text, StyleSheet, View, Button, TouchableOpacity } from 'react-native';
 import { logout } from '../store/reducers/userReducer';
+import { clearedComparisons } from '../store/reducers/comparisonReducer';
+import { connect } from 'react-redux';
 
-export default class Home extends Component {
+class Home extends Component {
   constructor(props) {
     super(props);
     this.logout = this.logout.bind(this);
   }
 
   logout() {
+    const { clearedComparisons, navigation } = this.props;
     logout();
-    return this.props.navigation.navigate('Auth');
+    clearedComparisons();
+    return navigation.navigate('Auth');
   }
 
   render() {
@@ -28,6 +32,15 @@ export default class Home extends Component {
     );
   }
 }
+
+const mapDispatch = dispatch => ({
+  clearedComparisons: () => dispatch(clearedComparisons()),
+});
+
+export default connect(
+  null,
+  mapDispatch
+)(Home);
 
 const styles = StyleSheet.create({
   bold: {
