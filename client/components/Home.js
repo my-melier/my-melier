@@ -22,10 +22,14 @@ export default class Home extends Component {
           </Text>
         </View>
         <View>
-          <Text>Instructions:</Text>
-          <Text>Open the camera to scan a menu</Text>
-          <Text>Click on myWines to see previously saved wines</Text>
-          <Text>Only drink wine you like - life is too short!</Text>
+          <Text style={styles.instructions}>Instructions:</Text>
+          <Text style={styles.copy}>Open the camera to scan a menu</Text>
+          <Text style={styles.copy}>
+            Click on myWines to see previously saved wines
+          </Text>
+          <Text style={styles.copy}>
+            Only drink wine you like - life is too short!
+          </Text>
         </View>
         <TouchableOpacity onPress={this.logout} style={styles.button}>
           <Text style={styles.buttonText}>Logout</Text>
@@ -41,7 +45,7 @@ const styles = StyleSheet.create({
   },
   logo: {
     fontSize: 50,
-    padding: 10
+    padding: 15
   },
   container: {
     flex: 1,
@@ -63,5 +67,19 @@ const styles = StyleSheet.create({
     color: 'black',
     textAlign: 'center',
     padding: 5
+  },
+  instructions: {
+    textAlign: 'center',
+    fontSize: 35,
+    paddingTop: 20,
+    paddingBottom: 5
+  },
+  copy: {
+    textAlign: 'center',
+    fontSize: 30
+  },
+  text: {
+    textAlign: 'center',
+    fontSize: 30
   }
 })
