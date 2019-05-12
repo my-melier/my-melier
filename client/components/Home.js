@@ -6,8 +6,8 @@ import { connect } from 'react-redux';
 
 class Home extends Component {
   constructor(props) {
-    super(props);
-    this.logout = this.logout.bind(this);
+    super(props)
+    this.logout = this.logout.bind(this)
   }
 
   logout() {
@@ -25,11 +25,21 @@ class Home extends Component {
             <Text style={styles.bold}>my</Text>Melier
           </Text>
         </View>
+        <View>
+          <Text style={styles.instructions}>Instructions:</Text>
+          <Text style={styles.copy}>Open the camera to scan a menu</Text>
+          <Text style={styles.copy}>
+            Click on myWines to see previously saved wines
+          </Text>
+          <Text style={styles.copy}>
+            Only drink wine you like - life is too short!
+          </Text>
+        </View>
         <TouchableOpacity onPress={this.logout} style={styles.button}>
           <Text style={styles.buttonText}>Logout</Text>
         </TouchableOpacity>
       </View>
-    );
+    )
   }
 }
 
@@ -44,17 +54,17 @@ export default connect(
 
 const styles = StyleSheet.create({
   bold: {
-    fontWeight: 'bold',
+    fontWeight: 'bold'
   },
   logo: {
     fontSize: 50,
-    padding: 10,
+    padding: 15
   },
   container: {
     flex: 1,
     backgroundColor: '#fff',
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'center'
   },
   button: {
     backgroundColor: 'gray',
@@ -64,11 +74,25 @@ const styles = StyleSheet.create({
     margin: 10,
     marginLeft: 75,
     marginRight: 75,
-    justifyContent: 'center',
+    justifyContent: 'center'
   },
   buttonText: {
     color: 'black',
     textAlign: 'center',
-    padding: 5,
+    padding: 5
   },
-});
+  instructions: {
+    textAlign: 'center',
+    fontSize: 35,
+    paddingTop: 20,
+    paddingBottom: 5
+  },
+  copy: {
+    textAlign: 'center',
+    fontSize: 30
+  },
+  text: {
+    textAlign: 'center',
+    fontSize: 30
+  }
+})
