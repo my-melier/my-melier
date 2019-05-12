@@ -4,22 +4,31 @@ import {
   StyleSheet,
   View,
   ScrollView,
-  Button,
   TouchableOpacity,
 } from 'react-native';
 import { connect } from 'react-redux';
-import { selectedWine } from '../store/reducers/comparisonReducer';
+import {
+  selectedWine,
+  removedWine,
+  clearedComparisons,
+} from '../store/reducers/comparisonReducer';
 
 class Comparisons extends Component {
   constructor(props) {
     super(props);
     this.handleSelect = this.handleSelect.bind(this);
+    this.handleClear = this.handleClear.bind(this);
   }
 
   handleSelect(wine) {
     const { selectedWine, navigation } = this.props;
     selectedWine(wine);
     return navigation.navigate('SelectedWine');
+  }
+
+  handleClear() {
+    const { clearedComparisons } = this.props;
+    return clearedComparisons();
   }
 
   render() {
@@ -34,24 +43,40 @@ class Comparisons extends Component {
             Please select which wine you decide to order
           </Text>
           <Text style={styles.headerText}>OR</Text>
-          <TouchableOpacity
-            onPress={() => navigate('Camera')}
-            style={styles.button}
-          >
-            <Text style={styles.buttonText}>Add another wine</Text>
-          </TouchableOpacity>
+          <View style={styles.mainButtonView}>
+            <TouchableOpacity
+              onPress={() => navigate('Camera')}
+              style={styles.mainButton}
+            >
+              <Text style={styles.buttonText}>Add another wine</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={this.handleClear}
+              style={styles.mainButton}
+            >
+              <Text style={styles.buttonText}>Clear all wines</Text>
+            </TouchableOpacity>
+          </View>
           <View>
             {comparisons.map(wine => (
               <View key={wine.id} style={styles.wine}>
                 <Text style={styles.wineTitle}>{wine.title}</Text>
                 <Text style={styles.description}>{wine.description}</Text>
                 <Text style={styles.score}>Score: {wine.points}</Text>
-                <TouchableOpacity
-                  onPress={() => this.handleSelect(wine)}
-                  style={styles.button}
-                >
-                  <Text style={styles.buttonText}>select</Text>
-                </TouchableOpacity>
+                <View style={styles.mainButtonView}>
+                  <TouchableOpacity
+                    onPress={() => this.handleSelect(wine)}
+                    style={styles.button}
+                  >
+                    <Text style={styles.buttonText}>select</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    onPress={() => this.props.removedWine(wine.id)}
+                    style={styles.button}
+                  >
+                    <Text style={styles.buttonText}>remove</Text>
+                  </TouchableOpacity>
+                </View>
               </View>
             ))}
           </View>
@@ -67,6 +92,8 @@ const mapState = state => ({
 
 const mapDispatch = dispatch => ({
   selectedWine: wine => dispatch(selectedWine(wine)),
+  removedWine: wineId => dispatch(removedWine(wineId)),
+  clearedComparisons: () => dispatch(clearedComparisons()),
 });
 
 export default connect(
@@ -117,15 +144,29 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: 15,
     fontWeight: 'bold',
+    paddingBottom: 10,
+  },
+  mainButtonView: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'center',
+  },
+  mainButton: {
+    backgroundColor: 'gray',
+    borderRadius: 20,
+    padding: 5,
+    height: 40,
+    width: 150,
+    margin: 5,
+    justifyContent: 'center',
   },
   button: {
     backgroundColor: 'gray',
     borderRadius: 20,
     padding: 5,
     height: 40,
-    margin: 10,
-    marginLeft: 75,
-    marginRight: 75,
+    width: 100,
+    margin: 5,
     justifyContent: 'center',
   },
   buttonText: {
