@@ -1,12 +1,5 @@
 import React, { Component } from 'react';
-import {
-  Text,
-  StyleSheet,
-  View,
-  Image,
-  ScrollView,
-  Button,
-} from 'react-native';
+import { Text, StyleSheet, View, Image } from 'react-native';
 
 export default class SelectedWine extends Component {
   render() {
