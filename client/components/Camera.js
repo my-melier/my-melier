@@ -33,6 +33,7 @@ class Camera extends Component {
       base64: true,
     });
 
+    this.props.loading();
     this.handleImagePicked(imageData);
   }
 
