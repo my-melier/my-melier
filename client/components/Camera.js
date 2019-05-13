@@ -1,14 +1,7 @@
 import { ImagePicker, Permissions } from 'expo';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import {
-  StyleSheet,
-  View,
-  Text,
-  Button,
-  TouchableOpacity,
-  Image,
-} from 'react-native';
+import { StyleSheet, View, Text, Button, TouchableOpacity } from 'react-native';
 import { withNavigation } from 'react-navigation';
 import {
   setImage,
@@ -100,8 +93,6 @@ class Camera extends Component {
   }
 
   render() {
-    // const cameraIcon = { uri: }
-
     if (this.props.isLoading) {
       return <LoadingPage />;
     }
