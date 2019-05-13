@@ -31,7 +31,7 @@ class MyWines extends Component {
     if (loading) {
       return <ActivityIndicator />;
     }
-    if (!loading && !savedWines.wines) {
+    if (!loading && !filteredWines) {
       return (
         <View style={styles.container}>
           <Text>No saved wines</Text>
@@ -66,21 +66,13 @@ class MyWines extends Component {
             </TouchableOpacity>
           </View>
           <View style={styles.wineContainer}>
-            {filteredWines.length
-              ? filteredWines.map(wine => (
-                  <View key={wine.id}>
-                    <View style={styles.wineTitle}>
-                      <Text>{wine.title}</Text>
-                    </View>
-                  </View>
-                ))
-              : savedWines.wines.map(wine => (
-                  <View key={wine.id}>
-                    <View style={styles.wineTitle}>
-                      <Text>{wine.title}</Text>
-                    </View>
-                  </View>
-                ))}
+            {filteredWines.wines.map(wine => (
+              <View key={wine.id}>
+                <View style={styles.wineTitle}>
+                  <Text>{wine.title}</Text>
+                </View>
+              </View>
+            ))}
           </View>
         </View>
       </ScrollView>

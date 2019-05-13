@@ -70,18 +70,19 @@ export default (state = initialState, action) => {
       return {
         ...state,
         savedWines: action.wines,
+        filteredWines: action.wines,
         loading: false,
       };
     case FILTER_WINES:
       if (action.filter === 'all') {
         return {
           ...state,
-          filteredWines: state.savedWines.wines,
+          filteredWines: state.savedWines,
         };
       } else {
         return {
           ...state,
-          filteredWines: state.savedWines.wines.filter(
+          filteredWines: state.filteredWines.wines.filter(
             wine => action.filter == wine.savedWine.like
           ),
         };
