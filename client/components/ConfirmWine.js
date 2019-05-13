@@ -3,8 +3,6 @@ import {
   Text,
   StyleSheet,
   View,
-  ActivityIndicator,
-  Button,
   Alert,
   ScrollView,
   TouchableOpacity,
