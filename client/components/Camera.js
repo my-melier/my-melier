@@ -1,7 +1,7 @@
 import { ImagePicker, Permissions } from 'expo';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { StyleSheet, View, Button, ActivityIndicator } from 'react-native';
+import { StyleSheet, View, Button } from 'react-native';
 import { withNavigation } from 'react-navigation';
 import {
   setImage,
@@ -9,6 +9,7 @@ import {
   gotGoogleResponse,
 } from '../store/reducers/googleVisionReducer';
 import googleVisionConfig from '../../googleVisionConfig.js';
+import LoadingPage from './LoadingPage';
 
 class Camera extends Component {
   constructor(props) {
@@ -27,9 +28,9 @@ class Camera extends Component {
 
   async takePhoto() {
     let imageData = await ImagePicker.launchCameraAsync({
-      base64: true,
       allowsEditing: true,
-      aspect: [4, 1],
+      aspect: [4, 3],
+      base64: true,
     });
 
     this.handleImagePicked(imageData);
@@ -55,6 +56,11 @@ class Camera extends Component {
     } catch (err) {
       console.error(err);
     }
+  }
+
+  async handlePress() {
+    await this.sendToGoogle();
+    return this.props.navigation.navigate('ConfirmWine');
   }
 
   async sendToGoogle() {
@@ -90,15 +96,11 @@ class Camera extends Component {
     }
   }
 
-  async handlePress() {
-    await this.sendToGoogle();
-    return this.props.navigation.navigate('ConfirmWine');
-  }
-
   render() {
     if (this.props.loadingGoogleRes) {
-      return <ActivityIndicator />;
+      return <LoadingPage />;
     }
+
     return (
       <View style={styles.container}>
         <Button onPress={this.takePhoto} title="Take a photo" color="#1985bc" />
@@ -111,13 +113,6 @@ class Camera extends Component {
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-  },
-});
 
 const mapState = state => ({
   image: state.googleVision.image,
@@ -137,3 +132,10 @@ export default withNavigation(
     mapDispatch
   )(Camera)
 );
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+  },
+});
