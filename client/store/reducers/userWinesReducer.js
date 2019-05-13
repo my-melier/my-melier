@@ -6,6 +6,7 @@ import myIPaddress from '../../../IPaddress';
 const GETTING_WINES = 'GETTING_WINES';
 const GOT_WINES = 'GOT_WINES';
 const SAVE_WINE = 'SAVE_WINE';
+const FILTER_WINES = 'FILTER_WINES';
 
 //action creators
 export const gettingWines = () => ({
@@ -20,6 +21,11 @@ export const gotWines = wines => ({
 const savedWine = wine => ({
   type: SAVE_WINE,
   wine,
+});
+
+export const filterWines = filter => ({
+  type: FILTER_WINES,
+  filter,
 });
 
 //thunks
@@ -53,6 +59,7 @@ export const saveWineToDb = (userId, wineId) => async dispatch => {
 const initialState = {
   loading: false,
   savedWines: [],
+  filteredWines: [],
 };
 
 export default (state = initialState, action) => {
@@ -65,6 +72,20 @@ export default (state = initialState, action) => {
         savedWines: action.wines,
         loading: false,
       };
+    case FILTER_WINES:
+      if (action.filter === 'all') {
+        return {
+          ...state,
+          filteredWines: state.savedWines.wines,
+        };
+      } else {
+        return {
+          ...state,
+          filteredWines: state.savedWines.wines.filter(
+            wine => action.filter == wine.savedWine.like
+          ),
+        };
+      }
     default:
       return state;
   }
