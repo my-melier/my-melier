@@ -5,8 +5,9 @@ import {
   TextInput,
   KeyboardAvoidingView,
   ActivityIndicator,
-  Button,
-  View
+  TouchableOpacity,
+  View,
+  Text
 } from 'react-native'
 import {auth} from '../store/reducers/userReducer'
 
@@ -37,8 +38,14 @@ class Signup extends Component {
     return (
       <KeyboardAvoidingView behavior="padding">
         <View style={styles.container}>
+          <View style={styles.header}>
+            <Text style={styles.logo}>
+              <Text style={styles.bold}>my</Text>Melier
+            </Text>
+          </View>
           <View style={styles.inputContainer}>
             <TextInput
+              style={styles.textInput}
               placeholder="Email"
               onChangeText={email => this.setState({email})}
               value={this.state.email}
@@ -50,6 +57,7 @@ class Signup extends Component {
           </View>
           <View style={styles.inputContainer}>
             <TextInput
+              style={styles.textInput}
               placeholder="Password"
               onChangeText={password => this.setState({password})}
               value={this.state.password}
@@ -58,8 +66,10 @@ class Signup extends Component {
               ref={input => (this.passwordInput = input)}
             />
           </View>
-          <View style={styles.button}>
-            <Button title="sign up" onPress={this.signup} />
+          <View style={styles.mainButtonView}>
+            <TouchableOpacity style={styles.button} onPress={this.signup}>
+              <Text style={styles.buttonText}>Sign Up</Text>
+            </TouchableOpacity>
           </View>
         </View>
       </KeyboardAvoidingView>
@@ -69,7 +79,7 @@ class Signup extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1
+    padding: 20
   },
   inputContainer: {
     height: 40,
@@ -80,8 +90,42 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     fontSize: 16
   },
+  bold: {
+    fontWeight: 'bold'
+  },
+  logo: {
+    fontSize: 50,
+    padding: 15,
+    paddingBottom: 50
+  },
+  mainButtonView: {
+    alignItems: 'center'
+  },
+  mainButton: {
+    backgroundColor: 'gray',
+    borderRadius: 20,
+    padding: 5,
+    height: 40,
+    width: 150,
+    margin: 5,
+    justifyContent: 'center'
+  },
   button: {
-    height: 40
+    backgroundColor: 'gray',
+    borderRadius: 20,
+    padding: 5,
+    height: 40,
+    width: 100,
+    margin: 5,
+    justifyContent: 'center'
+  },
+  buttonText: {
+    color: 'black',
+    textAlign: 'center',
+    padding: 5
+  },
+  textInput: {
+    fontSize: 16
   }
 })
 
