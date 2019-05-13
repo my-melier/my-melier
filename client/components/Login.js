@@ -25,13 +25,8 @@ class Login extends Component {
   async login() {
     const {auth} = this.props
     const {email, password} = this.state
-    console.log('before auth, email:', email)
     await auth(email, password, 'login')
-    console.log('after auth')
-    console.log('props:', this.props.user)
-    console.log('id:', this.props.user.id)
     if (this.props.user.id) {
-      console.log('in if/props:')
       return this.props.navigation.navigate('App')
     }
   }
