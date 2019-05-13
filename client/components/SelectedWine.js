@@ -13,6 +13,8 @@ export default class SelectedWine extends Component {
     const gif = {
       uri: 'https://media.giphy.com/media/3XHMTIqcUev2Vy9ILk/giphy.gif',
     };
+    const wine = this.props.navigation.getParam('wine', 'Not Found');
+
     return (
       <View style={styles.container}>
         <Text style={styles.cheers}>Cheers!</Text>
@@ -20,6 +22,7 @@ export default class SelectedWine extends Component {
           <Image source={gif} style={styles.gif} />
         </View>
         <Text style={styles.text}>Don't forget to rate your selection:</Text>
+        <Text style={styles.wineTitle}>{wine.title}</Text>
         <View style={styles.thumbsContainer}>
           <View style={styles.imageView}>
             <Image source={thumbsUp} style={styles.image} />
@@ -39,7 +42,7 @@ const styles = StyleSheet.create({
   },
   cheers: {
     textAlign: 'center',
-    fontSize: 70,
+    fontSize: 60,
     padding: 20,
   },
   gif: {
@@ -52,7 +55,13 @@ const styles = StyleSheet.create({
   },
   text: {
     textAlign: 'center',
-    fontSize: 30,
+    fontSize: 20,
+  },
+  wineTitle: {
+    textAlign: 'center',
+    fontSize: 20,
+    fontWeight: 'bold',
+    padding: 10,
   },
   thumbsContainer: {
     flex: 1,

@@ -23,7 +23,7 @@ class Comparisons extends Component {
   handleSelect(wine) {
     const { selectedWine, navigation } = this.props;
     selectedWine(wine);
-    return navigation.navigate('SelectedWine');
+    return navigation.navigate('SelectedWine', { wine: wine });
   }
 
   handleClear() {
