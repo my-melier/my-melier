@@ -18,9 +18,9 @@ export const gotWines = wines => ({
   wines,
 });
 
-const savedWine = wine => ({
+const savedWine = wines => ({
   type: SAVE_WINE,
-  wine,
+  wines,
 });
 
 export const filterWines = filter => ({
@@ -32,22 +32,20 @@ export const filterWines = filter => ({
 export const fetchingWinesFromDb = userId => async dispatch => {
   try {
     dispatch(gettingWines());
-
     const { data } = await axios.get(
       `http://${myIPaddress.IP}:8080/api/wine/saved/${userId}`
     );
-
     dispatch(gotWines(data));
   } catch (error) {
     console.error(error);
   }
 };
 
-export const saveWineToDb = (userId, wineId) => async dispatch => {
+export const saveWineToDb = (wineId, userId) => async dispatch => {
   try {
     const { data } = await axios.post(
       `http://${myIPaddress.IP}:8080/api/wine/saved/${userId}`,
-      { userId, wineId }
+      { wineId, userId }
     );
     dispatch(savedWine(data));
   } catch (error) {
@@ -58,8 +56,8 @@ export const saveWineToDb = (userId, wineId) => async dispatch => {
 //initial state
 const initialState = {
   loading: false,
-  savedWines: [],
-  filteredWines: [],
+  savedWines: {},
+  filteredWines: {},
 };
 
 export default (state = initialState, action) => {
@@ -74,6 +72,9 @@ export default (state = initialState, action) => {
         loading: false,
       };
     case FILTER_WINES:
+      const wines = state.savedWines.wines.filter(
+        wine => action.filter == wine.savedWine.like
+      );
       if (action.filter === 'all') {
         return {
           ...state,
@@ -82,11 +83,15 @@ export default (state = initialState, action) => {
       } else {
         return {
           ...state,
-          filteredWines: state.filteredWines.wines.filter(
-            wine => action.filter == wine.savedWine.like
-          ),
+          filteredWines: { ...state.savedWines, wines: wines },
         };
       }
+    case SAVE_WINE:
+      return {
+        ...state,
+        savedWines: action.wines,
+        filteredWines: action.wines,
+      };
     default:
       return state;
   }

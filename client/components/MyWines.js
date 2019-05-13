@@ -5,7 +5,6 @@ import {
   StyleSheet,
   View,
   ScrollView,
-  Button,
   ActivityIndicator,
   TouchableOpacity,
 } from 'react-native';
@@ -23,20 +22,14 @@ class MyWines extends Component {
     const { fetchingWinesFromDb, user } = this.props;
     fetchingWinesFromDb(user.id);
   }
+
   filter(filter) {
     this.props.filterWines(filter);
   }
   render() {
-    const { loading, savedWines, filteredWines } = this.props;
+    const { loading, filteredWines } = this.props;
     if (loading) {
       return <ActivityIndicator />;
-    }
-    if (!loading && !filteredWines) {
-      return (
-        <View style={styles.container}>
-          <Text>No saved wines</Text>
-        </View>
-      );
     }
     return (
       <ScrollView>
@@ -66,13 +59,17 @@ class MyWines extends Component {
             </TouchableOpacity>
           </View>
           <View style={styles.wineContainer}>
-            {filteredWines.wines.map(wine => (
-              <View key={wine.id}>
-                <View style={styles.wineTitle}>
-                  <Text>{wine.title}</Text>
+            {filteredWines.wines ? (
+              filteredWines.wines.map(wine => (
+                <View key={wine.id}>
+                  <View style={styles.wineTitle}>
+                    <Text>{wine.title}</Text>
+                  </View>
                 </View>
-              </View>
-            ))}
+              ))
+            ) : (
+              <Text>No wines</Text>
+            )}
           </View>
         </View>
       </ScrollView>
@@ -81,7 +78,6 @@ class MyWines extends Component {
 }
 
 const mapState = state => ({
-  savedWines: state.userWines.savedWines,
   loading: state.userWines.loading,
   user: state.user,
   filteredWines: state.userWines.filteredWines,
