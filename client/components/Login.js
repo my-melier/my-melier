@@ -1,32 +1,33 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
+import React, {Component} from 'react'
+import {connect} from 'react-redux'
 import {
   Text,
   StyleSheet,
+  TouchableOpacity,
   Button,
   View,
   TextInput,
   KeyboardAvoidingView,
-  Keyboard,
-} from 'react-native';
-import { auth } from '../store/reducers/userReducer';
+  Keyboard
+} from 'react-native'
+import {auth} from '../store/reducers/userReducer'
 
 class Login extends Component {
   constructor(props) {
-    super(props);
+    super(props)
     this.state = {
       email: '',
-      password: '',
-    };
-    this.login = this.login.bind(this);
+      password: ''
+    }
+    this.login = this.login.bind(this)
   }
 
   async login() {
-    const { auth } = this.props;
-    const { email, password } = this.state;
-    await auth(email, password, 'login');
+    const {auth} = this.props
+    const {email, password} = this.state
+    await auth(email, password, 'login')
     if (this.props.user.id) {
-      return this.props.navigation.navigate('App');
+      return this.props.navigation.navigate('App')
     }
   }
 
@@ -34,62 +35,123 @@ class Login extends Component {
     return (
       <KeyboardAvoidingView behavior="padding">
         <View style={styles.container}>
-          <Text>myMelier</Text>
-          <Text>Login here:</Text>
-        </View>
-        <View style={styles.inputContainer}>
-          <TextInput
-            placeholder="Email"
-            onBlur={Keyboard.dismiss}
-            onChangeText={email => this.setState({ email })}
-          />
-        </View>
-        <View style={styles.inputContainer}>
-          <TextInput
-            placeholder="Password"
-            onBlur={Keyboard.dismiss}
-            secureTextEntry
-            onChangeText={password => this.setState({ password })}
-          />
+          <View style={styles.header}>
+            <Text style={styles.logo}>
+              <Text style={styles.bold}>my</Text>Melier
+            </Text>
+            <Text style={styles.text}>Login here:</Text>
+          </View>
           <View style={styles.inputContainer}>
-            <Button title="Login" onPress={this.login} />
+            <View style={styles.inputText}>
+              <TextInput
+                style={styles.input}
+                placeholder="Email"
+                onBlur={Keyboard.dismiss}
+                onChangeText={email => this.setState({email})}
+              />
+            </View>
+            <View styles={styles.inputText}>
+              <TextInput
+                style={styles.input}
+                placeholder="Password"
+                onBlur={Keyboard.dismiss}
+                secureTextEntry
+                onChangeText={password => this.setState({password})}
+              />
+            </View>
+          </View>
+          <View style={styles.mainButtonView}>
+            <TouchableOpacity style={styles.button} onPress={this.login}>
+              <Text style={styles.buttonText}>Login</Text>
+            </TouchableOpacity>
+          </View>
+          <View>
+            <Button
+              title="New here? Sign up"
+              onPress={() => this.props.navigation.navigate('Signup')}
+            />
           </View>
         </View>
-        <Button
-          title="New here? Sign up"
-          onPress={() => this.props.navigation.navigate('Signup')}
-        />
       </KeyboardAvoidingView>
-    );
+    )
   }
 }
 
 const mapLogin = state => ({
-  user: state.user,
-});
+  user: state.user
+})
 
 const mapDispatch = dispatch => ({
-  auth: (email, password, method) => dispatch(auth(email, password, method)),
-});
+  auth: (email, password, method) => dispatch(auth(email, password, method))
+})
 
 export default connect(
   mapLogin,
   mapDispatch
-)(Login);
+)(Login)
 
 const styles = StyleSheet.create({
   container: {
-    height: 40,
-    marginBottom: 30,
-    paddingHorizontal: 10,
-    fontSize: 18,
+    padding: 20
   },
   inputContainer: {
-    height: 40,
     backgroundColor: 'rgba(255,255,255,0.2)',
+    marginTop: 20,
     marginBottom: 20,
     color: '#FFF',
     paddingHorizontal: 10,
-    fontSize: 16,
+    fontSize: 16
   },
-});
+  input: {
+    paddingHorizontal: 10,
+    marginBottom: 20,
+    height: 40,
+    fontSize: 16
+  },
+  header: {},
+  mainButtonView: {
+    alignItems: 'center',
+    paddingBottom: 20
+  },
+  mainButton: {
+    backgroundColor: 'gray',
+    borderRadius: 20,
+    padding: 5,
+    height: 40,
+    width: 150,
+    margin: 5,
+    justifyContent: 'center'
+  },
+  button: {
+    backgroundColor: 'gray',
+    borderRadius: 20,
+    padding: 5,
+    height: 40,
+    width: 100,
+    margin: 5,
+    justifyContent: 'center'
+  },
+  buttonText: {
+    color: 'black',
+    textAlign: 'center',
+    padding: 5
+  },
+  textInput: {
+    textAlign: 'right',
+    padding: 20
+  },
+  text: {
+    textAlign: 'center',
+    fontSize: 20,
+    paddingBottom: 10,
+    paddingTop: 20
+  },
+  bold: {
+    fontWeight: 'bold'
+  },
+  logo: {
+    fontSize: 50,
+    padding: 15,
+    paddingBottom: 50
+  }
+})
