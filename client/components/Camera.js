@@ -33,7 +33,6 @@ class Camera extends Component {
       base64: true,
     });
 
-    this.props.loading();
     this.handleImagePicked(imageData);
   }
 
@@ -44,13 +43,13 @@ class Camera extends Component {
       base64: true,
     });
 
-    this.props.loading();
     this.handleImagePicked(imageData);
   }
 
   async handleImagePicked(imageData) {
     try {
       if (!imageData.cancelled) {
+        this.props.loading();
         let image = imageData;
         this.props.setImage(image);
         await this.sendToGoogle();
@@ -64,7 +63,7 @@ class Camera extends Component {
   async sendToGoogle() {
     const { image, googleResponse } = this.props;
     try {
-      let body = JSON.stringify({
+      const body = JSON.stringify({
         requests: [
           {
             features: [{ type: 'TEXT_DETECTION', maxResults: 1 }],
@@ -74,7 +73,7 @@ class Camera extends Component {
           },
         ],
       });
-      let data = await fetch(
+      const data = await fetch(
         'https://vision.googleapis.com/v1/images:annotate?key=' +
           googleVisionConfig.API_KEY,
         {
@@ -86,7 +85,7 @@ class Camera extends Component {
           body: body,
         }
       );
-      let responseJson = await data.json();
+      const responseJson = await data.json();
       googleResponse(responseJson);
     } catch (error) {
       console.error(error);
