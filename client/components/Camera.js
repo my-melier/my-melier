@@ -33,7 +33,6 @@ class Camera extends Component {
       base64: true,
     });
 
-    this.props.loading();
     this.handleImagePicked(imageData);
   }
 
@@ -44,13 +43,13 @@ class Camera extends Component {
       base64: true,
     });
 
-    this.props.loading();
     this.handleImagePicked(imageData);
   }
 
   async handleImagePicked(imageData) {
     try {
       if (!imageData.cancelled) {
+        this.props.loading();
         let image = imageData;
         this.props.setImage(image);
         await this.sendToGoogle();
