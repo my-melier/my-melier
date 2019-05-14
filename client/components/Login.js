@@ -42,6 +42,7 @@ class Login extends Component {
             placeholder="Email"
             onBlur={Keyboard.dismiss}
             onChangeText={email => this.setState({email})}
+            returnKeyType="next"
             keyboardType="email-address"
             autoCapitalize="none"
             autoCorrect={false}
