@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
+import React, {Component} from 'react'
+import {connect} from 'react-redux'
 import {
   Text,
   StyleSheet,
@@ -7,26 +7,26 @@ import {
   View,
   TextInput,
   KeyboardAvoidingView,
-  Keyboard,
-} from 'react-native';
-import { auth } from '../store/reducers/userReducer';
+  Keyboard
+} from 'react-native'
+import {auth} from '../store/reducers/userReducer'
 
 class Login extends Component {
   constructor(props) {
-    super(props);
+    super(props)
     this.state = {
       email: '',
-      password: '',
-    };
-    this.login = this.login.bind(this);
+      password: ''
+    }
+    this.login = this.login.bind(this)
   }
 
   async login() {
-    const { auth } = this.props;
-    const { email, password } = this.state;
-    await auth(email, password, 'login');
+    const {auth} = this.props
+    const {email, password} = this.state
+    await auth(email, password, 'login')
     if (this.props.user.id) {
-      return this.props.navigation.navigate('App');
+      return this.props.navigation.navigate('App')
     }
   }
 
@@ -41,7 +41,10 @@ class Login extends Component {
           <TextInput
             placeholder="Email"
             onBlur={Keyboard.dismiss}
-            onChangeText={email => this.setState({ email })}
+            onChangeText={email => this.setState({email})}
+            keyboardType="email-address"
+            autoCapitalize="none"
+            autoCorrect={false}
           />
         </View>
         <View style={styles.inputContainer}>
@@ -49,7 +52,7 @@ class Login extends Component {
             placeholder="Password"
             onBlur={Keyboard.dismiss}
             secureTextEntry
-            onChangeText={password => this.setState({ password })}
+            onChangeText={password => this.setState({password})}
           />
           <View style={styles.inputContainer}>
             <Button title="Login" onPress={this.login} />
@@ -60,29 +63,29 @@ class Login extends Component {
           onPress={() => this.props.navigation.navigate('Signup')}
         />
       </KeyboardAvoidingView>
-    );
+    )
   }
 }
 
 const mapLogin = state => ({
-  user: state.user,
-});
+  user: state.user
+})
 
 const mapDispatch = dispatch => ({
-  auth: (email, password, method) => dispatch(auth(email, password, method)),
-});
+  auth: (email, password, method) => dispatch(auth(email, password, method))
+})
 
 export default connect(
   mapLogin,
   mapDispatch
-)(Login);
+)(Login)
 
 const styles = StyleSheet.create({
   container: {
     height: 40,
     marginBottom: 30,
     paddingHorizontal: 10,
-    fontSize: 18,
+    fontSize: 18
   },
   inputContainer: {
     height: 40,
@@ -90,6 +93,6 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     color: '#FFF',
     paddingHorizontal: 10,
-    fontSize: 16,
-  },
-});
+    fontSize: 16
+  }
+})

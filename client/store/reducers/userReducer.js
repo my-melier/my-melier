@@ -27,6 +27,7 @@ export const me = () => async dispatch => {
 export const auth = (email, password, method) => async dispatch => {
   let res;
   try {
+    email = email.toLowerCase()
     res = await axios.post(`http://${myIPaddress.IP}:8080/auth/${method}`, {
       email,
       password,
@@ -37,7 +38,6 @@ export const auth = (email, password, method) => async dispatch => {
 
   try {
     dispatch(getUser(res.data));
-    // return this.navigation.navigate('App')
   } catch (dispatchOrHistoryErr) {
     next(dispatchOrHistoryErr);
   }
