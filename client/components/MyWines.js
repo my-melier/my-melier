@@ -5,7 +5,6 @@ import {
   StyleSheet,
   View,
   ScrollView,
-  ActivityIndicator,
   TouchableOpacity,
 } from 'react-native';
 import {
@@ -22,10 +21,15 @@ class MyWines extends Component {
       filterArg: 'saved',
     };
     this.filter = this.filter.bind(this);
+    this.selectWine = this.selectWine.bind(this);
   }
   componentDidMount() {
     const { fetchingWinesFromDb, user } = this.props;
     fetchingWinesFromDb(user.id);
+  }
+
+  selectWine(wine) {
+    this.props.navigation.navigate('Rating', { wine: wine });
   }
 
   filter(filter) {
@@ -96,7 +100,7 @@ class MyWines extends Component {
                   <View key={wine.id}>
                     <View style={styles.text}>
                       {wine.savedWine.like ? (
-                        <Text>
+                        <Text onPress={() => this.selectWine(wine)}>
                           <IconComponent
                             name={'ios-checkmark-circle-outline'}
                             size={20}
@@ -105,7 +109,7 @@ class MyWines extends Component {
                           {wine.title}
                         </Text>
                       ) : wine.savedWine.like === false ? (
-                        <Text>
+                        <Text onPress={() => this.selectWine(wine)}>
                           <IconComponent
                             name={'ios-close-circle-outline'}
                             size={20}
@@ -114,7 +118,7 @@ class MyWines extends Component {
                           {wine.title}
                         </Text>
                       ) : (
-                        <Text>
+                        <Text onPress={() => this.selectWine(wine)}>
                           <IconComponent
                             name={'ios-help-circle-outline'}
                             size={20}
