@@ -56,6 +56,10 @@ class Login extends Component {
                 placeholder="Password"
                 onBlur={Keyboard.dismiss}
                 secureTextEntry
+                returnKeyType="next"
+                keyboardType="email-address"
+                autoCapitalize="none"
+                autoCorrect={false}
                 onChangeText={password => this.setState({password})}
               />
             </View>
