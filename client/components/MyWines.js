@@ -30,7 +30,7 @@ class MyWines extends Component {
   filter(filter) {
     this.props.filterWines(filter);
     if (filter === 'all') {
-      this.setState({ button: 'all' });
+      this.setState({ filterArg: 'saved', button: 'all' });
     } else if (filter === true) {
       this.setState({ filterArg: 'liked', button: 'true' });
     } else {
