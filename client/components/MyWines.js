@@ -105,7 +105,7 @@ class MyWines extends Component {
                             name={'ios-checkmark-circle-outline'}
                             size={20}
                             color={'green'}
-                          />{' '}
+                          />
                           {wine.title}
                         </Text>
                       ) : wine.savedWine.like === false ? (
@@ -114,7 +114,7 @@ class MyWines extends Component {
                             name={'ios-close-circle-outline'}
                             size={20}
                             color={'tomato'}
-                          />{' '}
+                          />
                           {wine.title}
                         </Text>
                       ) : (
@@ -122,7 +122,7 @@ class MyWines extends Component {
                           <IconComponent
                             name={'ios-help-circle-outline'}
                             size={20}
-                          />{' '}
+                          />
                           {wine.title}
                         </Text>
                       )}

@@ -1,7 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Text, StyleSheet, View, TouchableOpacity } from 'react-native';
-import { rateWineInDb } from '../store/reducers/userWinesReducer';
+import { Text, StyleSheet, View, TouchableOpacity, Image } from 'react-native';
+import {
+  rateWineInDb,
+  fetchingWinesFromDb,
+} from '../store/reducers/userWinesReducer';
+import { withNavigation } from 'react-navigation';
+import { Ionicons } from '@expo/vector-icons';
 
 class UpdateRating extends Component {
   constructor(props) {
@@ -18,18 +23,15 @@ class UpdateRating extends Component {
   }
 
   handleUpdate(wineId, rating) {
-    this.props.rateWineInDb(wineId, rating);
+    const { user, fetchWines, rateWineInDb, navigation } = this.props;
+    rateWineInDb(wineId, rating);
+    fetchWines(user.id);
+    return navigation.navigate('myWines');
   }
 
   render() {
     const { wine } = this.props;
-    const thumbsUp = {
-      uri:
-        'https://cdn0.iconfinder.com/data/icons/elite-emoticons/512/thumbs-up-512.png',
-    };
-    const thumbsDown = {
-      uri: 'https://sitejerk.com/images/transparent-thumbs-down-2.png',
-    };
+    let IconComponent = Ionicons;
 
     return (
       <View>
@@ -37,9 +39,17 @@ class UpdateRating extends Component {
           <Text>
             Your rating:
             {wine.savedWine.like ? (
-              <Image source={thumbsUp} style={styles.image} />
+              <IconComponent
+                name={'ios-checkmark-circle-outline'}
+                size={50}
+                color={'green'}
+              />
             ) : (
-              <Image source={thumbsDown} style={styles.image} />
+              <IconComponent
+                name={'ios-close-circle-outline'}
+                size={50}
+                color={'tomato'}
+              />
             )}
           </Text>
         </View>
@@ -51,10 +61,18 @@ class UpdateRating extends Component {
         {this.state.updateClicked ? (
           <View>
             <TouchableOpacity onPress={() => this.handleUpdate(wine.id, true)}>
-              <Image source={thumbsUp} style={styles.image} />
+              <IconComponent
+                name={'ios-checkmark-circle-outline'}
+                size={50}
+                color={'green'}
+              />
             </TouchableOpacity>
             <TouchableOpacity onPress={() => this.handleUpdate(wine.id, false)}>
-              <Image source={thumbsDown} style={styles.image} />
+              <IconComponent
+                name={'ios-close-circle-outline'}
+                size={50}
+                color={'tomato'}
+              />
             </TouchableOpacity>
           </View>
         ) : null}
@@ -63,14 +81,21 @@ class UpdateRating extends Component {
   }
 }
 
-const mapDispatch = dispatch => ({
-  rateWineInDb: (wineId, rating) => dispatch(rateWineInDb(wineId, rating)),
+const mapState = state => ({
+  user: state.user,
 });
 
-export default connect(
-  null,
-  mapDispatch
-)(UpdateRating);
+const mapDispatch = dispatch => ({
+  rateWineInDb: (wineId, rating) => dispatch(rateWineInDb(wineId, rating)),
+  fetchWines: userId => dispatch(fetchingWinesFromDb(userId)),
+});
+
+export default withNavigation(
+  connect(
+    mapState,
+    mapDispatch
+  )(UpdateRating)
+);
 
 const styles = StyleSheet.create({
   image: {
