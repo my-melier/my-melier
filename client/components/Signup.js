@@ -44,27 +44,29 @@ class Signup extends Component {
             </Text>
           </View>
           <View style={styles.inputContainer}>
-            <TextInput
-              style={styles.textInput}
-              placeholder="Email"
-              onChangeText={email => this.setState({email})}
-              value={this.state.email}
-              returnKeyType="next"
-              keyboardType="email-address"
-              autoCapitalize="none"
-              autoCorrect={false}
-            />
-          </View>
-          <View style={styles.inputContainer}>
-            <TextInput
-              style={styles.textInput}
-              placeholder="Password"
-              onChangeText={password => this.setState({password})}
-              value={this.state.password}
-              returnKeyType="go"
-              secureTextEntry
-              ref={input => (this.passwordInput = input)}
-            />
+            <View>
+              <TextInput
+                style={styles.textInput}
+                placeholder="Email"
+                onChangeText={email => this.setState({email})}
+                value={this.state.email}
+                returnKeyType="next"
+                keyboardType="email-address"
+                autoCapitalize="none"
+                autoCorrect={false}
+              />
+            </View>
+            <View>
+              <TextInput
+                style={styles.textInput}
+                placeholder="Password"
+                onChangeText={password => this.setState({password})}
+                value={this.state.password}
+                returnKeyType="go"
+                secureTextEntry
+                ref={input => (this.passwordInput = input)}
+              />
+            </View>
           </View>
           <View style={styles.mainButtonView}>
             <TouchableOpacity style={styles.button} onPress={this.signup}>
@@ -82,11 +84,11 @@ const styles = StyleSheet.create({
     padding: 20
   },
   inputContainer: {
-    height: 40,
-    backgroundColor: 'rgba(255,255,255,0.2)',
-    marginTop: 20,
-    marginBottom: 20,
+    backgroundColor: '#D3DCDF',
+    borderRadius: 20,
+    margin: 60,
     color: '#FFF',
+    padding: 20,
     paddingHorizontal: 10,
     fontSize: 16
   },
@@ -120,11 +122,14 @@ const styles = StyleSheet.create({
     justifyContent: 'center'
   },
   buttonText: {
-    color: 'black',
+    color: 'white',
     textAlign: 'center',
     padding: 5
   },
   textInput: {
+    paddingHorizontal: 10,
+    marginBottom: 20,
+    height: 40,
     fontSize: 16
   }
 })

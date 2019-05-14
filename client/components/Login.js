@@ -39,24 +39,31 @@ class Login extends Component {
             <Text style={styles.logo}>
               <Text style={styles.bold}>my</Text>Melier
             </Text>
-            <Text style={styles.text}>Login here:</Text>
           </View>
           <View style={styles.inputContainer}>
-            <View style={styles.inputText}>
+            <View>
               <TextInput
                 style={styles.input}
                 placeholder="Email"
                 onBlur={Keyboard.dismiss}
                 onChangeText={email => this.setState({email})}
+                returnKeyType="next"
+                keyboardType="email-address"
+                autoCapitalize="none"
+                autoCorrect={false}
               />
             </View>
-            <View styles={styles.inputText}>
+            <View>
               <TextInput
                 style={styles.input}
                 placeholder="Password"
                 onBlur={Keyboard.dismiss}
                 secureTextEntry
                 onChangeText={password => this.setState({password})}
+                returnKeyType="next"
+                keyboardType="email-address"
+                autoCapitalize="none"
+                autoCorrect={false}
               />
             </View>
           </View>
@@ -95,10 +102,11 @@ const styles = StyleSheet.create({
     padding: 20
   },
   inputContainer: {
-    backgroundColor: 'rgba(255,255,255,0.2)',
-    marginTop: 20,
-    marginBottom: 20,
+    backgroundColor: '#D3DCDF',
+    borderRadius: 20,
+    margin: 60,
     color: '#FFF',
+    padding: 20,
     paddingHorizontal: 10,
     fontSize: 16
   },
@@ -108,7 +116,9 @@ const styles = StyleSheet.create({
     height: 40,
     fontSize: 16
   },
-  header: {},
+  header: {
+    alignItems: 'center'
+  },
   mainButtonView: {
     alignItems: 'center',
     paddingBottom: 20
@@ -132,7 +142,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center'
   },
   buttonText: {
-    color: 'black',
+    color: 'white',
     textAlign: 'center',
     padding: 5
   },
