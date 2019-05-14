@@ -41,18 +41,6 @@ export const fetchingWinesFromDb = userId => async dispatch => {
   }
 };
 
-export const saveWineToDb = (wineId, userId) => async dispatch => {
-  try {
-    const { data } = await axios.post(
-      `http://${myIPaddress.IP}:8080/api/wine/saved/${userId}`,
-      { wineId, userId }
-    );
-    dispatch(savedWine(data));
-  } catch (error) {
-    console.error(error);
-  }
-};
-
 //initial state
 const initialState = {
   loading: false,
