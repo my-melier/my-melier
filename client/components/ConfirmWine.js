@@ -85,7 +85,7 @@ class ConfirmWine extends Component {
     const { wines } = this.props;
 
     if (this.state.loading) {
-      return <LoadingPage />;
+      return <LoadingPage pronoun={'our'} />;
     } else if (!wines[0]) {
       return (
         <View>
