@@ -19,7 +19,6 @@ class MyWines extends Component {
     super(props);
     this.state = {
       filterArg: 'saved',
-      button: 'all',
     };
     this.filter = this.filter.bind(this);
   }
@@ -31,11 +30,11 @@ class MyWines extends Component {
   filter(filter) {
     this.props.filterWines(filter);
     if (filter === 'all') {
-      this.setState({ filterArg: 'saved', button: 'all' });
+      this.setState({ filterArg: 'saved' });
     } else if (filter === true) {
-      this.setState({ filterArg: 'liked', button: 'true' });
+      this.setState({ filterArg: 'liked' });
     } else {
-      this.setState({ filterArg: 'disliked', button: 'false' });
+      this.setState({ filterArg: 'disliked' });
     }
   }
   render() {
@@ -51,7 +50,7 @@ class MyWines extends Component {
           </View>
           <Text style={styles.filterText}> Filter by: </Text>
           <View style={styles.buttonContainer}>
-            {this.state.button === 'all' ? (
+            {this.props.activeButton === 'all' ? (
               <TouchableOpacity style={styles.activeButton}>
                 <Text style={styles.buttonText}>All</Text>
               </TouchableOpacity>
@@ -63,7 +62,7 @@ class MyWines extends Component {
                 <Text style={styles.buttonText}>All</Text>
               </TouchableOpacity>
             )}
-            {this.state.button === 'true' ? (
+            {this.props.activeButton === 'true' ? (
               <TouchableOpacity style={styles.activeButton}>
                 <Text style={styles.buttonText}>Like</Text>
               </TouchableOpacity>
@@ -75,7 +74,7 @@ class MyWines extends Component {
                 <Text style={styles.buttonText}>Like</Text>
               </TouchableOpacity>
             )}
-            {this.state.button === 'false' ? (
+            {this.props.activeButton === 'false' ? (
               <TouchableOpacity style={styles.activeButton}>
                 <Text style={styles.buttonText}>Dislike</Text>
               </TouchableOpacity>
@@ -121,6 +120,7 @@ const mapState = state => ({
   loading: state.userWines.loading,
   user: state.user,
   filteredWines: state.userWines.filteredWines,
+  activeButton: state.userWines.activeButton,
 });
 
 const mapDispatch = dispatch => ({

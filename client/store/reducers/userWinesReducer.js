@@ -76,6 +76,7 @@ const initialState = {
   loading: false,
   savedWines: {},
   filteredWines: {},
+  activeButton: 'all',
 };
 
 export default (state = initialState, action) => {
@@ -88,6 +89,7 @@ export default (state = initialState, action) => {
         savedWines: action.wines,
         filteredWines: action.wines,
         loading: false,
+        activeButton: 'all',
       };
     case FILTER_WINES:
       const wines = state.savedWines.wines.filter(
@@ -97,11 +99,19 @@ export default (state = initialState, action) => {
         return {
           ...state,
           filteredWines: state.savedWines,
+          activeButton: 'all',
+        };
+      } else if (action.filter === true) {
+        return {
+          ...state,
+          filteredWines: { ...state.savedWines, wines: wines },
+          activeButton: 'true',
         };
       } else {
         return {
           ...state,
           filteredWines: { ...state.savedWines, wines: wines },
+          activeButton: 'false',
         };
       }
     case SAVE_WINE:
@@ -109,6 +119,7 @@ export default (state = initialState, action) => {
         ...state,
         savedWines: action.wines,
         filteredWines: action.wines,
+        activeButton: 'all',
       };
     default:
       return state;
