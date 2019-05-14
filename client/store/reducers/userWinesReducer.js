@@ -63,7 +63,7 @@ export const rateWineInDb = (wineId, rating) => async dispatch => {
   try {
     const { data } = await axios.put(
       `http://${myIPaddress.IP}:8080/api/wine/rating/${wineId}`,
-      rating
+      { rating }
     );
     dispatch(ratedWine(data));
   } catch (error) {

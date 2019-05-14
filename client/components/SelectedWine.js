@@ -1,16 +1,21 @@
 import React, { Component } from 'react';
 import { Text, StyleSheet, View, Image, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
-import { rateWineInDb } from '../store/reducers/userWinesReducer';
+import {
+  rateWineInDb,
+  fetchingWinesFromDb,
+} from '../store/reducers/userWinesReducer';
 
 class SelectedWine extends Component {
   constructor() {
     super();
-    this.saveWineRating = this.saveWineRating.bind(this);
+    this.rateWine = this.rateWine.bind(this);
   }
-  saveWineRating(wineId, rating) {
-    const { rateWineInDb } = this.props;
+  rateWine(wineId, rating) {
+    const { rateWineInDb, fetchWines, user } = this.props;
     rateWineInDb(wineId, rating);
+    fetchWines(user.id);
+    return this.props.navigation.navigate('myWines');
   }
   render() {
     const { selectedWine } = this.props;
@@ -37,14 +42,14 @@ class SelectedWine extends Component {
         <View style={styles.thumbsContainer}>
           <View style={styles.imageView}>
             <TouchableOpacity
-              onPress={() => this.saveWineRating(selectedWine.id, true)}
+              onPress={() => this.rateWine(selectedWine.id, true)}
             >
               <Image source={thumbsUp} style={styles.image} />
             </TouchableOpacity>
           </View>
           <View style={styles.imageView}>
             <TouchableOpacity
-              onPress={() => this.saveWineRating(selectedWine.id, false)}
+              onPress={() => this.rateWine(selectedWine.id, false)}
             >
               <Image source={thumbsDown} style={styles.image} />
             </TouchableOpacity>
@@ -57,10 +62,12 @@ class SelectedWine extends Component {
 
 const mapState = state => ({
   selectedWine: state.comparisons.selectedWine,
+  user: state.user,
 });
 
 const mapDispatch = dispatch => ({
   rateWineInDb: (wineId, rating) => dispatch(rateWineInDb(wineId, rating)),
+  fetchWines: userId => dispatch(fetchingWinesFromDb(userId)),
 });
 
 export default connect(

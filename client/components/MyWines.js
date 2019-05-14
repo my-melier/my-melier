@@ -12,13 +12,14 @@ import {
   fetchingWinesFromDb,
   filterWines,
 } from '../store/reducers/userWinesReducer';
+import LoadingPage from './LoadingPage';
 
 class MyWines extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
-      filterArg: '',
-      button: '',
+      filterArg: 'saved',
+      button: 'all',
     };
     this.filter = this.filter.bind(this);
   }
@@ -40,7 +41,7 @@ class MyWines extends Component {
   render() {
     const { loading, filteredWines } = this.props;
     if (loading) {
-      return <ActivityIndicator />;
+      return <LoadingPage />;
     }
     return (
       <ScrollView>
