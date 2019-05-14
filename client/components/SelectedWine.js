@@ -1,8 +1,24 @@
 import React, { Component } from 'react';
-import { Text, StyleSheet, View, Image } from 'react-native';
+import { Text, StyleSheet, View, Image, TouchableOpacity } from 'react-native';
+import { connect } from 'react-redux';
+import {
+  rateWineInDb,
+  fetchingWinesFromDb,
+} from '../store/reducers/userWinesReducer';
 
-export default class SelectedWine extends Component {
+class SelectedWine extends Component {
+  constructor() {
+    super();
+    this.rateWine = this.rateWine.bind(this);
+  }
+  rateWine(wineId, rating) {
+    const { rateWineInDb, fetchWines, user } = this.props;
+    rateWineInDb(wineId, rating);
+    fetchWines(user.id);
+    return this.props.navigation.navigate('myWines');
+  }
   render() {
+    const { selectedWine } = this.props;
     const thumbsUp = {
       uri:
         'https://cdn0.iconfinder.com/data/icons/elite-emoticons/512/thumbs-up-512.png',
@@ -25,16 +41,39 @@ export default class SelectedWine extends Component {
         <Text style={styles.wineTitle}>{wine.title}</Text>
         <View style={styles.thumbsContainer}>
           <View style={styles.imageView}>
-            <Image source={thumbsUp} style={styles.image} />
+            <TouchableOpacity
+              onPress={() => this.rateWine(selectedWine.id, true)}
+            >
+              <Image source={thumbsUp} style={styles.image} />
+            </TouchableOpacity>
           </View>
           <View style={styles.imageView}>
-            <Image source={thumbsDown} style={styles.image} />
+            <TouchableOpacity
+              onPress={() => this.rateWine(selectedWine.id, false)}
+            >
+              <Image source={thumbsDown} style={styles.image} />
+            </TouchableOpacity>
           </View>
         </View>
       </View>
     );
   }
 }
+
+const mapState = state => ({
+  selectedWine: state.comparisons.selectedWine,
+  user: state.user,
+});
+
+const mapDispatch = dispatch => ({
+  rateWineInDb: (wineId, rating) => dispatch(rateWineInDb(wineId, rating)),
+  fetchWines: userId => dispatch(fetchingWinesFromDb(userId)),
+});
+
+export default connect(
+  mapState,
+  mapDispatch
+)(SelectedWine);
 
 const styles = StyleSheet.create({
   container: {

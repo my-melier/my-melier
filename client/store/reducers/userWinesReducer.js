@@ -7,6 +7,7 @@ const GETTING_WINES = 'GETTING_WINES';
 const GOT_WINES = 'GOT_WINES';
 const SAVE_WINE = 'SAVE_WINE';
 const FILTER_WINES = 'FILTER_WINES';
+const RATE_WINE = 'RATE_WINE';
 
 //action creators
 export const gettingWines = () => ({
@@ -26,6 +27,11 @@ const savedWine = wines => ({
 export const filterWines = filter => ({
   type: FILTER_WINES,
   filter,
+});
+
+const ratedWine = wine => ({
+  type: RATE_WINE,
+  wine,
 });
 
 //thunks
@@ -53,11 +59,24 @@ export const saveWineToDb = (wineId, userId) => async dispatch => {
   }
 };
 
+export const rateWineInDb = (wineId, rating) => async dispatch => {
+  try {
+    const { data } = await axios.put(
+      `http://${myIPaddress.IP}:8080/api/wine/rating/${wineId}`,
+      { rating }
+    );
+    dispatch(ratedWine(data));
+  } catch (error) {
+    console.error(error);
+  }
+};
+
 //initial state
 const initialState = {
   loading: false,
   savedWines: {},
   filteredWines: {},
+  activeButton: 'all',
 };
 
 export default (state = initialState, action) => {
@@ -70,6 +89,7 @@ export default (state = initialState, action) => {
         savedWines: action.wines,
         filteredWines: action.wines,
         loading: false,
+        activeButton: 'all',
       };
     case FILTER_WINES:
       const wines = state.savedWines.wines.filter(
@@ -79,11 +99,19 @@ export default (state = initialState, action) => {
         return {
           ...state,
           filteredWines: state.savedWines,
+          activeButton: 'all',
+        };
+      } else if (action.filter === true) {
+        return {
+          ...state,
+          filteredWines: { ...state.savedWines, wines: wines },
+          activeButton: 'true',
         };
       } else {
         return {
           ...state,
           filteredWines: { ...state.savedWines, wines: wines },
+          activeButton: 'false',
         };
       }
     case SAVE_WINE:
@@ -91,6 +119,7 @@ export default (state = initialState, action) => {
         ...state,
         savedWines: action.wines,
         filteredWines: action.wines,
+        activeButton: 'all',
       };
     default:
       return state;
