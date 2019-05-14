@@ -1,11 +1,7 @@
 import React, { Component } from 'react';
-<<<<<<< HEAD
 import { Text, StyleSheet, View, Image, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
 import { rateWineInDb } from '../store/reducers/userWinesReducer';
-=======
-import { Text, StyleSheet, View, Image } from 'react-native';
->>>>>>> master
 
 class SelectedWine extends Component {
   constructor() {

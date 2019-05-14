@@ -53,8 +53,8 @@ router.put('/rating/:wineId', async (req, res, next) => {
         userId: req.user.id,
       },
     });
-    const updated = await wine.update({ like: req.body.rating });
-    res.send(updated);
+    await wine.update({ like: req.body.rating });
+    res.send(wine);
   } catch (error) {
     next(error);
   }
