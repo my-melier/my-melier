@@ -19,10 +19,10 @@ class SelectedWine extends Component {
     super();
     this.rateWine = this.rateWine.bind(this);
   }
-  rateWine(wineId, rating) {
+  async rateWine(wineId, rating) {
     const { rateWineInDb, fetchWines, user } = this.props;
-    rateWineInDb(wineId, rating);
-    fetchWines(user.id);
+    await rateWineInDb(wineId, rating);
+    // fetchWines(user.id);
     return this.props.navigation.navigate('myWines');
   }
   render() {

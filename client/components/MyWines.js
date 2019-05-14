@@ -23,9 +23,10 @@ class MyWines extends Component {
     this.filter = this.filter.bind(this);
     this.selectWine = this.selectWine.bind(this);
   }
-  componentDidMount() {
+  async componentDidMount() {
     const { fetchingWinesFromDb, user } = this.props;
-    fetchingWinesFromDb(user.id);
+    await fetchingWinesFromDb(user.id);
+    console.log('IS THIS RUNNING AGAIN?????');
   }
 
   selectWine(wine) {
