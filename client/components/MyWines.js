@@ -16,6 +16,9 @@ import {
 class MyWines extends Component {
   constructor() {
     super();
+    this.state = {
+      filterArg: '',
+    };
     this.filter = this.filter.bind(this);
   }
   componentDidMount() {
@@ -25,6 +28,11 @@ class MyWines extends Component {
 
   filter(filter) {
     this.props.filterWines(filter);
+    if (filter) {
+      this.setState({ filterArg: 'liked' });
+    } else {
+      this.setState({ filterArg: 'disliked' });
+    }
   }
   render() {
     const { loading, filteredWines } = this.props;
@@ -37,7 +45,7 @@ class MyWines extends Component {
           <View style={styles.titleContainer}>
             <Text style={styles.title}> myWines </Text>
           </View>
-          <Text style={styles.text}> Filter by: </Text>
+          <Text style={styles.filterText}> Filter by: </Text>
           <View style={styles.buttonContainer}>
             <TouchableOpacity
               style={styles.button}
@@ -63,16 +71,22 @@ class MyWines extends Component {
               filteredWines.wines.length ? (
                 filteredWines.wines.map(wine => (
                   <View key={wine.id}>
-                    <View style={styles.wineTitle}>
+                    <View style={styles.text}>
                       <Text>{wine.title}</Text>
                     </View>
                   </View>
                 ))
               ) : (
-                <Text>No wines</Text>
+                <View style={styles.text}>
+                  <Text>
+                    You currently have no {this.state.filterArg} wines
+                  </Text>
+                </View>
               )
             ) : (
-              <Text>Your cellar is empty!</Text>
+              <View style={styles.text}>
+                <Text>Your cellar is empty!</Text>
+              </View>
             )}
           </View>
         </View>
@@ -107,7 +121,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     margin: 20,
   },
-  text: {
+  filterText: {
     textAlign: 'center',
   },
   buttonContainer: {
@@ -129,7 +143,7 @@ const styles = StyleSheet.create({
   wineContainer: {
     marginTop: 20,
   },
-  wineTitle: {
+  text: {
     padding: 10,
   },
 });
