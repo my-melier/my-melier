@@ -18,6 +18,7 @@ class MyWines extends Component {
     super();
     this.state = {
       filterArg: '',
+      button: '',
     };
     this.filter = this.filter.bind(this);
   }
@@ -28,10 +29,12 @@ class MyWines extends Component {
 
   filter(filter) {
     this.props.filterWines(filter);
-    if (filter) {
-      this.setState({ filterArg: 'liked' });
+    if (filter === 'all') {
+      this.setState({ button: 'all' });
+    } else if (filter === true) {
+      this.setState({ filterArg: 'liked', button: 'true' });
     } else {
-      this.setState({ filterArg: 'disliked' });
+      this.setState({ filterArg: 'disliked', button: 'false' });
     }
   }
   render() {
@@ -47,24 +50,42 @@ class MyWines extends Component {
           </View>
           <Text style={styles.filterText}> Filter by: </Text>
           <View style={styles.buttonContainer}>
-            <TouchableOpacity
-              style={styles.button}
-              onPress={() => this.filter('all')}
-            >
-              <Text style={styles.buttonText}>All</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.button}
-              onPress={() => this.filter(true)}
-            >
-              <Text style={styles.buttonText}>Like</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.button}
-              onPress={() => this.filter(false)}
-            >
-              <Text style={styles.buttonText}>Dislike</Text>
-            </TouchableOpacity>
+            {this.state.button === 'all' ? (
+              <TouchableOpacity style={styles.activeButton}>
+                <Text style={styles.buttonText}>All</Text>
+              </TouchableOpacity>
+            ) : (
+              <TouchableOpacity
+                style={styles.button}
+                onPress={() => this.filter('all')}
+              >
+                <Text style={styles.buttonText}>All</Text>
+              </TouchableOpacity>
+            )}
+            {this.state.button === 'true' ? (
+              <TouchableOpacity style={styles.activeButton}>
+                <Text style={styles.buttonText}>Like</Text>
+              </TouchableOpacity>
+            ) : (
+              <TouchableOpacity
+                style={styles.button}
+                onPress={() => this.filter(true)}
+              >
+                <Text style={styles.buttonText}>Like</Text>
+              </TouchableOpacity>
+            )}
+            {this.state.button === 'false' ? (
+              <TouchableOpacity style={styles.activeButton}>
+                <Text style={styles.buttonText}>Dislike</Text>
+              </TouchableOpacity>
+            ) : (
+              <TouchableOpacity
+                style={styles.button}
+                onPress={() => this.filter(false)}
+              >
+                <Text style={styles.buttonText}>Dislike</Text>
+              </TouchableOpacity>
+            )}
           </View>
           <View style={styles.wineContainer}>
             {filteredWines.wines ? (
@@ -132,6 +153,13 @@ const styles = StyleSheet.create({
   button: {
     padding: 10,
     backgroundColor: 'grey',
+    borderRadius: 20,
+    margin: 10,
+    width: 100,
+  },
+  activeButton: {
+    padding: 10,
+    backgroundColor: '#D3DCDF',
     borderRadius: 20,
     margin: 10,
     width: 100,
