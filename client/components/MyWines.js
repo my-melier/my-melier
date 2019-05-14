@@ -42,7 +42,7 @@ class MyWines extends Component {
     const { loading, filteredWines } = this.props;
     let IconComponent = Ionicons;
     if (loading) {
-      return <LoadingPage />;
+      return <LoadingPage pronoun={'your'} />;
     }
     return (
       <ScrollView>
