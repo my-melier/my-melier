@@ -25,7 +25,7 @@ class Comparisons extends Component {
     const { selectedWine, saveWineToDb, user, navigation } = this.props;
     saveWineToDb(wine.id, user.id);
     selectedWine(wine);
-    return navigation.navigate('SelectedWine');
+    return navigation.navigate('SelectedWine', { wine: wine });
   }
 
   handleClear() {

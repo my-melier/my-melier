@@ -1,7 +1,11 @@
 import React, { Component } from 'react';
+<<<<<<< HEAD
 import { Text, StyleSheet, View, Image, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
 import { rateWineInDb } from '../store/reducers/userWinesReducer';
+=======
+import { Text, StyleSheet, View, Image } from 'react-native';
+>>>>>>> master
 
 class SelectedWine extends Component {
   constructor() {
@@ -24,6 +28,8 @@ class SelectedWine extends Component {
     const gif = {
       uri: 'https://media.giphy.com/media/3XHMTIqcUev2Vy9ILk/giphy.gif',
     };
+    const wine = this.props.navigation.getParam('wine', 'Not Found');
+
     return (
       <View style={styles.container}>
         <Text style={styles.cheers}>Cheers!</Text>
@@ -31,6 +37,7 @@ class SelectedWine extends Component {
           <Image source={gif} style={styles.gif} />
         </View>
         <Text style={styles.text}>Don't forget to rate your selection:</Text>
+        <Text style={styles.wineTitle}>{wine.title}</Text>
         <View style={styles.thumbsContainer}>
           <View style={styles.imageView}>
             <TouchableOpacity
@@ -71,7 +78,7 @@ const styles = StyleSheet.create({
   },
   cheers: {
     textAlign: 'center',
-    fontSize: 70,
+    fontSize: 60,
     padding: 20,
   },
   gif: {
@@ -84,7 +91,13 @@ const styles = StyleSheet.create({
   },
   text: {
     textAlign: 'center',
-    fontSize: 30,
+    fontSize: 20,
+  },
+  wineTitle: {
+    textAlign: 'center',
+    fontSize: 20,
+    fontWeight: 'bold',
+    padding: 10,
   },
   thumbsContainer: {
     flex: 1,

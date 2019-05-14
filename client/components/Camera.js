@@ -1,15 +1,16 @@
 import { ImagePicker, Permissions } from 'expo';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { StyleSheet, View, Button } from 'react-native';
+import { StyleSheet, View, Text, Button, TouchableOpacity } from 'react-native';
 import { withNavigation } from 'react-navigation';
 import {
   setImage,
-  loadingGoogleResponse,
+  loading,
   gotGoogleResponse,
 } from '../store/reducers/googleVisionReducer';
 import googleVisionConfig from '../../googleVisionConfig.js';
 import LoadingPage from './LoadingPage';
+import { Ionicons } from '@expo/vector-icons';
 
 class Camera extends Component {
   constructor(props) {
@@ -18,7 +19,6 @@ class Camera extends Component {
     this.handleImagePicked = this.handleImagePicked.bind(this);
     this.pickPhoto = this.pickPhoto.bind(this);
     this.sendToGoogle = this.sendToGoogle.bind(this);
-    this.handlePress = this.handlePress.bind(this);
   }
 
   async componentDidMount() {
@@ -46,28 +46,24 @@ class Camera extends Component {
     this.handleImagePicked(imageData);
   }
 
-  handleImagePicked(imageData) {
+  async handleImagePicked(imageData) {
     try {
       if (!imageData.cancelled) {
+        this.props.loading();
         let image = imageData;
         this.props.setImage(image);
-        this.handlePress();
+        await this.sendToGoogle();
+        return this.props.navigation.navigate('ConfirmWine');
       }
     } catch (err) {
       console.error(err);
     }
   }
 
-  async handlePress() {
-    await this.sendToGoogle();
-    return this.props.navigation.navigate('ConfirmWine');
-  }
-
   async sendToGoogle() {
-    const { image, loading, googleResponse } = this.props;
+    const { image, googleResponse } = this.props;
     try {
-      loading();
-      let body = JSON.stringify({
+      const body = JSON.stringify({
         requests: [
           {
             features: [{ type: 'TEXT_DETECTION', maxResults: 1 }],
@@ -77,7 +73,7 @@ class Camera extends Component {
           },
         ],
       });
-      let data = await fetch(
+      const data = await fetch(
         'https://vision.googleapis.com/v1/images:annotate?key=' +
           googleVisionConfig.API_KEY,
         {
@@ -89,7 +85,7 @@ class Camera extends Component {
           body: body,
         }
       );
-      let responseJson = await data.json();
+      const responseJson = await data.json();
       googleResponse(responseJson);
     } catch (error) {
       console.error(error);
@@ -97,13 +93,20 @@ class Camera extends Component {
   }
 
   render() {
-    if (this.props.loadingGoogleRes) {
+    if (this.props.isLoading) {
       return <LoadingPage />;
     }
 
     return (
       <View style={styles.container}>
-        <Button onPress={this.takePhoto} title="Take a photo" color="#1985bc" />
+        <Text style={styles.instructions}>
+          When taking a photo, please capture only one wine at a time
+        </Text>
+        <TouchableOpacity onPress={this.takePhoto} style={styles.camera}>
+          <View>
+            <Ionicons name="ios-camera" size={75} />
+          </View>
+        </TouchableOpacity>
         <Button
           onPress={this.pickPhoto}
           title="Choose from camera roll"
@@ -117,12 +120,12 @@ class Camera extends Component {
 const mapState = state => ({
   image: state.googleVision.image,
   response: state.googleVision.response,
-  loadingGoogleRes: state.googleVision.loading,
+  isLoading: state.googleVision.loading,
 });
 
 const mapDispatch = dispatch => ({
   setImage: image => dispatch(setImage(image)),
-  loading: () => dispatch(loadingGoogleResponse()),
+  loading: () => dispatch(loading()),
   googleResponse: response => dispatch(gotGoogleResponse(response)),
 });
 
@@ -137,5 +140,21 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
+    alignItems: 'center',
+  },
+  instructions: {
+    textAlign: 'center',
+    marginLeft: 40,
+    marginRight: 40,
+    fontSize: 25,
+  },
+  camera: {
+    backgroundColor: '#D3DCDF',
+    borderRadius: 50,
+    padding: 10,
+    margin: 20,
+    height: 100,
+    width: 100,
+    alignItems: 'center',
   },
 });

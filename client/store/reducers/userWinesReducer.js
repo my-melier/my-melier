@@ -47,6 +47,7 @@ export const fetchingWinesFromDb = userId => async dispatch => {
   }
 };
 
+<<<<<<< HEAD
 export const saveWineToDb = (wineId, userId) => async dispatch => {
   try {
     const { data } = await axios.post(
@@ -71,6 +72,8 @@ export const rateWineInDb = (wineId, rating) => async dispatch => {
   }
 };
 
+=======
+>>>>>>> master
 //initial state
 const initialState = {
   loading: false,

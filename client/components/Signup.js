@@ -5,8 +5,9 @@ import {
   TextInput,
   KeyboardAvoidingView,
   ActivityIndicator,
-  Button,
-  View
+  TouchableOpacity,
+  View,
+  Text
 } from 'react-native'
 import {auth} from '../store/reducers/userReducer'
 
@@ -37,29 +38,40 @@ class Signup extends Component {
     return (
       <KeyboardAvoidingView behavior="padding">
         <View style={styles.container}>
-          <View style={styles.inputContainer}>
-            <TextInput
-              placeholder="Email"
-              onChangeText={email => this.setState({email})}
-              value={this.state.email}
-              returnKeyType="next"
-              keyboardType="email-address"
-              autoCapitalize="none"
-              autoCorrect={false}
-            />
+          <View style={styles.header}>
+            <Text style={styles.logo}>
+              <Text style={styles.bold}>my</Text>Melier
+            </Text>
           </View>
           <View style={styles.inputContainer}>
-            <TextInput
-              placeholder="Password"
-              onChangeText={password => this.setState({password})}
-              value={this.state.password}
-              returnKeyType="go"
-              secureTextEntry
-              ref={input => (this.passwordInput = input)}
-            />
+            <View>
+              <TextInput
+                style={styles.textInput}
+                placeholder="Email"
+                onChangeText={email => this.setState({email})}
+                value={this.state.email}
+                returnKeyType="next"
+                keyboardType="email-address"
+                autoCapitalize="none"
+                autoCorrect={false}
+              />
+            </View>
+            <View>
+              <TextInput
+                style={styles.textInput}
+                placeholder="Password"
+                onChangeText={password => this.setState({password})}
+                value={this.state.password}
+                returnKeyType="go"
+                secureTextEntry
+                ref={input => (this.passwordInput = input)}
+              />
+            </View>
           </View>
-          <View style={styles.button}>
-            <Button title="sign up" onPress={this.signup} />
+          <View style={styles.mainButtonView}>
+            <TouchableOpacity style={styles.button} onPress={this.signup}>
+              <Text style={styles.buttonText}>Sign Up</Text>
+            </TouchableOpacity>
           </View>
         </View>
       </KeyboardAvoidingView>
@@ -69,19 +81,56 @@ class Signup extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1
+    padding: 20
   },
   inputContainer: {
-    height: 40,
-    backgroundColor: 'rgba(255,255,255,0.2)',
-    marginTop: 20,
-    marginBottom: 20,
+    backgroundColor: '#D3DCDF',
+    borderRadius: 20,
+    margin: 60,
     color: '#FFF',
+    padding: 20,
     paddingHorizontal: 10,
     fontSize: 16
   },
+  bold: {
+    fontWeight: 'bold'
+  },
+  logo: {
+    fontSize: 50,
+    padding: 15,
+    paddingBottom: 50
+  },
+  mainButtonView: {
+    alignItems: 'center'
+  },
+  mainButton: {
+    backgroundColor: 'gray',
+    borderRadius: 20,
+    padding: 5,
+    height: 40,
+    width: 150,
+    margin: 5,
+    justifyContent: 'center'
+  },
   button: {
-    height: 40
+    backgroundColor: 'gray',
+    borderRadius: 20,
+    padding: 5,
+    height: 40,
+    width: 100,
+    margin: 5,
+    justifyContent: 'center'
+  },
+  buttonText: {
+    color: 'white',
+    textAlign: 'center',
+    padding: 5
+  },
+  textInput: {
+    paddingHorizontal: 10,
+    marginBottom: 20,
+    height: 40,
+    fontSize: 16
   }
 })
 
