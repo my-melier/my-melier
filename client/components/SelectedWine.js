@@ -1,10 +1,18 @@
 import React, { Component } from 'react';
-import { Text, StyleSheet, View, Image, TouchableOpacity } from 'react-native';
+import {
+  ScrollView,
+  Text,
+  StyleSheet,
+  View,
+  Image,
+  TouchableOpacity,
+} from 'react-native';
 import { connect } from 'react-redux';
 import {
   rateWineInDb,
   fetchingWinesFromDb,
 } from '../store/reducers/userWinesReducer';
+import { Ionicons } from '@expo/vector-icons';
 
 class SelectedWine extends Component {
   constructor() {
@@ -19,20 +27,14 @@ class SelectedWine extends Component {
   }
   render() {
     const { selectedWine } = this.props;
-    const thumbsUp = {
-      uri:
-        'https://cdn0.iconfinder.com/data/icons/elite-emoticons/512/thumbs-up-512.png',
-    };
-    const thumbsDown = {
-      uri: 'https://sitejerk.com/images/transparent-thumbs-down-2.png',
-    };
+    let IconComponent = Ionicons;
     const gif = {
       uri: 'https://media.giphy.com/media/3XHMTIqcUev2Vy9ILk/giphy.gif',
     };
     const wine = this.props.navigation.getParam('wine', 'Not Found');
 
     return (
-      <View style={styles.container}>
+      <ScrollView style={styles.container}>
         <Text style={styles.cheers}>Cheers!</Text>
         <View style={styles.gifView}>
           <Image source={gif} style={styles.gif} />
@@ -44,18 +46,26 @@ class SelectedWine extends Component {
             <TouchableOpacity
               onPress={() => this.rateWine(selectedWine.id, true)}
             >
-              <Image source={thumbsUp} style={styles.image} />
+              <IconComponent
+                name={'ios-checkmark-circle-outline'}
+                size={75}
+                color={'green'}
+              />
             </TouchableOpacity>
           </View>
           <View style={styles.imageView}>
             <TouchableOpacity
               onPress={() => this.rateWine(selectedWine.id, false)}
             >
-              <Image source={thumbsDown} style={styles.image} />
+              <IconComponent
+                name={'ios-close-circle-outline'}
+                size={75}
+                color={'tomato'}
+              />
             </TouchableOpacity>
           </View>
         </View>
-      </View>
+      </ScrollView>
     );
   }
 }
@@ -106,12 +116,10 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'center',
-  },
-  image: {
-    width: 50,
-    height: 50,
+    alignItems: 'center',
   },
   imageView: {
-    padding: 25,
+    paddingRight: 15,
+    paddingLeft: 15,
   },
 });
