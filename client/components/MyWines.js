@@ -60,15 +60,19 @@ class MyWines extends Component {
           </View>
           <View style={styles.wineContainer}>
             {filteredWines.wines ? (
-              filteredWines.wines.map(wine => (
-                <View key={wine.id}>
-                  <View style={styles.wineTitle}>
-                    <Text>{wine.title}</Text>
+              filteredWines.wines.length ? (
+                filteredWines.wines.map(wine => (
+                  <View key={wine.id}>
+                    <View style={styles.wineTitle}>
+                      <Text>{wine.title}</Text>
+                    </View>
                   </View>
-                </View>
-              ))
+                ))
+              ) : (
+                <Text>No wines</Text>
+              )
             ) : (
-              <Text>No wines</Text>
+              <Text>Your cellar is empty!</Text>
             )}
           </View>
         </View>
