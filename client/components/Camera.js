@@ -49,11 +49,11 @@ class Camera extends Component {
   async handleImagePicked(imageData) {
     try {
       if (!imageData.cancelled) {
-        this.props.loading();
-        let image = imageData;
-        this.props.setImage(image);
+        // this.props.loading();
+        // let image = imageData;
+        this.props.setImage(imageData);
         await this.sendToGoogle();
-        return this.props.navigation.navigate('ConfirmWine');
+        this.props.navigation.navigate('ConfirmWine');
       }
     } catch (err) {
       console.error(err);
@@ -87,15 +87,16 @@ class Camera extends Component {
       );
       const responseJson = await data.json();
       googleResponse(responseJson);
+      // console.log('GOOGLE RESPONSE IN CAMERA', this.props.response);
     } catch (error) {
       console.error(error);
     }
   }
 
   render() {
-    if (this.props.isLoading) {
-      return <LoadingPage />;
-    }
+    // if (this.props.isLoading) {
+    //   return <LoadingPage />;
+    // }
 
     return (
       <View style={styles.container}>
@@ -119,7 +120,7 @@ class Camera extends Component {
 
 const mapState = state => ({
   image: state.googleVision.image,
-  response: state.googleVision.response,
+  // response: state.googleVision.response,
   isLoading: state.googleVision.loading,
 });
 

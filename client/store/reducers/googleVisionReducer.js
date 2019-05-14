@@ -32,6 +32,7 @@ export default (state = initialState, action) => {
     case LOADING:
       return { ...state, loading: true };
     case GOT_GOOGLE_REPSONSE:
+      console.log('GOT GOOGLE RESPONSE REDUCER');
       return {
         ...state,
         response: action.response.responses[0].fullTextAnnotation.text.slice(

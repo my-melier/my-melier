@@ -18,7 +18,8 @@ export const gotWines = wines => ({
 //thunks
 export const fetchingWinesFromDb = googleResFormatted => async dispatch => {
   try {
-    dispatch(gettingWines());
+    console.log('IN FETCHING WINES THUNK');
+    // dispatch(gettingWines());
     const { data } = await axios.get(
       `http://${myIPaddress.IP}:8080/api/wine/${googleResFormatted}`
     );
@@ -30,15 +31,15 @@ export const fetchingWinesFromDb = googleResFormatted => async dispatch => {
 
 //initial state
 const initialState = {
-  loading: false,
+  loading: true,
   results: [],
 };
 
 //reducer
 export default (state = initialState, action) => {
   switch (action.type) {
-    case GETTING_WINES:
-      return { ...state, loading: true };
+    // case GETTING_WINES:
+    //   return { ...state, loading: true };
     case GOT_WINES:
       let uniqueValues = [];
       let uniqueTitles = [];

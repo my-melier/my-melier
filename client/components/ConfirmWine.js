@@ -24,8 +24,11 @@ class ConfirmWine extends Component {
   }
 
   componentDidMount() {
+    console.log('IN CONFIRM WINES COMPONENT DID MOUNT');
     const { googleResponse, fetchWine } = this.props;
+    console.log('GOOGLE RES', googleResponse);
     const queryString = ocrToUrlTitle(googleResponse);
+    console.log('QUERY STRING', queryString);
     fetchWine(queryString);
   }
 
@@ -49,20 +52,18 @@ class ConfirmWine extends Component {
 
   render() {
     const { loading, wines } = this.props;
+    console.log('LOADING STATE', loading);
+    console.log('WINES IN CONFIRM WINE', wines);
 
     if (loading) {
       return <LoadingPage />;
-    }
-
-    if (!wines[0]) {
+    } else if (!wines[0]) {
       return (
         <View>
           <ErrorWine />
         </View>
       );
-    }
-
-    if (wines.length === 1) {
+    } else if (wines.length === 1) {
       const singleWine = wines[0];
       return (
         <View style={styles.container}>
@@ -81,29 +82,28 @@ class ConfirmWine extends Component {
           </View>
         </View>
       );
-    }
-
-    return (
-      <ScrollView>
-        <View style={styles.container}>
-          <Text style={styles.headerText}>
-            Please confirm which wine is correct:
-          </Text>
-          {wines.map(wine => (
-            <View key={wine.id} style={styles.wine}>
-              <View style={styles.titleContainer}>
-                <Text style={styles.wineTitle}>{wine.title}</Text>
+    } else
+      return (
+        <ScrollView>
+          <View style={styles.container}>
+            <Text style={styles.headerText}>
+              Please confirm which wine is correct:
+            </Text>
+            {wines.map(wine => (
+              <View key={wine.id} style={styles.wine}>
+                <View style={styles.titleContainer}>
+                  <Text style={styles.wineTitle}>{wine.title}</Text>
+                </View>
+                <View style={styles.button}>
+                  <TouchableOpacity onPress={() => this.handlePress(wine)}>
+                    <Text style={styles.buttonText}>confirm</Text>
+                  </TouchableOpacity>
+                </View>
               </View>
-              <View style={styles.button}>
-                <TouchableOpacity onPress={() => this.handlePress(wine)}>
-                  <Text style={styles.buttonText}>confirm</Text>
-                </TouchableOpacity>
-              </View>
-            </View>
-          ))}
-        </View>
-      </ScrollView>
-    );
+            ))}
+          </View>
+        </ScrollView>
+      );
   }
 }
 
