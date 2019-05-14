@@ -12,6 +12,7 @@ import {
   removedWine,
   clearedComparisons,
 } from '../store/reducers/comparisonReducer';
+import { saveWineToDb } from '../store/reducers/userWinesReducer';
 
 class Comparisons extends Component {
   constructor(props) {
@@ -21,7 +22,8 @@ class Comparisons extends Component {
   }
 
   handleSelect(wine) {
-    const { selectedWine, navigation } = this.props;
+    const { selectedWine, saveWineToDb, user, navigation } = this.props;
+    saveWineToDb(wine.id, user.id);
     selectedWine(wine);
     return navigation.navigate('SelectedWine', { wine: wine });
   }
@@ -88,12 +90,14 @@ class Comparisons extends Component {
 
 const mapState = state => ({
   comparisons: state.comparisons.comparisons,
+  user: state.user,
 });
 
 const mapDispatch = dispatch => ({
   selectedWine: wine => dispatch(selectedWine(wine)),
   removedWine: wineId => dispatch(removedWine(wineId)),
   clearedComparisons: () => dispatch(clearedComparisons()),
+  saveWineToDb: (userId, wineId) => dispatch(saveWineToDb(userId, wineId)),
 });
 
 export default connect(
