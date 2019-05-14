@@ -35,11 +35,16 @@ router.get('/saved/:userId', async (req, res, next) => {
 router.post('/saved/:userId', async (req, res, next) => {
   try {
     await SavedWine.create(req.body);
-    res.send('Sucess!');
+    const savedWines = await User.findOne({
+      where: { id: req.user.id },
+      include: { model: Wine },
+    });
+    res.send(savedWines);
   } catch (error) {
     next(error);
   }
 });
+
 // let varieties = ['Merlot', 'Cabernet', 'Pinot Noir', 'Chardonnay', 'Malbec'];
 // let variety;
 
