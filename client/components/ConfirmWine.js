@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import { connect } from 'react-redux';
+import { gotGoogleResponse } from '../store/reducers/googleVisionReducer';
 import {
   fetchingWinesFromDb,
   confirmedWine,
@@ -16,20 +17,56 @@ import { addedToComparisons } from '../store/reducers/comparisonReducer';
 import { ocrToUrlTitle } from '../../utils';
 import ErrorWine from './ErrorWine';
 import LoadingPage from './LoadingPage';
+import googleVisionConfig from '../../googleVisionConfig.js';
 
 class ConfirmWine extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      loading: true,
+    };
+    this.sendToGoogle = this.sendToGoogle.bind(this);
     this.handlePress = this.handlePress.bind(this);
   }
 
-  componentDidMount() {
-    console.log('IN CONFIRM WINES COMPONENT DID MOUNT');
+  async componentDidMount() {
+    await this.sendToGoogle();
     const { googleResponse, fetchWine } = this.props;
-    console.log('GOOGLE RES', googleResponse);
     const queryString = ocrToUrlTitle(googleResponse);
-    console.log('QUERY STRING', queryString);
-    fetchWine(queryString);
+    await fetchWine(queryString);
+    this.setState({ loading: false });
+  }
+
+  async sendToGoogle() {
+    const { image, gotGoogleResponse } = this.props;
+    try {
+      const body = JSON.stringify({
+        requests: [
+          {
+            features: [{ type: 'TEXT_DETECTION', maxResults: 1 }],
+            image: {
+              content: image.base64,
+            },
+          },
+        ],
+      });
+      const data = await fetch(
+        'https://vision.googleapis.com/v1/images:annotate?key=' +
+          googleVisionConfig.API_KEY,
+        {
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+          },
+          method: 'POST',
+          body: body,
+        }
+      );
+      const responseJson = await data.json();
+      gotGoogleResponse(responseJson);
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   handlePress(wine) {
@@ -51,11 +88,9 @@ class ConfirmWine extends Component {
   }
 
   render() {
-    const { loading, wines } = this.props;
-    console.log('LOADING STATE', loading);
-    console.log('WINES IN CONFIRM WINE', wines);
+    const { wines } = this.props;
 
-    if (loading) {
+    if (this.state.loading) {
       return <LoadingPage />;
     } else if (!wines[0]) {
       return (
@@ -108,13 +143,14 @@ class ConfirmWine extends Component {
 }
 
 const mapState = state => ({
-  loading: state.database.loading,
-  wines: state.database.results,
+  image: state.googleVision.image,
   googleResponse: state.googleVision.response,
+  wines: state.database.results,
   comparisons: state.comparisons.comparisons,
 });
 
 const mapDispatch = dispatch => ({
+  gotGoogleResponse: response => dispatch(gotGoogleResponse(response)),
   fetchWine: googleResFormatted =>
     dispatch(fetchingWinesFromDb(googleResFormatted)),
   confirmedWine: wine => dispatch(confirmedWine(wine)),

@@ -3,22 +3,15 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { StyleSheet, View, Text, Button, TouchableOpacity } from 'react-native';
 import { withNavigation } from 'react-navigation';
-import {
-  setImage,
-  loading,
-  gotGoogleResponse,
-} from '../store/reducers/googleVisionReducer';
-import googleVisionConfig from '../../googleVisionConfig.js';
-import LoadingPage from './LoadingPage';
+import { setImage } from '../store/reducers/googleVisionReducer';
 import { Ionicons } from '@expo/vector-icons';
 
 class Camera extends Component {
   constructor(props) {
     super(props);
     this.takePhoto = this.takePhoto.bind(this);
+    this.chooseFromCameraRoll = this.chooseFromCameraRoll.bind(this);
     this.handleImagePicked = this.handleImagePicked.bind(this);
-    this.pickPhoto = this.pickPhoto.bind(this);
-    this.sendToGoogle = this.sendToGoogle.bind(this);
   }
 
   async componentDidMount() {
@@ -36,7 +29,7 @@ class Camera extends Component {
     this.handleImagePicked(imageData);
   }
 
-  async pickPhoto() {
+  async chooseFromCameraRoll() {
     let imageData = await ImagePicker.launchImageLibraryAsync({
       allowsEditing: true,
       aspect: [4, 3],
@@ -49,10 +42,7 @@ class Camera extends Component {
   async handleImagePicked(imageData) {
     try {
       if (!imageData.cancelled) {
-        // this.props.loading();
-        // let image = imageData;
         this.props.setImage(imageData);
-        await this.sendToGoogle();
         this.props.navigation.navigate('ConfirmWine');
       }
     } catch (err) {
@@ -60,44 +50,7 @@ class Camera extends Component {
     }
   }
 
-  async sendToGoogle() {
-    const { image, googleResponse } = this.props;
-    try {
-      const body = JSON.stringify({
-        requests: [
-          {
-            features: [{ type: 'TEXT_DETECTION', maxResults: 1 }],
-            image: {
-              content: image.base64,
-            },
-          },
-        ],
-      });
-      const data = await fetch(
-        'https://vision.googleapis.com/v1/images:annotate?key=' +
-          googleVisionConfig.API_KEY,
-        {
-          headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-          },
-          method: 'POST',
-          body: body,
-        }
-      );
-      const responseJson = await data.json();
-      googleResponse(responseJson);
-      // console.log('GOOGLE RESPONSE IN CAMERA', this.props.response);
-    } catch (error) {
-      console.error(error);
-    }
-  }
-
   render() {
-    // if (this.props.isLoading) {
-    //   return <LoadingPage />;
-    // }
-
     return (
       <View style={styles.container}>
         <Text style={styles.instructions}>
@@ -109,7 +62,7 @@ class Camera extends Component {
           </View>
         </TouchableOpacity>
         <Button
-          onPress={this.pickPhoto}
+          onPress={this.chooseFromCameraRoll}
           title="Choose from camera roll"
           color="#1985bc"
         />
@@ -118,21 +71,13 @@ class Camera extends Component {
   }
 }
 
-const mapState = state => ({
-  image: state.googleVision.image,
-  // response: state.googleVision.response,
-  isLoading: state.googleVision.loading,
-});
-
 const mapDispatch = dispatch => ({
   setImage: image => dispatch(setImage(image)),
-  loading: () => dispatch(loading()),
-  googleResponse: response => dispatch(gotGoogleResponse(response)),
 });
 
 export default withNavigation(
   connect(
-    mapState,
+    null,
     mapDispatch
   )(Camera)
 );
