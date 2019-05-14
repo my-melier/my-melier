@@ -5,7 +5,6 @@ import {
   StyleSheet,
   View,
   ScrollView,
-  ActivityIndicator,
   TouchableOpacity,
 } from 'react-native';
 import {
@@ -13,6 +12,7 @@ import {
   filterWines,
 } from '../store/reducers/userWinesReducer';
 import LoadingPage from './LoadingPage';
+import { Ionicons } from '@expo/vector-icons';
 
 class MyWines extends Component {
   constructor(props) {
@@ -21,10 +21,15 @@ class MyWines extends Component {
       filterArg: 'saved',
     };
     this.filter = this.filter.bind(this);
+    this.selectWine = this.selectWine.bind(this);
   }
   componentDidMount() {
     const { fetchingWinesFromDb, user } = this.props;
     fetchingWinesFromDb(user.id);
+  }
+
+  selectWine(wine) {
+    this.props.navigation.navigate('Rating', { wine: wine });
   }
 
   filter(filter) {
@@ -39,6 +44,7 @@ class MyWines extends Component {
   }
   render() {
     const { loading, filteredWines } = this.props;
+    let IconComponent = Ionicons;
     if (loading) {
       return <LoadingPage />;
     }
@@ -93,7 +99,33 @@ class MyWines extends Component {
                 filteredWines.wines.map(wine => (
                   <View key={wine.id}>
                     <View style={styles.text}>
-                      <Text>{wine.title}</Text>
+                      {wine.savedWine.like ? (
+                        <Text onPress={() => this.selectWine(wine)}>
+                          <IconComponent
+                            name={'ios-checkmark-circle-outline'}
+                            size={20}
+                            color={'green'}
+                          />{' '}
+                          {wine.title}
+                        </Text>
+                      ) : wine.savedWine.like === false ? (
+                        <Text onPress={() => this.selectWine(wine)}>
+                          <IconComponent
+                            name={'ios-close-circle-outline'}
+                            size={20}
+                            color={'tomato'}
+                          />{' '}
+                          {wine.title}
+                        </Text>
+                      ) : (
+                        <Text onPress={() => this.selectWine(wine)}>
+                          <IconComponent
+                            name={'ios-help-circle-outline'}
+                            size={20}
+                          />{' '}
+                          {wine.title}
+                        </Text>
+                      )}
                     </View>
                   </View>
                 ))
