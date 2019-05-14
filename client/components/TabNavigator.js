@@ -16,23 +16,30 @@ import SelectedWine from './SelectedWine';
 import Signup from './Signup';
 import Login from './Login';
 import ErrorWine from './ErrorWine';
+import defaultNavStyling from '../styles/defaultNavigationOptions';
 
-const AuthStack = createStackNavigator({
-  Login: Login,
-  Signup: Signup,
-});
+const AuthStack = createStackNavigator(
+  {
+    Login: Login,
+    Signup: Signup,
+  },
+  { defaultNavigationOptions: defaultNavStyling }
+);
 
 const HomeStack = createStackNavigator({
   Home: Home,
 });
 
-const CameraStack = createStackNavigator({
-  Camera: Camera,
-  ConfirmWine: ConfirmWine,
-  Comparisons: Comparisons,
-  SelectedWine: SelectedWine,
-  ErrorWine: ErrorWine,
-});
+const CameraStack = createStackNavigator(
+  {
+    Camera: Camera,
+    ConfirmWine: ConfirmWine,
+    Comparisons: Comparisons,
+    SelectedWine: SelectedWine,
+    ErrorWine: ErrorWine,
+  },
+  { defaultNavigationOptions: defaultNavStyling }
+);
 
 const TabNavigator = createBottomTabNavigator(
   {
