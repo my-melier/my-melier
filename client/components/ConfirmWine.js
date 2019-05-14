@@ -1,12 +1,5 @@
 import React, { Component } from 'react';
-import {
-  Text,
-  StyleSheet,
-  View,
-  Alert,
-  ScrollView,
-  TouchableOpacity,
-} from 'react-native';
+import { Text, StyleSheet, View, Alert, ScrollView } from 'react-native';
 import { connect } from 'react-redux';
 import { gotGoogleResponse } from '../store/reducers/googleVisionReducer';
 import {
@@ -18,6 +11,7 @@ import { ocrToUrlTitle } from '../../utils';
 import ErrorWine from './ErrorWine';
 import LoadingPage from './LoadingPage';
 import googleVisionConfig from '../../googleVisionConfig.js';
+import SingleWine from './SingleWineForConfirm';
 
 class ConfirmWine extends Component {
   constructor(props) {
@@ -105,16 +99,7 @@ class ConfirmWine extends Component {
           <Text style={styles.headerText}>
             Please confirm this is the correct wine:
           </Text>
-          <View style={styles.wine}>
-            <View style={styles.titleContainer}>
-              <Text style={styles.wineTitle}>{singleWine.title}</Text>
-            </View>
-            <View style={styles.button}>
-              <TouchableOpacity onPress={() => this.handlePress(singleWine)}>
-                <Text style={styles.buttonText}>confirm</Text>
-              </TouchableOpacity>
-            </View>
-          </View>
+          <SingleWine wine={singleWine} handlePress={this.handlePress} />
         </View>
       );
     } else
@@ -125,16 +110,11 @@ class ConfirmWine extends Component {
               Please confirm which wine is correct:
             </Text>
             {wines.map(wine => (
-              <View key={wine.id} style={styles.wine}>
-                <View style={styles.titleContainer}>
-                  <Text style={styles.wineTitle}>{wine.title}</Text>
-                </View>
-                <View style={styles.button}>
-                  <TouchableOpacity onPress={() => this.handlePress(wine)}>
-                    <Text style={styles.buttonText}>confirm</Text>
-                  </TouchableOpacity>
-                </View>
-              </View>
+              <SingleWine
+                key={wine.id}
+                wine={wine}
+                handlePress={this.handlePress}
+              />
             ))}
           </View>
         </ScrollView>
