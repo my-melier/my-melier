@@ -45,6 +45,21 @@ router.post('/saved/:userId', async (req, res, next) => {
   }
 });
 
+router.put('/rating/:wineId', async (req, res, next) => {
+  try {
+    const wine = await SavedWine.findOne({
+      where: {
+        wineId: req.params.wineId,
+        userId: req.user.id,
+      },
+    });
+    const updated = await wine.update({ like: req.body.rating });
+    res.send(updated);
+  } catch (error) {
+    next(error);
+  }
+});
+
 // let varieties = ['Merlot', 'Cabernet', 'Pinot Noir', 'Chardonnay', 'Malbec'];
 // let variety;
 

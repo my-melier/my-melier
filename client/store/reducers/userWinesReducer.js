@@ -7,6 +7,7 @@ const GETTING_WINES = 'GETTING_WINES';
 const GOT_WINES = 'GOT_WINES';
 const SAVE_WINE = 'SAVE_WINE';
 const FILTER_WINES = 'FILTER_WINES';
+const RATE_WINE = 'RATE_WINE';
 
 //action creators
 export const gettingWines = () => ({
@@ -26,6 +27,11 @@ const savedWine = wines => ({
 export const filterWines = filter => ({
   type: FILTER_WINES,
   filter,
+});
+
+const ratedWine = wine => ({
+  type: RATE_WINE,
+  wine,
 });
 
 //thunks
@@ -48,6 +54,18 @@ export const saveWineToDb = (wineId, userId) => async dispatch => {
       { wineId, userId }
     );
     dispatch(savedWine(data));
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const rateWineInDb = (wineId, rating) => async dispatch => {
+  try {
+    const { data } = await axios.put(
+      `http://${myIPaddress.IP}:8080/api/wine/rating/${wineId}`,
+      rating
+    );
+    dispatch(ratedWine(data));
   } catch (error) {
     console.error(error);
   }

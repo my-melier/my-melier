@@ -1,15 +1,19 @@
 import React, { Component } from 'react';
-import {
-  Text,
-  StyleSheet,
-  View,
-  Image,
-  ScrollView,
-  Button,
-} from 'react-native';
+import { Text, StyleSheet, View, Image, TouchableOpacity } from 'react-native';
+import { connect } from 'react-redux';
+import { rateWineInDb } from '../store/reducers/userWinesReducer';
 
-export default class SelectedWine extends Component {
+class SelectedWine extends Component {
+  constructor() {
+    super();
+    this.saveWineRating = this.saveWineRating.bind(this);
+  }
+  saveWineRating(wineId, rating) {
+    const { rateWineInDb } = this.props;
+    rateWineInDb(wineId, rating);
+  }
   render() {
+    const { selectedWine } = this.props;
     const thumbsUp = {
       uri:
         'https://cdn0.iconfinder.com/data/icons/elite-emoticons/512/thumbs-up-512.png',
@@ -29,16 +33,37 @@ export default class SelectedWine extends Component {
         <Text style={styles.text}>Don't forget to rate your selection:</Text>
         <View style={styles.thumbsContainer}>
           <View style={styles.imageView}>
-            <Image source={thumbsUp} style={styles.image} />
+            <TouchableOpacity
+              onPress={() => this.saveWineRating(selectedWine.id, true)}
+            >
+              <Image source={thumbsUp} style={styles.image} />
+            </TouchableOpacity>
           </View>
           <View style={styles.imageView}>
-            <Image source={thumbsDown} style={styles.image} />
+            <TouchableOpacity
+              onPress={() => this.saveWineRating(selectedWine.id, false)}
+            >
+              <Image source={thumbsDown} style={styles.image} />
+            </TouchableOpacity>
           </View>
         </View>
       </View>
     );
   }
 }
+
+const mapState = state => ({
+  selectedWine: state.comparisons.selectedWine,
+});
+
+const mapDispatch = dispatch => ({
+  rateWineInDb: (wineId, rating) => dispatch(rateWineInDb(wineId, rating)),
+});
+
+export default connect(
+  mapState,
+  mapDispatch
+)(SelectedWine);
 
 const styles = StyleSheet.create({
   container: {
