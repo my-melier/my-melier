@@ -1,9 +1,10 @@
-import React, {Component} from 'react'
-import {connect} from 'react-redux'
-import {StyleSheet, View, Text, Button, TouchableOpacity} from 'react-native'
-import AddRating from './AddRating'
-import UpdateRating from './UpdateRating'
-import {numToLetter} from '../../utils'
+import React from 'react';
+import { View, Text } from 'react-native';
+import AddRating from './AddRating';
+import UpdateRating from './UpdateRating';
+import {numToLetter} from '../../utils';
+import layoutStyles from '../styles/layoutStyles';
+import textStyles from '../styles/textStyles';
 
 const SingleWineRating = props => {
   const wine = props.navigation.getParam('wine')

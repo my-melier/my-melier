@@ -7,22 +7,31 @@ import {
   ActivityIndicator,
 } from 'react-native';
 
+import layoutStyles from '../styles/layoutStyles';
+import textStyles from '../styles/textStyles';
+import buttonStyles from '../styles/buttonStyles';
+
 const SingleWine = props => {
   const { wine, handlePress, loading } = props;
 
   return (
-    <View style={styles.wine}>
-      <View style={styles.titleContainer}>
-        <Text style={styles.wineTitle}>{wine.title}</Text>
+    <View style={layoutStyles.flexContainer}>
+      <View style={styles.textContainer}>
+        <Text style={textStyles.h6}>{wine.title}</Text>
       </View>
-      <View style={styles.button}>
-        <TouchableOpacity onPress={() => handlePress(wine)}>
-          {loading ? (
-            <ActivityIndicator />
-          ) : (
-            <Text style={styles.buttonText}>confirm</Text>
-          )}
-        </TouchableOpacity>
+      <View style={styles.container}>
+        <View style={buttonStyles.confirmWine}>
+          <TouchableOpacity
+            onPress={() => handlePress(wine)}
+            style={buttonStyles.button}
+          >
+            {loading ? (
+              <ActivityIndicator color="white" />
+            ) : (
+              <Text style={buttonStyles.text}>confirm</Text>
+            )}
+          </TouchableOpacity>
+        </View>
       </View>
     </View>
   );
@@ -31,28 +40,10 @@ const SingleWine = props => {
 export default SingleWine;
 
 const styles = StyleSheet.create({
-  wine: {
+  container: {
     flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'center',
-    marginTop: 10,
-    marginBottom: 10,
   },
-  titleContainer: {
-    width: '60%',
-  },
-  wineTitle: {
-    fontSize: 15,
-  },
-  button: {
-    backgroundColor: 'gray',
-    borderRadius: 20,
-    padding: 5,
-    height: 30,
-    width: 75,
-  },
-  buttonText: {
-    color: 'black',
-    textAlign: 'center',
+  textContainer: {
+    flex: 1,
   },
 });

@@ -21,6 +21,10 @@ import googleVisionConfig from '../../googleVisionConfig.js';
 import SingleWine from './SingleWineForConfirm';
 import { fetchingRating } from '../store/reducers/userWinesReducer';
 
+import layoutStyles from '../styles/layoutStyles';
+import textStyles from '../styles/textStyles';
+import buttonStyles from '../styles/buttonStyles';
+
 class ConfirmWine extends Component {
   constructor(props) {
     super(props);
@@ -119,8 +123,8 @@ class ConfirmWine extends Component {
     } else if (wines.length === 1) {
       const singleWine = wines[0];
       return (
-        <View style={styles.container}>
-          <Text style={styles.headerText}>
+        <View style={layoutStyles.container}>
+          <Text style={textStyles.h3bold}>
             Please confirm this is the correct wine:
           </Text>
           <SingleWine
@@ -133,8 +137,8 @@ class ConfirmWine extends Component {
     } else
       return (
         <ScrollView>
-          <View style={styles.container}>
-            <Text style={styles.headerText}>
+          <View style={layoutStyles.container}>
+            <Text style={textStyles.h3bold}>
               Please confirm which wine is correct:
             </Text>
             {wines.map(wine => (
