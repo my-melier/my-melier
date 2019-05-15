@@ -28,24 +28,31 @@ class Home extends Component {
   render() {
     return (
       <View style={layoutStyles.container}>
-        <View>
-          <Text style={textStyles.logo}>
-            <Text style={textStyles.bold}>my</Text>Melier
-          </Text>
-          <Text style={textStyles.h1}>
-            Life is too short to drink bad wine!
-          </Text>
-        </View>
-        <View>
-          <Text style={textStyles.h2}>Open the camera to scan a menu</Text>
-          <Text style={textStyles.h2}>
-            Click on myWines to see previously saved wines
-          </Text>
-        </View>
-        <View style={buttonStyles.container}>
-          <TouchableOpacity onPress={this.logout} style={buttonStyles.button}>
-            <Text style={buttonStyles.text}>Logout</Text>
-          </TouchableOpacity>
+        <View style={styles.padding}>
+          <View style={styles.padding}>
+            <Text style={textStyles.logo}>
+              <Text style={textStyles.bold}>my</Text>Melier
+            </Text>
+          </View>
+          <View style={styles.padding}>
+            <Text style={textStyles.h1}>
+              Life is too short to drink bad wine!
+            </Text>
+            <Text style={textStyles.h2}>Open the camera to scan a menu</Text>
+            <Text style={textStyles.h2}>
+              Click on myWines to see previously saved wines
+            </Text>
+          </View>
+          <View style={styles.padding}>
+            <View style={buttonStyles.container}>
+              <TouchableOpacity
+                onPress={this.logout}
+                style={buttonStyles.button}
+              >
+                <Text style={buttonStyles.text}>Logout</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
         </View>
       </View>
     );
@@ -60,3 +67,9 @@ export default connect(
   null,
   mapDispatch
 )(Home);
+
+const styles = StyleSheet.create({
+  padding: {
+    paddingTop: 50,
+  },
+});
