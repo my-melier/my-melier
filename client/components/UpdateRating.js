@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Text, StyleSheet, View, TouchableOpacity } from 'react-native';
+import { Text, View, TouchableOpacity } from 'react-native';
 import { rateWineInDb } from '../store/reducers/userWinesReducer';
 import { withNavigation } from 'react-navigation';
 import { Ionicons } from '@expo/vector-icons';
-import layoutStyles from '../styles/layoutStyles';
 import textStyles from '../styles/textStyles';
 import buttonStyles from '../styles/buttonStyles';
 
@@ -39,7 +38,7 @@ class UpdateRating extends Component {
         ) : (
           <Text style={textStyles.h3bold}>You did not like this wine!</Text>
         )}
-        <View style={buttonStyles.container}>
+        <View style={{ alignItems: 'center' }}>
           <TouchableOpacity
             onPress={this.handlePress}
             style={buttonStyles.wideButton}
@@ -48,18 +47,24 @@ class UpdateRating extends Component {
           </TouchableOpacity>
         </View>
         {this.state.updateClicked ? (
-          <View>
-            <TouchableOpacity onPress={() => this.handleUpdate(wine.id, true)}>
+          <View style={buttonStyles.container}>
+            <TouchableOpacity
+              onPress={() => this.handleUpdate(wine.id, true)}
+              style={buttonStyles.rating}
+            >
               <IconComponent
                 name={'ios-checkmark-circle-outline'}
-                size={50}
+                size={60}
                 color={'green'}
               />
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => this.handleUpdate(wine.id, false)}>
+            <TouchableOpacity
+              onPress={() => this.handleUpdate(wine.id, false)}
+              style={buttonStyles.rating}
+            >
               <IconComponent
                 name={'ios-close-circle-outline'}
-                size={50}
+                size={60}
                 color={'tomato'}
               />
             </TouchableOpacity>
@@ -80,10 +85,3 @@ export default withNavigation(
     mapDispatch
   )(UpdateRating)
 );
-
-const styles = StyleSheet.create({
-  image: {
-    width: 50,
-    height: 50,
-  },
-});
