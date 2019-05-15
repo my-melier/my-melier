@@ -91,18 +91,18 @@ const TabNavigator = createBottomTabNavigator(
   }
 );
 
-// const AppContainer = createAppContainer(
-//   createSwitchNavigator(
-//     {
-//       App: TabNavigator,
-//       Auth: AuthStack,
-//     },
-//     {
-//       initialRouteName: 'Auth',
-//     }
-//   )
-// );
+const AppContainer = createAppContainer(
+  createSwitchNavigator(
+    {
+      App: TabNavigator,
+      Auth: AuthStack,
+    },
+    {
+      initialRouteName: 'Auth',
+    }
+  )
+);
 
-const AppContainer = createAppContainer(TabNavigator);
+// const AppContainer = createAppContainer(TabNavigator);
 
 export default AppContainer;
