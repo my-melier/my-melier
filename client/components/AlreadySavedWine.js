@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import AddRating from './AddRating';
 
 import layoutStyles from '../styles/layoutStyles';
@@ -39,7 +39,7 @@ export default class AlreadySavedWine extends Component {
             </View>
           )}
         </View>
-        <View>
+        <View style={styles.padding}>
           <View style={buttonStyles.container}>
             <TouchableOpacity
               onPress={this.goBackToCamera}
@@ -53,3 +53,9 @@ export default class AlreadySavedWine extends Component {
     );
   }
 }
+
+const styles = StyleSheet.create({
+  padding: {
+    paddingTop: 80,
+  },
+});

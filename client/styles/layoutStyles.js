@@ -5,6 +5,11 @@ const layoutStyles = StyleSheet.create({
     flex: 1,
     margin: 20,
   },
+  centerContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   subContainer: {
     marginTop: 10,
     marginBottom: 10,
@@ -24,6 +29,15 @@ const layoutStyles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  flexContainer: {
+    flex: 1,
+    borderRadius: 20,
+    padding: 10,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 10,
+    alignItems: 'stretch',
   },
 });
 

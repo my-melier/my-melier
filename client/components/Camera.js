@@ -6,6 +6,10 @@ import { withNavigation } from 'react-navigation';
 import { setImage } from '../store/reducers/googleVisionReducer';
 import { Ionicons } from '@expo/vector-icons';
 
+import layoutStyles from '../styles/layoutStyles';
+import textStyles from '../styles/textStyles';
+import buttonStyles from '../styles/buttonStyles';
+
 class Camera extends Component {
   constructor(props) {
     super(props);
@@ -41,15 +45,17 @@ class Camera extends Component {
 
   render() {
     return (
-      <View style={styles.container}>
-        <Text style={styles.instructions}>
-          When taking a photo, please capture only one wine at a time
-        </Text>
-        <TouchableOpacity onPress={this.takePhoto} style={styles.camera}>
-          <View>
-            <Ionicons name="ios-camera" size={75} />
-          </View>
-        </TouchableOpacity>
+      <View style={layoutStyles.container}>
+        <View style={layoutStyles.centerContainer}>
+          <Text style={textStyles.h2}>
+            When taking a photo, please capture only one wine at a time
+          </Text>
+          <TouchableOpacity onPress={this.takePhoto} style={styles.camera}>
+            <View>
+              <Ionicons name="ios-camera" size={75} color={'white'} />
+            </View>
+          </TouchableOpacity>
+        </View>
       </View>
     );
   }
@@ -67,19 +73,8 @@ export default withNavigation(
 );
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  instructions: {
-    textAlign: 'center',
-    marginLeft: 40,
-    marginRight: 40,
-    fontSize: 25,
-  },
   camera: {
-    backgroundColor: '#D3DCDF',
+    backgroundColor: '#555056',
     borderRadius: 50,
     padding: 10,
     margin: 20,

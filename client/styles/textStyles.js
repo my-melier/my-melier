@@ -45,6 +45,9 @@ const textStyles = StyleSheet.create({
     fontWeight: 'bold',
     padding: 5,
   },
+  h6: {
+    fontSize: 15,
+  },
   bold: {
     fontWeight: 'bold',
   },
