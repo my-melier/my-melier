@@ -8,6 +8,7 @@ const GOT_WINES = 'GOT_WINES';
 const SAVE_WINE = 'SAVE_WINE';
 const FILTER_WINES = 'FILTER_WINES';
 const RATE_WINE = 'RATE_WINE';
+const GET_RATING = 'GET_RATING';
 
 //action creators
 export const gettingWines = () => ({
@@ -19,9 +20,9 @@ export const gotWines = wines => ({
   wines,
 });
 
-const savedWine = wines => ({
+const savedWine = wine => ({
   type: SAVE_WINE,
-  wines,
+  wine,
 });
 
 export const filterWines = filter => ({
@@ -31,6 +32,11 @@ export const filterWines = filter => ({
 
 const ratedWine = wine => ({
   type: RATE_WINE,
+  wine,
+});
+
+const gotRating = wine => ({
+  type: GET_RATING,
   wine,
 });
 
@@ -71,12 +77,26 @@ export const rateWineInDb = (wineId, rating) => async dispatch => {
   }
 };
 
+export const fetchingRating = wineId => async dispatch => {
+  try {
+    dispatch(gettingWines());
+    const { data } = await axios.get(
+      `http://${myIPaddress.IP}:8080/api/wine/rating/${wineId}`
+    );
+    dispatch(gotRating(data));
+  } catch (error) {
+    console.error(error);
+  }
+};
+
 //initial state
 const initialState = {
   loading: false,
   savedWines: {},
   filteredWines: {},
   activeButton: 'all',
+  alreadySaved: false,
+  alreadySavedWine: {},
 };
 
 export default (state = initialState, action) => {
@@ -115,10 +135,21 @@ export default (state = initialState, action) => {
         };
       }
     case SAVE_WINE:
+      if (action.wine[1] === false) {
+        return {
+          ...state,
+          alreadySaved: true,
+        };
+      }
+
+      let allWines = action.wine.wines;
+      if (state.savedWines.wines) {
+        allWines.concat(state.savedWines.wines);
+      }
       return {
         ...state,
-        savedWines: action.wines,
-        filteredWines: action.wines,
+        savedWines: { ...state.savedWines, wines: allWines },
+        filteredWines: { ...state.savedWines, wines: allWines },
         activeButton: 'all',
       };
     case RATE_WINE:
@@ -136,6 +167,8 @@ export default (state = initialState, action) => {
         filteredWines: { ...state.savedWines, wines: updatedWines },
         activeButton: 'all',
       };
+    case GET_RATING:
+      return { ...state, alreadySavedWine: action.wine, loading: false };
     default:
       return state;
   }

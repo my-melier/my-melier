@@ -34,12 +34,30 @@ router.get('/saved/:userId', async (req, res, next) => {
 
 router.post('/saved/:wineId', async (req, res, next) => {
   try {
-    await SavedWine.create(req.body);
-    const savedWines = await User.findOne({
-      where: { id: req.user.id },
-      include: { model: Wine },
+    const saved = await SavedWine.findOrCreate({
+      where: { wineId: req.params.wineId, userId: req.user.id },
     });
-    res.send(savedWines);
+    if (saved[1]) {
+      const savedWine = await User.findOne({
+        where: { id: req.user.id },
+        include: { model: Wine, where: { id: req.params.wineId } },
+      });
+      res.send(savedWine);
+    } else {
+      res.send(saved);
+    }
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.get('/rating/:wineId', async (req, res, next) => {
+  try {
+    const savedWine = await User.findOne({
+      where: { id: req.user.id },
+      include: { model: Wine, where: { id: req.params.wineId } },
+    });
+    res.send(savedWine);
   } catch (error) {
     next(error);
   }
