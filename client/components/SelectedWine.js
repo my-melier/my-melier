@@ -8,10 +8,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import { connect } from 'react-redux';
-import {
-  rateWineInDb,
-  fetchingWinesFromDb,
-} from '../store/reducers/userWinesReducer';
+import { rateWineInDb } from '../store/reducers/userWinesReducer';
 import { Ionicons } from '@expo/vector-icons';
 import { MyMenuHeader } from '../styles/defaultNavigationOptions';
 
@@ -28,9 +25,8 @@ class SelectedWine extends Component {
   };
 
   rateWine(wineId, rating) {
-    const { rateWineInDb, fetchWines, user } = this.props;
+    const { rateWineInDb } = this.props;
     rateWineInDb(wineId, rating);
-    fetchWines(user.id);
     return this.props.navigation.navigate('myWines');
   }
 
@@ -81,12 +77,10 @@ class SelectedWine extends Component {
 
 const mapState = state => ({
   selectedWine: state.comparisons.selectedWine,
-  user: state.user,
 });
 
 const mapDispatch = dispatch => ({
   rateWineInDb: (wineId, rating) => dispatch(rateWineInDb(wineId, rating)),
-  fetchWines: userId => dispatch(fetchingWinesFromDb(userId)),
 });
 
 export default connect(

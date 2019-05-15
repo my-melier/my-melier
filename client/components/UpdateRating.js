@@ -1,10 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Text, StyleSheet, View, TouchableOpacity, Image } from 'react-native';
-import {
-  rateWineInDb,
-  fetchingWinesFromDb,
-} from '../store/reducers/userWinesReducer';
+import { rateWineInDb } from '../store/reducers/userWinesReducer';
 import { withNavigation } from 'react-navigation';
 import { Ionicons } from '@expo/vector-icons';
 
@@ -23,9 +20,8 @@ class UpdateRating extends Component {
   }
 
   handleUpdate(wineId, rating) {
-    const { user, fetchWines, rateWineInDb, navigation } = this.props;
+    const { rateWineInDb, navigation } = this.props;
     rateWineInDb(wineId, rating);
-    fetchWines(user.id);
     return navigation.navigate('myWines');
   }
 
@@ -81,18 +77,13 @@ class UpdateRating extends Component {
   }
 }
 
-const mapState = state => ({
-  user: state.user,
-});
-
 const mapDispatch = dispatch => ({
   rateWineInDb: (wineId, rating) => dispatch(rateWineInDb(wineId, rating)),
-  fetchWines: userId => dispatch(fetchingWinesFromDb(userId)),
 });
 
 export default withNavigation(
   connect(
-    mapState,
+    null,
     mapDispatch
   )(UpdateRating)
 );

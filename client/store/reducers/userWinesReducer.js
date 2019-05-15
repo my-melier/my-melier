@@ -50,7 +50,7 @@ export const fetchingWinesFromDb = userId => async dispatch => {
 export const saveWineToDb = (wineId, userId) => async dispatch => {
   try {
     const { data } = await axios.post(
-      `http://${myIPaddress.IP}:8080/api/wine/saved/${userId}`,
+      `http://${myIPaddress.IP}:8080/api/wine/saved/${wineId}`,
       { wineId, userId }
     );
     dispatch(savedWine(data));
@@ -119,6 +119,21 @@ export default (state = initialState, action) => {
         ...state,
         savedWines: action.wines,
         filteredWines: action.wines,
+        activeButton: 'all',
+      };
+    case RATE_WINE:
+      let updatedWines = [];
+      state.savedWines.wines.map(wine => {
+        if (action.wine.wines[0].id === wine.id) {
+          updatedWines.push(action.wine.wines[0]);
+        } else {
+          updatedWines.push(wine);
+        }
+      });
+      return {
+        ...state,
+        savedWines: { ...state.savedWines, wines: updatedWines },
+        filteredWines: { ...state.savedWines, wines: updatedWines },
         activeButton: 'all',
       };
     default:
