@@ -8,8 +8,9 @@ import {
   TouchableOpacity,
   View,
   Text,
-} from 'react-native';
-import { auth } from '../store/reducers/userReducer';
+  Alert
+} from 'react-native'
+import {auth, checkEmail} from '../store/reducers/userReducer'
 
 class Signup extends Component {
   constructor(props) {
@@ -23,11 +24,22 @@ class Signup extends Component {
     this.signup = this.signup.bind(this);
   }
 
-  signup() {
-    const { email, password } = this.state;
-    if (email && password) {
-      this.props.auth(email, password, 'signup');
-      return this.props.navigation.navigate('App');
+  async signup() {
+    const {email, password} = this.state
+    await this.props.checkEmail(email)
+    if (!this.props.user) {
+      if (email && password) {
+        this.props.auth(email, password, 'signup')
+        return this.props.navigation.navigate('App')
+      } else {
+        Alert.alert(null, 'Check username or password', [
+          {text: 'OK', style: 'cancel'}
+        ])
+      }
+    } else {
+      Alert.alert(null, 'An acccount with this username already exists', [
+        {text: 'OK', style: 'cancel'}
+      ])
     }
   }
 
@@ -78,6 +90,15 @@ class Signup extends Component {
     );
   }
 }
+
+const mapSignup = state => ({
+  user: state.user
+})
+
+const mapDispatch = dispatch => ({
+  auth: (email, password, method) => dispatch(auth(email, password, method)),
+  checkEmail: (email, method) => dispatch(checkEmail(email, method))
+})
 
 const styles = StyleSheet.create({
   container: {

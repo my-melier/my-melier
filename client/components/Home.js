@@ -27,16 +27,15 @@ class Home extends Component {
         <View style={styles.text}>
           <Text style={styles.logo}>
             <Text style={styles.bold}>my</Text>Melier
+            <Text style={styles.copy}>
+            Only drink wine you like - life is too short to drink bad wine!
+          </Text>
           </Text>
         </View>
         <View>
-          <Text style={styles.instructions}>Instructions:</Text>
           <Text style={styles.copy}>Open the camera to scan a menu</Text>
           <Text style={styles.copy}>
             Click on myWines to see previously saved wines
-          </Text>
-          <Text style={styles.copy}>
-            Only drink wine you like - life is too short!
           </Text>
         </View>
         <TouchableOpacity onPress={this.logout} style={styles.button}>
@@ -75,7 +74,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     padding: 5,
     height: 40,
-    marginTop: 150,
+    marginTop: 100,
     marginLeft: 75,
     marginRight: 75,
     justifyContent: 'center',
