@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {
   Text,
-  StyleSheet,
   TouchableOpacity,
   Button,
   View,
@@ -109,72 +108,3 @@ export default connect(
   mapLogin,
   mapDispatch
 )(Login);
-
-const styles = StyleSheet.create({
-  container: {
-    padding: 20,
-  },
-  inputContainer: {
-    backgroundColor: '#D3DCDF',
-    borderRadius: 20,
-    margin: 60,
-    color: '#FFF',
-    padding: 20,
-    paddingHorizontal: 10,
-    fontSize: 16,
-  },
-  input: {
-    paddingHorizontal: 10,
-    marginBottom: 20,
-    height: 40,
-    fontSize: 16,
-  },
-  header: {
-    alignItems: 'center',
-  },
-  mainButtonView: {
-    alignItems: 'center',
-    paddingBottom: 20,
-  },
-  mainButton: {
-    backgroundColor: 'gray',
-    borderRadius: 20,
-    padding: 5,
-    height: 40,
-    width: 150,
-    margin: 5,
-    justifyContent: 'center',
-  },
-  button: {
-    backgroundColor: 'gray',
-    borderRadius: 20,
-    padding: 5,
-    height: 40,
-    width: 100,
-    margin: 5,
-    justifyContent: 'center',
-  },
-  buttonText: {
-    color: 'white',
-    textAlign: 'center',
-    padding: 5,
-  },
-  textInput: {
-    textAlign: 'right',
-    padding: 20,
-  },
-  text: {
-    textAlign: 'center',
-    fontSize: 20,
-    paddingBottom: 10,
-    paddingTop: 20,
-  },
-  bold: {
-    fontWeight: 'bold',
-  },
-  logo: {
-    fontSize: 50,
-    padding: 15,
-    paddingBottom: 50,
-  },
-});
