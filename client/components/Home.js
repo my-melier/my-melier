@@ -1,20 +1,24 @@
-import React, {Component} from 'react'
-import {Text, StyleSheet, View, Button, TouchableOpacity} from 'react-native'
-import {logout} from '../store/reducers/userReducer'
-import {clearedComparisons} from '../store/reducers/comparisonReducer'
-import {connect} from 'react-redux'
+import React, { Component } from 'react';
+import { Text, StyleSheet, View, Button, TouchableOpacity } from 'react-native';
+import { logout } from '../store/reducers/userReducer';
+import { clearedComparisons } from '../store/reducers/comparisonReducer';
+import { connect } from 'react-redux';
 
 class Home extends Component {
   constructor(props) {
-    super(props)
-    this.logout = this.logout.bind(this)
+    super(props);
+    this.logout = this.logout.bind(this);
   }
 
+  static navigationOptions = {
+    header: null,
+  };
+
   logout() {
-    const {clearedComparisons, navigation} = this.props
-    logout()
-    clearedComparisons()
-    return navigation.navigate('Auth')
+    const { clearedComparisons, navigation } = this.props;
+    logout();
+    clearedComparisons();
+    return navigation.navigate('Auth');
   }
 
   render() {
@@ -38,32 +42,32 @@ class Home extends Component {
           <Text style={styles.buttonText}>Logout</Text>
         </TouchableOpacity>
       </View>
-    )
+    );
   }
 }
 
 const mapDispatch = dispatch => ({
-  clearedComparisons: () => dispatch(clearedComparisons())
-})
+  clearedComparisons: () => dispatch(clearedComparisons()),
+});
 
 export default connect(
   null,
   mapDispatch
-)(Home)
+)(Home);
 
 const styles = StyleSheet.create({
   bold: {
-    fontWeight: 'bold'
+    fontWeight: 'bold',
   },
   logo: {
     fontSize: 50,
-    padding: 15
+    padding: 15,
   },
   container: {
     flex: 1,
     backgroundColor: '#fff',
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   button: {
     backgroundColor: 'gray',
@@ -73,25 +77,25 @@ const styles = StyleSheet.create({
     marginTop: 100,
     marginLeft: 75,
     marginRight: 75,
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   buttonText: {
     color: 'white',
     textAlign: 'center',
-    padding: 5
+    padding: 5,
   },
   instructions: {
     textAlign: 'center',
     fontSize: 35,
     paddingTop: 20,
-    paddingBottom: 5
+    paddingBottom: 5,
   },
   copy: {
     textAlign: 'center',
-    fontSize: 30
+    fontSize: 30,
   },
   text: {
     textAlign: 'center',
-    fontSize: 30
-  }
-})
+    fontSize: 30,
+  },
+});
