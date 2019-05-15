@@ -37,6 +37,14 @@ const buttonStyles = StyleSheet.create({
     textAlign: 'center',
     color: 'white',
   },
+  rating: {
+    padding: 10,
+    borderRadius: 40,
+    width: 100,
+    height: 100,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
 });
 
 export default buttonStyles;
