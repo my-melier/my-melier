@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Text, StyleSheet, View, TouchableOpacity, Image } from 'react-native';
+import { Text, StyleSheet, View, TouchableOpacity } from 'react-native';
 import { rateWineInDb } from '../store/reducers/userWinesReducer';
 import { withNavigation } from 'react-navigation';
 import { Ionicons } from '@expo/vector-icons';
+import layoutStyles from '../styles/layoutStyles';
+import textStyles from '../styles/textStyles';
+import buttonStyles from '../styles/buttonStyles';
 
 class UpdateRating extends Component {
   constructor(props) {
@@ -31,27 +34,17 @@ class UpdateRating extends Component {
 
     return (
       <View>
-        <View>
-          <Text>
-            Your rating:
-            {wine.savedWine.like ? (
-              <IconComponent
-                name={'ios-checkmark-circle-outline'}
-                size={50}
-                color={'green'}
-              />
-            ) : (
-              <IconComponent
-                name={'ios-close-circle-outline'}
-                size={50}
-                color={'tomato'}
-              />
-            )}
-          </Text>
-        </View>
-        <View>
-          <TouchableOpacity onPress={this.handlePress}>
-            <Text>update</Text>
+        {wine.savedWine.like ? (
+          <Text style={textStyles.h3bold}>You liked this wine!</Text>
+        ) : (
+          <Text style={textStyles.h3bold}>You did not like this wine!</Text>
+        )}
+        <View style={buttonStyles.container}>
+          <TouchableOpacity
+            onPress={this.handlePress}
+            style={buttonStyles.wideButton}
+          >
+            <Text style={buttonStyles.text}>Update Rating</Text>
           </TouchableOpacity>
         </View>
         {this.state.updateClicked ? (
