@@ -10,19 +10,12 @@ import {
 import { connect } from 'react-redux';
 import { rateWineInDb } from '../store/reducers/userWinesReducer';
 import { Ionicons } from '@expo/vector-icons';
-import { MyMenuHeader } from '../styles/defaultNavigationOptions';
 
 class SelectedWine extends Component {
   constructor() {
     super();
     this.rateWine = this.rateWine.bind(this);
   }
-
-  static navigationOptions = ({ navigation }) => {
-    return {
-      headerRight: <MyMenuHeader nav={navigation} />,
-    };
-  };
 
   rateWine(wineId, rating) {
     const { rateWineInDb } = this.props;
