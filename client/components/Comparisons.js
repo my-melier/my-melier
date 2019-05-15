@@ -19,6 +19,10 @@ import layoutStyles from '../styles/layoutStyles';
 import textStyles from '../styles/textStyles';
 import buttonStyles from '../styles/buttonStyles';
 
+import layoutStyles from '../styles/layoutStyles';
+import textStyles from '../styles/textStyles';
+import buttonStyles from '../styles/buttonStyles';
+
 class Comparisons extends Component {
   constructor(props) {
     super(props)
@@ -75,13 +79,11 @@ class Comparisons extends Component {
           </View>
           <View style={layoutStyles.padding}>
             {comparisons.map(wine => (
-              <View key={wine.id} style={styles.wine}>
-                <Text style={styles.wineTitle}>{wine.title}</Text>
-                <Text style={styles.description}>{wine.description}</Text>
-                <Text style={styles.score}>
-                  Score: {numToLetter(wine.points)}
-                </Text>
-                <View style={styles.mainButtonView}>
+              <View key={wine.id} style={layoutStyles.bubble}>
+                <Text style={textStyles.h3bold}>{wine.title}</Text>
+                <Text style={textStyles.h5}>{wine.description}</Text>
+                <Text style={textStyles.h5bold}>Score: {numToLetter(wine.points)}</Text>
+                <View style={buttonStyles.container}>
                   <TouchableOpacity
                     onPress={() => this.handleSelect(wine)}
                     style={buttonStyles.button}

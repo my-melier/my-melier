@@ -107,4 +107,6 @@ const AppContainer = createAppContainer(
 
 // const AppContainer = createAppContainer(TabNavigator);
 
+// const AppContainer = createAppContainer(TabNavigator);
+
 export default AppContainer;
