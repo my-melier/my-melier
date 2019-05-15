@@ -9,14 +9,9 @@ import {
   TextInput,
   KeyboardAvoidingView,
   Keyboard,
-<<<<<<< HEAD
   Alert
 } from 'react-native'
 import {auth} from '../store/reducers/userReducer'
-=======
-} from 'react-native';
-import { auth } from '../store/reducers/userReducer';
->>>>>>> master
 
 class Login extends Component {
   constructor(props) {
@@ -38,15 +33,11 @@ class Login extends Component {
     const { email, password } = this.state;
     await auth(email, password, 'login');
     if (this.props.user.id) {
-<<<<<<< HEAD
       return this.props.navigation.navigate('App')
     } else {
       Alert.alert(null, 'Incorrect username or password', [
         {text: 'OK', style: 'cancel'}
       ])
-=======
-      return this.props.navigation.navigate('App');
->>>>>>> master
     }
   }
 
