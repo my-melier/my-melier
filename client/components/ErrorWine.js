@@ -10,8 +10,7 @@ export default class ErrorWine extends Component {
     return (
       <View style={styles.container}>
         <Text style={styles.message}>
-          Oh no! We don't have that particular wine in our cellar. Please try
-          another wine!
+          Oh no! We don't have that particular wine in our cellar. Please make another selection!
         </Text>
         <View style={styles.gifView}>
           <Image source={noWine} style={styles.gif} />

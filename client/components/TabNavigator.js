@@ -4,21 +4,22 @@ import {
   createBottomTabNavigator,
   createAppContainer,
   createStackNavigator,
-  createSwitchNavigator
-} from 'react-navigation'
-import {Ionicons} from '@expo/vector-icons'
-import Home from './Home'
-import MyWines from './MyWines'
-import Camera from './Camera'
-import ConfirmWine from './ConfirmWine'
-import Comparisons from './Comparisons'
-import SelectedWine from './SelectedWine'
-import Signup from './Signup'
-import Login from './Login'
-import ErrorWine from './ErrorWine'
-import {LogoTitle} from '../styles/defaultNavigationOptions'
-import SingleWineRating from './SingleWineRating'
-import ComparisonWithoutFunctionality from './ComparisonWithoutFunctionality'
+  createSwitchNavigator,
+} from 'react-navigation';
+import { Ionicons } from '@expo/vector-icons';
+import Home from './Home';
+import MyWines from './MyWines';
+import Camera from './Camera';
+import ConfirmWine from './ConfirmWine';
+import Comparisons from './Comparisons';
+import SelectedWine from './SelectedWine';
+import Signup from './Signup';
+import Login from './Login';
+import ErrorWine from './ErrorWine';
+import { LogoTitle } from '../styles/defaultNavigationOptions';
+import SingleWineRating from './SingleWineRating';
+import AlreadySavedWine from './AlreadySavedWine';
+import ComparisonWithoutFunctionality from './ComparisonWithoutFunctionality';
 
 const AuthStack = createStackNavigator({
   Login: Login,
@@ -36,7 +37,8 @@ const CameraStack = createStackNavigator(
     Comparisons: Comparisons,
     ComparisonWithoutFunctionality: ComparisonWithoutFunctionality,
     SelectedWine: SelectedWine,
-    ErrorWine: ErrorWine
+    AlreadySavedWine: AlreadySavedWine,
+    ErrorWine: ErrorWine,
   },
   {
     defaultNavigationOptions: {
@@ -64,21 +66,25 @@ const TabNavigator = createBottomTabNavigator(
     myWines: myWinesStack
   },
   {
-    defaultNavigationOptions: ({navigation}) => ({
-      tabBarIcon: ({tintColor}) => {
-        const {routeName} = navigation.state
-        let IconComponent = Ionicons
-        let iconName
+    defaultNavigationOptions: ({ navigation }) => ({
+      tabBarIcon: ({ tintColor }) => {
+        const { routeName } = navigation.state;
+        let IconComponent = Ionicons;
+        let iconName;
+        let size;
         if (routeName === 'Home') {
-          iconName = 'ios-home'
+          iconName = 'ios-home';
+          size = 25;
         } else if (routeName === 'myWines') {
-          iconName = 'ios-wine'
+          iconName = 'ios-wine';
+          size = 25;
         } else if (routeName === 'Camera') {
-          iconName = 'ios-camera'
+          iconName = 'ios-camera';
+          size = 35;
         }
 
-        return <IconComponent name={iconName} size={25} color={tintColor} />
-      }
+        return <IconComponent name={iconName} size={size} color={tintColor} />;
+      },
     }),
     tabBarOptions: {
       activeTintColor: 'tomato',

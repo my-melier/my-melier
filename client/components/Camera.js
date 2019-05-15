@@ -5,21 +5,13 @@ import { StyleSheet, View, Text, Button, TouchableOpacity } from 'react-native';
 import { withNavigation } from 'react-navigation';
 import { setImage } from '../store/reducers/googleVisionReducer';
 import { Ionicons } from '@expo/vector-icons';
-import { MyMenuHeader } from '../styles/defaultNavigationOptions';
 
 class Camera extends Component {
   constructor(props) {
     super(props);
     this.takePhoto = this.takePhoto.bind(this);
-    this.chooseFromCameraRoll = this.chooseFromCameraRoll.bind(this);
     this.handleImagePicked = this.handleImagePicked.bind(this);
   }
-
-  static navigationOptions = ({ navigation }) => {
-    return {
-      headerRight: <MyMenuHeader nav={navigation} />,
-    };
-  };
 
   async componentDidMount() {
     await Permissions.askAsync(Permissions.CAMERA_ROLL);
@@ -28,16 +20,6 @@ class Camera extends Component {
 
   async takePhoto() {
     let imageData = await ImagePicker.launchCameraAsync({
-      allowsEditing: true,
-      aspect: [4, 3],
-      base64: true,
-    });
-
-    this.handleImagePicked(imageData);
-  }
-
-  async chooseFromCameraRoll() {
-    let imageData = await ImagePicker.launchImageLibraryAsync({
       allowsEditing: true,
       aspect: [4, 3],
       base64: true,
@@ -68,11 +50,6 @@ class Camera extends Component {
             <Ionicons name="ios-camera" size={75} />
           </View>
         </TouchableOpacity>
-        <Button
-          onPress={this.chooseFromCameraRoll}
-          title="Choose from camera roll"
-          color="#1985bc"
-        />
       </View>
     );
   }

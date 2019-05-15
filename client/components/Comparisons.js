@@ -12,7 +12,7 @@ import {
   removedWine,
   clearedComparisons
 } from '../store/reducers/comparisonReducer'
-import {saveWineToDb} from '../store/reducers/userWinesReducer'
+import {saveWineToDb, fetchingRating,} from '../store/reducers/userWinesReducer'
 import {numToLetter} from '../../utils'
 
 class Comparisons extends Component {
@@ -23,10 +23,17 @@ class Comparisons extends Component {
   }
 
   handleSelect(wine) {
-    const {selectedWine, saveWineToDb, user, navigation} = this.props
-    saveWineToDb(wine.id, user.id)
-    selectedWine(wine)
-    return navigation.navigate('SelectedWine', {wine: wine})
+    const {
+      selectedWine,
+      saveWineToDb,
+      fetchRating,
+      user,
+      navigation,
+    } = this.props;
+    saveWineToDb(wine.id, user.id);
+    fetchRating(wine.id);
+    selectedWine(wine);
+    return navigation.navigate('SelectedWine', { wine: wine });
   }
 
   handleClear() {
@@ -100,8 +107,9 @@ const mapDispatch = dispatch => ({
   selectedWine: wine => dispatch(selectedWine(wine)),
   removedWine: wineId => dispatch(removedWine(wineId)),
   clearedComparisons: () => dispatch(clearedComparisons()),
-  saveWineToDb: (userId, wineId) => dispatch(saveWineToDb(userId, wineId))
-})
+  saveWineToDb: (userId, wineId) => dispatch(saveWineToDb(userId, wineId)),
+  fetchRating: wineId => dispatch(fetchingRating(wineId)),
+});
 
 export default connect(
   mapState,
