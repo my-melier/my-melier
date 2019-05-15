@@ -4,7 +4,9 @@ import { logout } from '../store/reducers/userReducer';
 import { clearedComparisons } from '../store/reducers/comparisonReducer';
 import { connect } from 'react-redux';
 
-import { textStyles } from '../styles';
+import buttonStyles from '../styles/buttonStyles';
+import textStyles from '../styles/textStyles';
+import layoutStyles from '../styles/layoutStyles';
 
 class Home extends Component {
   constructor(props) {
@@ -25,24 +27,26 @@ class Home extends Component {
 
   render() {
     return (
-      <View style={styles.container}>
-        <View style={styles.text}>
-          <Text style={styles.logo}>
-            <Text style={styles.bold}>my</Text>Melier
-            <Text style={styles.copy}>
-              Only drink wine you like - life is too short to drink bad wine!
-            </Text>
+      <View style={layoutStyles.container}>
+        <View>
+          <Text style={textStyles.logo}>
+            <Text style={textStyles.bold}>my</Text>Melier
+          </Text>
+          <Text style={textStyles.h1}>
+            Life is too short to drink bad wine!
           </Text>
         </View>
         <View>
-          <Text style={styles.copy}>Open the camera to scan a menu</Text>
-          <Text style={styles.copy}>
+          <Text style={textStyles.h2}>Open the camera to scan a menu</Text>
+          <Text style={textStyles.h2}>
             Click on myWines to see previously saved wines
           </Text>
         </View>
-        <TouchableOpacity onPress={this.logout} style={styles.button}>
-          <Text style={styles.buttonText}>Logout</Text>
-        </TouchableOpacity>
+        <View style={buttonStyles.container}>
+          <TouchableOpacity onPress={this.logout} style={buttonStyles.button}>
+            <Text style={buttonStyles.text}>Logout</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     );
   }
@@ -56,48 +60,3 @@ export default connect(
   null,
   mapDispatch
 )(Home);
-
-const styles = StyleSheet.create({
-  bold: {
-    fontWeight: 'bold',
-  },
-  logo: {
-    fontSize: 50,
-    padding: 15,
-  },
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  button: {
-    backgroundColor: 'gray',
-    borderRadius: 20,
-    padding: 5,
-    height: 40,
-    marginTop: 100,
-    marginLeft: 75,
-    marginRight: 75,
-    justifyContent: 'center',
-  },
-  buttonText: {
-    color: 'white',
-    textAlign: 'center',
-    padding: 5,
-  },
-  instructions: {
-    textAlign: 'center',
-    fontSize: 35,
-    paddingTop: 20,
-    paddingBottom: 5,
-  },
-  copy: {
-    textAlign: 'center',
-    fontSize: 30,
-  },
-  text: {
-    textAlign: 'center',
-    fontSize: 30,
-  },
-});

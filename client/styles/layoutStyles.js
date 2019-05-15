@@ -1,9 +1,16 @@
 import { StyleSheet } from 'react-native';
 
 const layoutStyles = StyleSheet.create({
-  appContainer: {
-    flex: 1,
+  container: {
     margin: 20,
+  },
+  subContainer: {
+    marginTop: 10,
+    marginBottom: 10,
+  },
+  padding: {
+    paddingTop: 10,
+    paddingBottom: 10,
   },
 });
 

@@ -7,19 +7,31 @@ const textStyles = StyleSheet.create({
     padding: 5,
   },
   h1: {
-    fontSize: 40,
+    fontSize: 30,
     textAlign: 'center',
     padding: 5,
   },
   h2: {
-    fontSize: 30,
+    fontSize: 24,
     textAlign: 'center',
     padding: 5,
+  },
+  h2bold: {
+    fontSize: 24,
+    textAlign: 'center',
+    padding: 5,
+    fontWeight: 'bold',
   },
   h3: {
     fontSize: 18,
     textAlign: 'center',
     padding: 5,
+  },
+  h3bold: {
+    fontSize: 18,
+    textAlign: 'center',
+    padding: 5,
+    fontWeight: 'bold',
   },
   h4: {},
   h5: {
