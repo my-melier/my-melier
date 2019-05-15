@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
+import React, {Component} from 'react'
+import {connect} from 'react-redux'
 import {
   StyleSheet,
   TextInput,
@@ -8,32 +8,49 @@ import {
   TouchableOpacity,
   View,
   Text,
-} from 'react-native';
-import { auth } from '../store/reducers/userReducer';
+  Alert
+} from 'react-native'
+import {auth, checkEmail} from '../store/reducers/userReducer'
 
 class Signup extends Component {
   constructor(props) {
-    super(props);
+    super(props)
     this.state = {
       loading: false,
       email: '',
       password: '',
-      error: '',
-    };
-    this.signup = this.signup.bind(this);
+      confirmPassword: '',
+      error: ''
+    }
+    this.signup = this.signup.bind(this)
   }
 
-  signup() {
-    const { email, password } = this.state;
-    if (email && password) {
-      this.props.auth(email, password, 'signup');
-      return this.props.navigation.navigate('App');
+  async signup() {
+    const {email, password, confirmPassword} = this.state
+    await this.props.checkEmail(email)
+    if (!this.props.user) {
+      if (password !== confirmPassword) {
+        Alert.alert(null, 'Passwords must match', [
+          {text: 'OK', style: 'cancel'}
+        ])
+      } else if (email && password) {
+        this.props.auth(email, password, 'signup')
+        return this.props.navigation.navigate('App')
+      } else {
+        Alert.alert(null, 'Check username or password', [
+          {text: 'OK', style: 'cancel'}
+        ])
+      }
+    } else {
+      Alert.alert(null, 'An acccount with this username already exists', [
+        {text: 'OK', style: 'cancel'}
+      ])
     }
   }
 
   render() {
     if (this.state.loading) {
-      return <ActivityIndicator />;
+      return <ActivityIndicator />
     }
     return (
       <KeyboardAvoidingView behavior="padding">
@@ -48,7 +65,7 @@ class Signup extends Component {
               <TextInput
                 style={styles.textInput}
                 placeholder="Email"
-                onChangeText={email => this.setState({ email })}
+                onChangeText={email => this.setState({email})}
                 value={this.state.email}
                 returnKeyType="next"
                 keyboardType="email-address"
@@ -60,11 +77,24 @@ class Signup extends Component {
               <TextInput
                 style={styles.textInput}
                 placeholder="Password"
-                onChangeText={password => this.setState({ password })}
+                onChangeText={password => this.setState({password})}
                 value={this.state.password}
                 returnKeyType="go"
                 secureTextEntry
                 ref={input => (this.passwordInput = input)}
+              />
+            </View>
+            <View>
+              <TextInput
+                style={styles.textInput}
+                placeholder="Confirm Password"
+                onChangeText={confirmPassword =>
+                  this.setState({confirmPassword})
+                }
+                value={this.state.confirmPassword}
+                returnKeyType="go"
+                secureTextEntry
+                ref={input => (this.confirmPasswordInput = input)}
               />
             </View>
           </View>
@@ -75,13 +105,13 @@ class Signup extends Component {
           </View>
         </View>
       </KeyboardAvoidingView>
-    );
+    )
   }
 }
 
 const styles = StyleSheet.create({
   container: {
-    padding: 20,
+    padding: 20
   },
   inputContainer: {
     backgroundColor: '#D3DCDF',
@@ -90,18 +120,18 @@ const styles = StyleSheet.create({
     color: '#FFF',
     padding: 20,
     paddingHorizontal: 10,
-    fontSize: 16,
+    fontSize: 16
   },
   bold: {
-    fontWeight: 'bold',
+    fontWeight: 'bold'
   },
   logo: {
     fontSize: 50,
     padding: 15,
-    paddingBottom: 50,
+    paddingBottom: 50
   },
   mainButtonView: {
-    alignItems: 'center',
+    alignItems: 'center'
   },
   mainButton: {
     backgroundColor: 'gray',
@@ -110,7 +140,7 @@ const styles = StyleSheet.create({
     height: 40,
     width: 150,
     margin: 5,
-    justifyContent: 'center',
+    justifyContent: 'center'
   },
   button: {
     backgroundColor: 'gray',
@@ -119,30 +149,31 @@ const styles = StyleSheet.create({
     height: 40,
     width: 100,
     margin: 5,
-    justifyContent: 'center',
+    justifyContent: 'center'
   },
   buttonText: {
     color: 'white',
     textAlign: 'center',
-    padding: 5,
+    padding: 5
   },
   textInput: {
     paddingHorizontal: 10,
     marginBottom: 20,
     height: 40,
-    fontSize: 16,
-  },
-});
+    fontSize: 16
+  }
+})
 
 const mapSignup = state => ({
-  user: state.user,
-});
+  user: state.user
+})
 
 const mapDispatch = dispatch => ({
   auth: (email, password, method) => dispatch(auth(email, password, method)),
-});
+  checkEmail: email => dispatch(checkEmail(email))
+})
 
 export default connect(
   mapSignup,
   mapDispatch
-)(Signup);
+)(Signup)

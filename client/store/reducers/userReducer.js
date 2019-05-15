@@ -1,66 +1,80 @@
-import axios from 'axios';
+import axios from 'axios'
 
 // SWITCH IP ADDRESS
-import myIPaddress from '../../../IPaddress';
+import myIPaddress from '../../../IPaddress'
 
 // action types
-const GET_USER = 'GET_USER';
-const REMOVE_USER = 'REMOVE_USER';
+const GET_USER = 'GET_USER'
+const CHECK_EMAIL = 'CHECK_EMAIL'
+const REMOVE_USER = 'REMOVE_USER'
 
 // initial state
-const defaultUser = {};
+const defaultUser = {}
 
 // action creators
-const getUser = user => ({ type: GET_USER, user });
-const removeUser = () => ({ type: REMOVE_USER });
+const getUser = user => ({type: GET_USER, user})
+const checkEmailAction = email => ({type: CHECK_EMAIL, email})
+const removeUser = () => ({type: REMOVE_USER})
 
 // thunks
 export const me = () => async dispatch => {
   try {
-    const res = await axios.get(`http://${myIPaddress.IP}:8080/auth/me`);
-    dispatch(getUser(res.data || defaultUser));
+    const res = await axios.get(`http://${myIPaddress.IP}:8080/auth/me`)
+    dispatch(getUser(res.data || defaultUser))
   } catch (err) {
-    next(err);
+    next(err)
   }
-};
+}
+
+export const checkEmail = email => async dispatch => {
+  try {
+    const {data} = await axios.get(
+      `http://${myIPaddress.IP}:8080/auth/check/${email}`
+    )
+    dispatch(checkEmailAction(data))
+  } catch (checkError) {
+    return dispatch(checkEmailAction({error: checkError}))
+  }
+}
 
 export const auth = (email, password, method) => async dispatch => {
-  let res;
+  let res
   try {
     email = email.toLowerCase()
     res = await axios.post(`http://${myIPaddress.IP}:8080/auth/${method}`, {
       email,
-      password,
-    });
+      password
+    })
   } catch (authError) {
-    return dispatch(getUser({ error: authError }));
+    return dispatch(getUser({error: authError}))
   }
 
   try {
-    dispatch(getUser(res.data));
-    // return this.navigation.navigate('App')
+    dispatch(getUser(res.data))
   } catch (dispatchOrHistoryErr) {
-    next(dispatchOrHistoryErr);
+    next(dispatchOrHistoryErr)
   }
-};
+}
 
 export const logout = () => async dispatch => {
   try {
-    await axios.post(`http://${myIPaddress.IP}:8080/auth/logout`);
-    dispatch(removeUser());
+    await axios.post(`http://${myIPaddress.IP}:8080/auth/logout`)
+    dispatch(removeUser())
   } catch (err) {
-    next(err);
+    next(err)
   }
-};
+}
 
 // reducer
 export default (userReducer = (state = defaultUser, action) => {
   switch (action.type) {
     case GET_USER:
-      return action.user;
+      return action.user
+    case CHECK_EMAIL:
+      return action.email
     case REMOVE_USER:
-      return defaultUser;
+      return defaultUser
     default:
-      return state;
+      return state
   }
-});
+})

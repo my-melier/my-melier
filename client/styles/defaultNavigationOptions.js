@@ -30,8 +30,3 @@ export class MyMenuHeader extends Component {
     )
   }
 }
-
-// export default {
-//   headerTitle: <LogoTitle />,
-//   headerRight: <MyMenuHeader />,
-// };
