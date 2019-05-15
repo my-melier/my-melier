@@ -1,5 +1,5 @@
 /* eslint-disable react/display-name */
-import React from 'react';
+import React from 'react'
 import {
   createBottomTabNavigator,
   createAppContainer,
@@ -19,49 +19,51 @@ import ErrorWine from './ErrorWine';
 import { LogoTitle } from '../styles/defaultNavigationOptions';
 import SingleWineRating from './SingleWineRating';
 import AlreadySavedWine from './AlreadySavedWine';
+import ComparisonWithoutFunctionality from './ComparisonWithoutFunctionality';
 
 const AuthStack = createStackNavigator({
   Login: Login,
-  Signup: Signup,
-});
+  Signup: Signup
+})
 
 const HomeStack = createStackNavigator({
-  Home: Home,
-});
+  Home: Home
+})
 
 const CameraStack = createStackNavigator(
   {
     Camera: Camera,
     ConfirmWine: ConfirmWine,
     Comparisons: Comparisons,
+    ComparisonWithoutFunctionality: ComparisonWithoutFunctionality,
     SelectedWine: SelectedWine,
     AlreadySavedWine: AlreadySavedWine,
     ErrorWine: ErrorWine,
   },
   {
     defaultNavigationOptions: {
-      headerTitle: <LogoTitle />,
-    },
+      headerTitle: <LogoTitle />
+    }
   }
-);
+)
 
 const myWinesStack = createStackNavigator(
   {
     myWines: MyWines,
-    Rating: SingleWineRating,
+    Rating: SingleWineRating
   },
   {
     defaultNavigationOptions: {
-      headerTitle: <LogoTitle />,
-    },
+      headerTitle: <LogoTitle />
+    }
   }
-);
+)
 
 const TabNavigator = createBottomTabNavigator(
   {
     Home: HomeStack,
     Camera: CameraStack,
-    myWines: myWinesStack,
+    myWines: myWinesStack
   },
   {
     defaultNavigationOptions: ({ navigation }) => ({
@@ -86,22 +88,22 @@ const TabNavigator = createBottomTabNavigator(
     }),
     tabBarOptions: {
       activeTintColor: 'tomato',
-      inactiveTintColor: 'gray',
-    },
+      inactiveTintColor: 'gray'
+    }
   }
-);
+)
 
 const AppContainer = createAppContainer(
   createSwitchNavigator(
     {
       App: TabNavigator,
-      Auth: AuthStack,
+      Auth: AuthStack
     },
     {
-      initialRouteName: 'Auth',
+      initialRouteName: 'Auth'
     }
   )
-);
+)
 
 // const AppContainer = createAppContainer(TabNavigator);
 

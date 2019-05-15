@@ -1,21 +1,23 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react'
 import {
   Text,
   StyleSheet,
   View,
   ScrollView,
-  TouchableOpacity,
-} from 'react-native';
-import { connect } from 'react-redux';
+  TouchableOpacity
+} from 'react-native'
+import {connect} from 'react-redux'
 import {
   selectedWine,
   removedWine,
-  clearedComparisons,
-} from '../store/reducers/comparisonReducer';
-import {
-  saveWineToDb,
-  fetchingRating,
-} from '../store/reducers/userWinesReducer';
+  clearedComparisons
+} from '../store/reducers/comparisonReducer'
+import {saveWineToDb, fetchingRating,} from '../store/reducers/userWinesReducer'
+import {numToLetter} from '../../utils'
+
+import layoutStyles from '../styles/layoutStyles';
+import textStyles from '../styles/textStyles';
+import buttonStyles from '../styles/buttonStyles';
 
 import layoutStyles from '../styles/layoutStyles';
 import textStyles from '../styles/textStyles';
@@ -23,9 +25,9 @@ import buttonStyles from '../styles/buttonStyles';
 
 class Comparisons extends Component {
   constructor(props) {
-    super(props);
-    this.handleSelect = this.handleSelect.bind(this);
-    this.handleClear = this.handleClear.bind(this);
+    super(props)
+    this.handleSelect = this.handleSelect.bind(this)
+    this.handleClear = this.handleClear.bind(this)
   }
 
   handleSelect(wine) {
@@ -43,13 +45,13 @@ class Comparisons extends Component {
   }
 
   handleClear() {
-    const { clearedComparisons } = this.props;
-    return clearedComparisons();
+    const {clearedComparisons} = this.props
+    return clearedComparisons()
   }
 
   render() {
-    const { comparisons } = this.props;
-    const { navigate } = this.props.navigation;
+    const {comparisons} = this.props
+    const {navigate} = this.props.navigation
 
     return (
       <ScrollView>
@@ -80,7 +82,7 @@ class Comparisons extends Component {
               <View key={wine.id} style={layoutStyles.bubble}>
                 <Text style={textStyles.h3bold}>{wine.title}</Text>
                 <Text style={textStyles.h5}>{wine.description}</Text>
-                <Text style={textStyles.h5bold}>Score: {wine.points}</Text>
+                <Text style={textStyles.h5bold}>Score: {numToLetter(wine.points)}</Text>
                 <View style={buttonStyles.container}>
                   <TouchableOpacity
                     onPress={() => this.handleSelect(wine)}
@@ -100,14 +102,14 @@ class Comparisons extends Component {
           </View>
         </View>
       </ScrollView>
-    );
+    )
   }
 }
 
 const mapState = state => ({
   comparisons: state.comparisons.comparisons,
-  user: state.user,
-});
+  user: state.user
+})
 
 const mapDispatch = dispatch => ({
   selectedWine: wine => dispatch(selectedWine(wine)),
