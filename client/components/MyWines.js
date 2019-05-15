@@ -23,6 +23,7 @@ class MyWines extends Component {
     this.filter = this.filter.bind(this);
     this.selectWine = this.selectWine.bind(this);
   }
+
   componentDidMount() {
     const { fetchingWinesFromDb, user } = this.props;
     fetchingWinesFromDb(user.id);

@@ -16,11 +16,13 @@ class SelectedWine extends Component {
     super();
     this.rateWine = this.rateWine.bind(this);
   }
+
   rateWine(wineId, rating) {
     const { rateWineInDb } = this.props;
     rateWineInDb(wineId, rating);
     return this.props.navigation.navigate('myWines');
   }
+
   render() {
     const { selectedWine } = this.props;
     let IconComponent = Ionicons;

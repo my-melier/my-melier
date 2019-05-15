@@ -1,5 +1,5 @@
-import React, {Component} from 'react'
-import {connect} from 'react-redux'
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import {
   Text,
   StyleSheet,
@@ -8,26 +8,31 @@ import {
   View,
   TextInput,
   KeyboardAvoidingView,
-  Keyboard
-} from 'react-native'
-import {auth} from '../store/reducers/userReducer'
+  Keyboard,
+} from 'react-native';
+import { auth } from '../store/reducers/userReducer';
 
 class Login extends Component {
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
       email: '',
-      password: ''
-    }
-    this.login = this.login.bind(this)
+      password: '',
+    };
+    this.login = this.login.bind(this);
   }
 
+  static navigationOptions = {
+    header: null,
+    headerBackTitle: 'Login',
+  };
+
   async login() {
-    const {auth} = this.props
-    const {email, password} = this.state
-    await auth(email, password, 'login')
+    const { auth } = this.props;
+    const { email, password } = this.state;
+    await auth(email, password, 'login');
     if (this.props.user.id) {
-      return this.props.navigation.navigate('App')
+      return this.props.navigation.navigate('App');
     }
   }
 
@@ -46,7 +51,7 @@ class Login extends Component {
                 style={styles.input}
                 placeholder="Email"
                 onBlur={Keyboard.dismiss}
-                onChangeText={email => this.setState({email})}
+                onChangeText={email => this.setState({ email })}
                 returnKeyType="next"
                 keyboardType="email-address"
                 autoCapitalize="none"
@@ -63,7 +68,7 @@ class Login extends Component {
                 keyboardType="email-address"
                 autoCapitalize="none"
                 autoCorrect={false}
-                onChangeText={password => this.setState({password})}
+                onChangeText={password => this.setState({ password })}
                 returnKeyType="next"
                 keyboardType="email-address"
                 autoCapitalize="none"
@@ -84,26 +89,26 @@ class Login extends Component {
           </View>
         </View>
       </KeyboardAvoidingView>
-    )
+    );
   }
 }
 
 const mapLogin = state => ({
-  user: state.user
-})
+  user: state.user,
+});
 
 const mapDispatch = dispatch => ({
-  auth: (email, password, method) => dispatch(auth(email, password, method))
-})
+  auth: (email, password, method) => dispatch(auth(email, password, method)),
+});
 
 export default connect(
   mapLogin,
   mapDispatch
-)(Login)
+)(Login);
 
 const styles = StyleSheet.create({
   container: {
-    padding: 20
+    padding: 20,
   },
   inputContainer: {
     backgroundColor: '#D3DCDF',
@@ -112,20 +117,20 @@ const styles = StyleSheet.create({
     color: '#FFF',
     padding: 20,
     paddingHorizontal: 10,
-    fontSize: 16
+    fontSize: 16,
   },
   input: {
     paddingHorizontal: 10,
     marginBottom: 20,
     height: 40,
-    fontSize: 16
+    fontSize: 16,
   },
   header: {
-    alignItems: 'center'
+    alignItems: 'center',
   },
   mainButtonView: {
     alignItems: 'center',
-    paddingBottom: 20
+    paddingBottom: 20,
   },
   mainButton: {
     backgroundColor: 'gray',
@@ -134,7 +139,7 @@ const styles = StyleSheet.create({
     height: 40,
     width: 150,
     margin: 5,
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   button: {
     backgroundColor: 'gray',
@@ -143,29 +148,29 @@ const styles = StyleSheet.create({
     height: 40,
     width: 100,
     margin: 5,
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   buttonText: {
     color: 'white',
     textAlign: 'center',
-    padding: 5
+    padding: 5,
   },
   textInput: {
     textAlign: 'right',
-    padding: 20
+    padding: 20,
   },
   text: {
     textAlign: 'center',
     fontSize: 20,
     paddingBottom: 10,
-    paddingTop: 20
+    paddingTop: 20,
   },
   bold: {
-    fontWeight: 'bold'
+    fontWeight: 'bold',
   },
   logo: {
     fontSize: 50,
     padding: 15,
-    paddingBottom: 50
-  }
-})
+    paddingBottom: 50,
+  },
+});
