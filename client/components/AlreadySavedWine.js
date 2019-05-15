@@ -1,19 +1,18 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { View, Text } from 'react-native';
+import { View, Text, TouchableOpacity } from 'react-native';
 import AddRating from './AddRating';
-import UpdateRating from './UpdateRating';
 
-class AlreadySavedWine extends Component {
+export default class AlreadySavedWine extends Component {
+  constructor() {
+    super();
+    this.goBackToCamera = this.goBackToCamera.bind(this);
+  }
+  goBackToCamera() {
+    return this.props.navigation.navigate('Camera');
+  }
   render() {
-    let wine;
-    const { wineRating, selectedWine } = this.props;
-    console.log('WINE W RATING', wineRating);
-    if (wineRating.wines) {
-      wine = wineRating.wines[0];
-    } else {
-      wine = selectedWine;
-    }
+    const savedWine = this.props.navigation.getParam('savedWine');
+    const wine = savedWine.wines[0];
     return (
       <View>
         <View>
@@ -21,35 +20,21 @@ class AlreadySavedWine extends Component {
           <Text>{wine.title}</Text>
           <Text>{wine.description}</Text>
           <Text>Score: {wine.points}</Text>
-          {wine.savedWine ? (
-            wine.savedWine.like ? (
-              <Text>Rating: you liked this wine!</Text>
-            ) : wine.savedWine.like === false ? (
-              <Text>You did not like this wine!</Text>
-            ) : (
-              <View>
-                <Text>You haven't rated this wine yet</Text>
-                <AddRating wine={wine} />
-              </View>
-            )
+          {wine.savedWine.like ? (
+            <Text>Rating: you liked this wine!</Text>
+          ) : wine.savedWine.like === false ? (
+            <Text>You did not like this wine!</Text>
           ) : (
             <View>
               <Text>You haven't rated this wine yet</Text>
               <AddRating wine={wine} />
             </View>
           )}
+          <TouchableOpacity onPress={this.goBackToCamera}>
+            <Text>Take another photo</Text>
+          </TouchableOpacity>
         </View>
       </View>
     );
   }
 }
-
-const mapState = state => ({
-  wineRating: state.userWines.alreadySavedWine,
-  loading: state.userWines.loading,
-});
-// const mapDispatch = dispatch => ({
-//   fetchRating: wineId => dispatch(fetchingRating(wineId)),
-// });
-
-export default connect(mapState)(AlreadySavedWine);

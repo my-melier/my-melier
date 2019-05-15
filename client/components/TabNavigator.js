@@ -17,6 +17,7 @@ import Signup from './Signup';
 import Login from './Login';
 import ErrorWine from './ErrorWine';
 import SingleWineRating from './SingleWineRating';
+import AlreadySavedWine from './AlreadySavedWine';
 
 const AuthStack = createStackNavigator({
   Login: Login,
@@ -32,6 +33,7 @@ const CameraStack = createStackNavigator({
   ConfirmWine: ConfirmWine,
   Comparisons: Comparisons,
   SelectedWine: SelectedWine,
+  AlreadySavedWine: AlreadySavedWine,
   ErrorWine: ErrorWine,
 });
 

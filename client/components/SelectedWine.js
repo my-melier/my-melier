@@ -10,7 +10,6 @@ import {
 import { connect } from 'react-redux';
 import { rateWineInDb } from '../store/reducers/userWinesReducer';
 import { Ionicons } from '@expo/vector-icons';
-import AlreadySavedWine from './AlreadySavedWine';
 
 class SelectedWine extends Component {
   constructor() {
@@ -23,20 +22,13 @@ class SelectedWine extends Component {
     return this.props.navigation.navigate('myWines');
   }
   render() {
-    const { selectedWine, alreadySaved } = this.props;
+    const { selectedWine } = this.props;
     let IconComponent = Ionicons;
     const gif = {
       uri: 'https://media.giphy.com/media/3XHMTIqcUev2Vy9ILk/giphy.gif',
     };
     const wine = this.props.navigation.getParam('wine', 'Not Found');
 
-    if (alreadySaved) {
-      return (
-        <View>
-          <AlreadySavedWine selectedWine={selectedWine} />
-        </View>
-      );
-    }
     return (
       <ScrollView style={styles.container}>
         <Text style={styles.cheers}>Cheers!</Text>
@@ -76,7 +68,6 @@ class SelectedWine extends Component {
 
 const mapState = state => ({
   selectedWine: state.comparisons.selectedWine,
-  alreadySaved: state.userWines.alreadySaved,
 });
 
 const mapDispatch = dispatch => ({

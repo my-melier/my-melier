@@ -79,6 +79,7 @@ export const rateWineInDb = (wineId, rating) => async dispatch => {
 
 export const fetchingRating = wineId => async dispatch => {
   try {
+    dispatch(gettingWines());
     const { data } = await axios.get(
       `http://${myIPaddress.IP}:8080/api/wine/rating/${wineId}`
     );
@@ -94,7 +95,6 @@ const initialState = {
   savedWines: {},
   filteredWines: {},
   activeButton: 'all',
-  alreadySaved: false,
   alreadySavedWine: {},
 };
 
@@ -134,13 +134,6 @@ export default (state = initialState, action) => {
         };
       }
     case SAVE_WINE:
-      if (action.wine[1] === false) {
-        return {
-          ...state,
-          alreadySaved: true,
-        };
-      }
-
       let allWines = action.wine.wines;
       if (state.savedWines.wines) {
         allWines.concat(state.savedWines.wines);
@@ -167,7 +160,7 @@ export default (state = initialState, action) => {
         activeButton: 'all',
       };
     case GET_RATING:
-      return { ...state, alreadySavedWine: action.wine };
+      return { ...state, alreadySavedWine: action.wine, loading: false };
     default:
       return state;
   }
