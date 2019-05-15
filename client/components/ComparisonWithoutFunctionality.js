@@ -1,11 +1,5 @@
 import React, {Component} from 'react'
-import {
-  Text,
-  StyleSheet,
-  View,
-  ScrollView,
-  TouchableOpacity
-} from 'react-native'
+import {Text, StyleSheet, View, ScrollView} from 'react-native'
 import {connect} from 'react-redux'
 import {
   selectedWine,
@@ -13,6 +7,7 @@ import {
   clearedComparisons
 } from '../store/reducers/comparisonReducer'
 import {saveWineToDb} from '../store/reducers/userWinesReducer'
+import {numToLetter} from '../../utils'
 
 class ComparisonsWithoutFunctionality extends Component {
   constructor(props) {
@@ -34,7 +29,9 @@ class ComparisonsWithoutFunctionality extends Component {
               <View key={wine.id} style={styles.wine}>
                 <Text style={styles.wineTitle}>{wine.title}</Text>
                 <Text style={styles.description}>{wine.description}</Text>
-                <Text style={styles.score}>Score: {wine.points}</Text>
+                <Text style={styles.score}>
+                  Score: {numToLetter(wine.points)}
+                </Text>
                 <View style={styles.mainButtonView} />
               </View>
             ))}

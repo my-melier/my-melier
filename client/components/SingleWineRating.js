@@ -1,18 +1,19 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { StyleSheet, View, Text, Button, TouchableOpacity } from 'react-native';
-import AddRating from './AddRating';
-import UpdateRating from './UpdateRating';
+import React, {Component} from 'react'
+import {connect} from 'react-redux'
+import {StyleSheet, View, Text, Button, TouchableOpacity} from 'react-native'
+import AddRating from './AddRating'
+import UpdateRating from './UpdateRating'
+import {numToLetter} from '../../utils'
 
 const SingleWineRating = props => {
-  const wine = props.navigation.getParam('wine');
+  const wine = props.navigation.getParam('wine')
 
   return (
     <View>
       <View>
         <Text>{wine.title}</Text>
         <Text>{wine.description}</Text>
-        <Text>Score: {wine.points}</Text>
+        <Text>Score: {numToLetter(wine.points)}</Text>
         {wine.savedWine.like === null ? (
           <AddRating wine={wine} />
         ) : (
@@ -20,7 +21,7 @@ const SingleWineRating = props => {
         )}
       </View>
     </View>
-  );
-};
+  )
+}
 
-export default SingleWineRating;
+export default SingleWineRating
