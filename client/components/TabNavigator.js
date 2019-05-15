@@ -17,6 +17,7 @@ import Signup from './Signup';
 import Login from './Login';
 import ErrorWine from './ErrorWine';
 import defaultNavStyling from '../styles/defaultNavigationOptions';
+import SingleWineRating from './SingleWineRating';
 
 const AuthStack = createStackNavigator(
   {
@@ -41,11 +42,16 @@ const CameraStack = createStackNavigator(
   { defaultNavigationOptions: defaultNavStyling }
 );
 
+const myWinesStack = createStackNavigator({
+  myWines: MyWines,
+  Rating: SingleWineRating,
+});
+
 const TabNavigator = createBottomTabNavigator(
   {
     Home: HomeStack,
     Camera: CameraStack,
-    myWines: MyWines,
+    myWines: myWinesStack,
   },
   {
     defaultNavigationOptions: ({ navigation }) => ({

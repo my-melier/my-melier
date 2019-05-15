@@ -1,22 +1,40 @@
 import React, { Component } from 'react';
-import { Text, StyleSheet, View, Image } from 'react-native';
+import {
+  ScrollView,
+  Text,
+  StyleSheet,
+  View,
+  Image,
+  TouchableOpacity,
+} from 'react-native';
+import { connect } from 'react-redux';
+import {
+  rateWineInDb,
+  fetchingWinesFromDb,
+} from '../store/reducers/userWinesReducer';
+import { Ionicons } from '@expo/vector-icons';
 
-export default class SelectedWine extends Component {
+class SelectedWine extends Component {
+  constructor() {
+    super();
+    this.rateWine = this.rateWine.bind(this);
+  }
+  rateWine(wineId, rating) {
+    const { rateWineInDb, fetchWines, user } = this.props;
+    rateWineInDb(wineId, rating);
+    fetchWines(user.id);
+    return this.props.navigation.navigate('myWines');
+  }
   render() {
-    const thumbsUp = {
-      uri:
-        'https://cdn0.iconfinder.com/data/icons/elite-emoticons/512/thumbs-up-512.png',
-    };
-    const thumbsDown = {
-      uri: 'https://sitejerk.com/images/transparent-thumbs-down-2.png',
-    };
+    const { selectedWine } = this.props;
+    let IconComponent = Ionicons;
     const gif = {
       uri: 'https://media.giphy.com/media/3XHMTIqcUev2Vy9ILk/giphy.gif',
     };
     const wine = this.props.navigation.getParam('wine', 'Not Found');
 
     return (
-      <View style={styles.container}>
+      <ScrollView style={styles.container}>
         <Text style={styles.cheers}>Cheers!</Text>
         <View style={styles.gifView}>
           <Image source={gif} style={styles.gif} />
@@ -25,16 +43,47 @@ export default class SelectedWine extends Component {
         <Text style={styles.wineTitle}>{wine.title}</Text>
         <View style={styles.thumbsContainer}>
           <View style={styles.imageView}>
-            <Image source={thumbsUp} style={styles.image} />
+            <TouchableOpacity
+              onPress={() => this.rateWine(selectedWine.id, true)}
+            >
+              <IconComponent
+                name={'ios-checkmark-circle-outline'}
+                size={75}
+                color={'green'}
+              />
+            </TouchableOpacity>
           </View>
           <View style={styles.imageView}>
-            <Image source={thumbsDown} style={styles.image} />
+            <TouchableOpacity
+              onPress={() => this.rateWine(selectedWine.id, false)}
+            >
+              <IconComponent
+                name={'ios-close-circle-outline'}
+                size={75}
+                color={'tomato'}
+              />
+            </TouchableOpacity>
           </View>
         </View>
-      </View>
+      </ScrollView>
     );
   }
 }
+
+const mapState = state => ({
+  selectedWine: state.comparisons.selectedWine,
+  user: state.user,
+});
+
+const mapDispatch = dispatch => ({
+  rateWineInDb: (wineId, rating) => dispatch(rateWineInDb(wineId, rating)),
+  fetchWines: userId => dispatch(fetchingWinesFromDb(userId)),
+});
+
+export default connect(
+  mapState,
+  mapDispatch
+)(SelectedWine);
 
 const styles = StyleSheet.create({
   container: {
@@ -67,12 +116,10 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'center',
-  },
-  image: {
-    width: 50,
-    height: 50,
+    alignItems: 'center',
   },
   imageView: {
-    padding: 25,
+    paddingRight: 15,
+    paddingLeft: 15,
   },
 });

@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
-import { Text, StyleSheet, View, Button, TouchableOpacity } from 'react-native';
-import { logout } from '../store/reducers/userReducer';
-import { clearedComparisons } from '../store/reducers/comparisonReducer';
-import { connect } from 'react-redux';
+import React, {Component} from 'react'
+import {Text, StyleSheet, View, Button, TouchableOpacity} from 'react-native'
+import {logout} from '../store/reducers/userReducer'
+import {clearedComparisons} from '../store/reducers/comparisonReducer'
+import {connect} from 'react-redux'
 
 class Home extends Component {
   constructor(props) {
@@ -11,10 +11,10 @@ class Home extends Component {
   }
 
   logout() {
-    const { clearedComparisons, navigation } = this.props;
-    logout();
-    clearedComparisons();
-    return navigation.navigate('Auth');
+    const {clearedComparisons, navigation} = this.props
+    logout()
+    clearedComparisons()
+    return navigation.navigate('Auth')
   }
 
   render() {
@@ -44,13 +44,13 @@ class Home extends Component {
 }
 
 const mapDispatch = dispatch => ({
-  clearedComparisons: () => dispatch(clearedComparisons()),
-});
+  clearedComparisons: () => dispatch(clearedComparisons())
+})
 
 export default connect(
   null,
   mapDispatch
-)(Home);
+)(Home)
 
 const styles = StyleSheet.create({
   bold: {
@@ -71,13 +71,13 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     padding: 5,
     height: 40,
-    margin: 10,
+    marginTop: 150,
     marginLeft: 75,
     marginRight: 75,
     justifyContent: 'center'
   },
   buttonText: {
-    color: 'black',
+    color: 'white',
     textAlign: 'center',
     padding: 5
   },

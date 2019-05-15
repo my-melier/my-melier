@@ -5,38 +5,48 @@ import {
   StyleSheet,
   View,
   ScrollView,
-  Button,
-  ActivityIndicator,
   TouchableOpacity,
 } from 'react-native';
 import {
   fetchingWinesFromDb,
   filterWines,
 } from '../store/reducers/userWinesReducer';
+import LoadingPage from './LoadingPage';
+import { Ionicons } from '@expo/vector-icons';
 
 class MyWines extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
+    this.state = {
+      filterArg: 'saved',
+    };
     this.filter = this.filter.bind(this);
+    this.selectWine = this.selectWine.bind(this);
   }
   componentDidMount() {
     const { fetchingWinesFromDb, user } = this.props;
     fetchingWinesFromDb(user.id);
   }
+
+  selectWine(wine) {
+    this.props.navigation.navigate('Rating', { wine: wine });
+  }
+
   filter(filter) {
     this.props.filterWines(filter);
+    if (filter === 'all') {
+      this.setState({ filterArg: 'saved' });
+    } else if (filter === true) {
+      this.setState({ filterArg: 'liked' });
+    } else {
+      this.setState({ filterArg: 'disliked' });
+    }
   }
   render() {
-    const { loading, savedWines, filteredWines } = this.props;
+    const { loading, filteredWines } = this.props;
+    let IconComponent = Ionicons;
     if (loading) {
-      return <ActivityIndicator />;
-    }
-    if (!loading && !savedWines.wines) {
-      return (
-        <View style={styles.container}>
-          <Text>No saved wines</Text>
-        </View>
-      );
+      return <LoadingPage pronoun={'your'} />;
     }
     return (
       <ScrollView>
@@ -44,43 +54,93 @@ class MyWines extends Component {
           <View style={styles.titleContainer}>
             <Text style={styles.title}> myWines </Text>
           </View>
-          <Text style={styles.text}> Filter by: </Text>
+          <Text style={styles.filterText}> Filter by: </Text>
           <View style={styles.buttonContainer}>
-            <TouchableOpacity
-              style={styles.button}
-              onPress={() => this.filter('all')}
-            >
-              <Text style={styles.buttonText}>All</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.button}
-              onPress={() => this.filter(true)}
-            >
-              <Text style={styles.buttonText}>Like</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.button}
-              onPress={() => this.filter(false)}
-            >
-              <Text style={styles.buttonText}>Dislike</Text>
-            </TouchableOpacity>
+            {this.props.activeButton === 'all' ? (
+              <TouchableOpacity style={styles.activeButton}>
+                <Text style={styles.buttonText}>All</Text>
+              </TouchableOpacity>
+            ) : (
+              <TouchableOpacity
+                style={styles.button}
+                onPress={() => this.filter('all')}
+              >
+                <Text style={styles.buttonText}>All</Text>
+              </TouchableOpacity>
+            )}
+            {this.props.activeButton === 'true' ? (
+              <TouchableOpacity style={styles.activeButton}>
+                <Text style={styles.buttonText}>Like</Text>
+              </TouchableOpacity>
+            ) : (
+              <TouchableOpacity
+                style={styles.button}
+                onPress={() => this.filter(true)}
+              >
+                <Text style={styles.buttonText}>Like</Text>
+              </TouchableOpacity>
+            )}
+            {this.props.activeButton === 'false' ? (
+              <TouchableOpacity style={styles.activeButton}>
+                <Text style={styles.buttonText}>Dislike</Text>
+              </TouchableOpacity>
+            ) : (
+              <TouchableOpacity
+                style={styles.button}
+                onPress={() => this.filter(false)}
+              >
+                <Text style={styles.buttonText}>Dislike</Text>
+              </TouchableOpacity>
+            )}
           </View>
           <View style={styles.wineContainer}>
-            {filteredWines.length
-              ? filteredWines.map(wine => (
+            {filteredWines.wines ? (
+              filteredWines.wines.length ? (
+                filteredWines.wines.map(wine => (
                   <View key={wine.id}>
-                    <View style={styles.wineTitle}>
-                      <Text>{wine.title}</Text>
+                    <View style={styles.text}>
+                      {wine.savedWine.like ? (
+                        <Text onPress={() => this.selectWine(wine)}>
+                          <IconComponent
+                            name={'ios-checkmark-circle-outline'}
+                            size={20}
+                            color={'green'}
+                          />
+                          {wine.title}
+                        </Text>
+                      ) : wine.savedWine.like === false ? (
+                        <Text onPress={() => this.selectWine(wine)}>
+                          <IconComponent
+                            name={'ios-close-circle-outline'}
+                            size={20}
+                            color={'tomato'}
+                          />
+                          {wine.title}
+                        </Text>
+                      ) : (
+                        <Text onPress={() => this.selectWine(wine)}>
+                          <IconComponent
+                            name={'ios-help-circle-outline'}
+                            size={20}
+                          />
+                          {wine.title}
+                        </Text>
+                      )}
                     </View>
                   </View>
                 ))
-              : savedWines.wines.map(wine => (
-                  <View key={wine.id}>
-                    <View style={styles.wineTitle}>
-                      <Text>{wine.title}</Text>
-                    </View>
-                  </View>
-                ))}
+              ) : (
+                <View style={styles.text}>
+                  <Text>
+                    You currently have no {this.state.filterArg} wines
+                  </Text>
+                </View>
+              )
+            ) : (
+              <View style={styles.text}>
+                <Text>Your cellar is empty!</Text>
+              </View>
+            )}
           </View>
         </View>
       </ScrollView>
@@ -89,10 +149,10 @@ class MyWines extends Component {
 }
 
 const mapState = state => ({
-  savedWines: state.userWines.savedWines,
   loading: state.userWines.loading,
   user: state.user,
   filteredWines: state.userWines.filteredWines,
+  activeButton: state.userWines.activeButton,
 });
 
 const mapDispatch = dispatch => ({
@@ -115,7 +175,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     margin: 20,
   },
-  text: {
+  filterText: {
     textAlign: 'center',
   },
   buttonContainer: {
@@ -130,6 +190,13 @@ const styles = StyleSheet.create({
     margin: 10,
     width: 100,
   },
+  activeButton: {
+    padding: 10,
+    backgroundColor: '#D3DCDF',
+    borderRadius: 20,
+    margin: 10,
+    width: 100,
+  },
   buttonText: {
     textAlign: 'center',
     color: 'white',
@@ -137,7 +204,7 @@ const styles = StyleSheet.create({
   wineContainer: {
     marginTop: 20,
   },
-  wineTitle: {
+  text: {
     padding: 10,
   },
 });
