@@ -5,6 +5,8 @@ import { rateWineInDb } from '../store/reducers/userWinesReducer';
 import { withNavigation } from 'react-navigation';
 import { Ionicons } from '@expo/vector-icons';
 
+import { textStyles, layoutStyles } from '../styles';
+
 class AddRating extends Component {
   constructor(props) {
     super(props);
@@ -22,7 +24,7 @@ class AddRating extends Component {
     let IconComponent = Ionicons;
 
     return (
-      <View>
+      <View style={layoutStyles.appContainer}>
         <View>
           <Text>Add your rating:</Text>
         </View>

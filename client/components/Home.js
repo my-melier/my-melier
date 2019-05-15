@@ -4,6 +4,8 @@ import { logout } from '../store/reducers/userReducer';
 import { clearedComparisons } from '../store/reducers/comparisonReducer';
 import { connect } from 'react-redux';
 
+import { textStyles } from '../styles';
+
 class Home extends Component {
   constructor(props) {
     super(props);
@@ -28,8 +30,8 @@ class Home extends Component {
           <Text style={styles.logo}>
             <Text style={styles.bold}>my</Text>Melier
             <Text style={styles.copy}>
-            Only drink wine you like - life is too short to drink bad wine!
-          </Text>
+              Only drink wine you like - life is too short to drink bad wine!
+            </Text>
           </Text>
         </View>
         <View>
