@@ -9,6 +9,7 @@ import {
   KeyboardAvoidingView,
   Keyboard,
   Alert,
+  StyleSheet,
 } from 'react-native';
 import { auth } from '../store/reducers/userReducer';
 import layoutStyles from '../styles/layoutStyles';
@@ -79,12 +80,12 @@ class Login extends Component {
               autoCorrect={false}
             />
           </View>
-          <View style={buttonStyles.container}>
+          <View style={styles.loginContainer}>
             <TouchableOpacity style={buttonStyles.button} onPress={this.login}>
               <Text style={buttonStyles.text}>Login</Text>
             </TouchableOpacity>
           </View>
-          <View style={{ paddingTop: 70 }}>
+          <View>
             <Button
               title="New here? Sign up"
               onPress={() => this.props.navigation.navigate('Signup')}
@@ -108,3 +109,12 @@ export default connect(
   mapLogin,
   mapDispatch
 )(Login);
+
+const styles = StyleSheet.create({
+  loginContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    paddingBottom: 70,
+  },
+});
