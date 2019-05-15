@@ -5,6 +5,7 @@ import { StyleSheet, View, Text, Button, TouchableOpacity } from 'react-native';
 import { withNavigation } from 'react-navigation';
 import { setImage } from '../store/reducers/googleVisionReducer';
 import { Ionicons } from '@expo/vector-icons';
+import { MyMenuHeader } from '../styles/defaultNavigationOptions';
 
 class Camera extends Component {
   constructor(props) {
@@ -13,6 +14,12 @@ class Camera extends Component {
     this.chooseFromCameraRoll = this.chooseFromCameraRoll.bind(this);
     this.handleImagePicked = this.handleImagePicked.bind(this);
   }
+
+  static navigationOptions = ({ navigation }) => {
+    return {
+      headerRight: <MyMenuHeader nav={navigation} />,
+    };
+  };
 
   async componentDidMount() {
     await Permissions.askAsync(Permissions.CAMERA_ROLL);

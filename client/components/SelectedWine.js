@@ -13,18 +13,27 @@ import {
   fetchingWinesFromDb,
 } from '../store/reducers/userWinesReducer';
 import { Ionicons } from '@expo/vector-icons';
+import { MyMenuHeader } from '../styles/defaultNavigationOptions';
 
 class SelectedWine extends Component {
   constructor() {
     super();
     this.rateWine = this.rateWine.bind(this);
   }
+
+  static navigationOptions = ({ navigation }) => {
+    return {
+      headerRight: <MyMenuHeader nav={navigation} />,
+    };
+  };
+
   rateWine(wineId, rating) {
     const { rateWineInDb, fetchWines, user } = this.props;
     rateWineInDb(wineId, rating);
     fetchWines(user.id);
     return this.props.navigation.navigate('myWines');
   }
+
   render() {
     const { selectedWine } = this.props;
     let IconComponent = Ionicons;

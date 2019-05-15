@@ -13,6 +13,7 @@ import {
 } from '../store/reducers/userWinesReducer';
 import LoadingPage from './LoadingPage';
 import { Ionicons } from '@expo/vector-icons';
+import { MyMenuHeader } from '../styles/defaultNavigationOptions';
 
 class MyWines extends Component {
   constructor(props) {
@@ -23,6 +24,13 @@ class MyWines extends Component {
     this.filter = this.filter.bind(this);
     this.selectWine = this.selectWine.bind(this);
   }
+
+  static navigationOptions = ({ navigation }) => {
+    return {
+      headerRight: <MyMenuHeader nav={navigation} />,
+    };
+  };
+
   componentDidMount() {
     const { fetchingWinesFromDb, user } = this.props;
     fetchingWinesFromDb(user.id);

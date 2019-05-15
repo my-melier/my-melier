@@ -1,17 +1,35 @@
 import React, { Component } from 'react';
-import { Text } from 'react-native';
+import { Text, TouchableOpacity } from 'react-native';
+import MyMenu from '../components/Comparisons';
+import { getActiveChildNavigationOptions } from 'react-navigation';
 
-class LogoTitle extends Component {
+export class LogoTitle extends Component {
   render() {
     return (
-      <Text>
+      <Text style={{ fontSize: 25 }}>
         <Text style={{ fontWeight: 'bold' }}>my</Text>Melier
       </Text>
     );
   }
 }
 
-export default {
-  headerTitle: <LogoTitle />,
-  headerBackTitle: null,
-};
+export class MyMenuHeader extends Component {
+  constructor(props) {
+    super(props);
+  }
+
+  render() {
+    return (
+      <TouchableOpacity onPress={() => this.props.nav.navigate('Comparisons')}>
+        <Text style={{ paddingRight: 15 }}>
+          <Text style={{ fontWeight: 'bold' }}>my</Text>Menu
+        </Text>
+      </TouchableOpacity>
+    );
+  }
+}
+
+// export default {
+//   headerTitle: <LogoTitle />,
+//   headerRight: <MyMenuHeader />,
+// };

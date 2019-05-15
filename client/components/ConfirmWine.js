@@ -12,6 +12,7 @@ import ErrorWine from './ErrorWine';
 import LoadingPage from './LoadingPage';
 import googleVisionConfig from '../../googleVisionConfig.js';
 import SingleWine from './SingleWineForConfirm';
+import { MyMenuHeader } from '../styles/defaultNavigationOptions';
 
 class ConfirmWine extends Component {
   constructor(props) {
@@ -22,6 +23,12 @@ class ConfirmWine extends Component {
     this.sendToGoogle = this.sendToGoogle.bind(this);
     this.handlePress = this.handlePress.bind(this);
   }
+
+  static navigationOptions = ({ navigation }) => {
+    return {
+      headerRight: <MyMenuHeader nav={navigation} />,
+    };
+  };
 
   async componentDidMount() {
     await this.sendToGoogle();

@@ -16,16 +16,13 @@ import SelectedWine from './SelectedWine';
 import Signup from './Signup';
 import Login from './Login';
 import ErrorWine from './ErrorWine';
-import defaultNavStyling from '../styles/defaultNavigationOptions';
+import { LogoTitle } from '../styles/defaultNavigationOptions';
 import SingleWineRating from './SingleWineRating';
 
-const AuthStack = createStackNavigator(
-  {
-    Login: Login,
-    Signup: Signup,
-  },
-  { defaultNavigationOptions: defaultNavStyling }
-);
+const AuthStack = createStackNavigator({
+  Login: Login,
+  Signup: Signup,
+});
 
 const HomeStack = createStackNavigator({
   Home: Home,
@@ -39,13 +36,24 @@ const CameraStack = createStackNavigator(
     SelectedWine: SelectedWine,
     ErrorWine: ErrorWine,
   },
-  { defaultNavigationOptions: defaultNavStyling }
+  {
+    defaultNavigationOptions: {
+      headerTitle: <LogoTitle />,
+    },
+  }
 );
 
-const myWinesStack = createStackNavigator({
-  myWines: MyWines,
-  Rating: SingleWineRating,
-});
+const myWinesStack = createStackNavigator(
+  {
+    myWines: MyWines,
+    Rating: SingleWineRating,
+  },
+  {
+    defaultNavigationOptions: {
+      headerTitle: <LogoTitle />,
+    },
+  }
+);
 
 const TabNavigator = createBottomTabNavigator(
   {
