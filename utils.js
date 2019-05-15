@@ -18,9 +18,9 @@ function numToLetter(num) {
   if (num <= 84) {
     letterGrade = 'C'
   } else if (num > 84 && num <= 88) {
-    letterGrade = 'B'
+    letterGrade = 'B-'
   } else if (num > 88 && num <= 92) {
-    letterGrade = 'B+'
+    letterGrade = 'B'
   } else if (num > 92 && num <= 96) {
     letterGrade = 'A-'
   } else {
