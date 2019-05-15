@@ -67,15 +67,19 @@ const TabNavigator = createBottomTabNavigator(
         const { routeName } = navigation.state;
         let IconComponent = Ionicons;
         let iconName;
+        let size;
         if (routeName === 'Home') {
           iconName = 'ios-home';
+          size = 25;
         } else if (routeName === 'myWines') {
           iconName = 'ios-wine';
+          size = 25;
         } else if (routeName === 'Camera') {
           iconName = 'ios-camera';
+          size = 35;
         }
 
-        return <IconComponent name={iconName} size={25} color={tintColor} />;
+        return <IconComponent name={iconName} size={size} color={tintColor} />;
       },
     }),
     tabBarOptions: {
