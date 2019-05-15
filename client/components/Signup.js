@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
+import React, {Component} from 'react'
+import {connect} from 'react-redux'
 import {
   StyleSheet,
   TextInput,
@@ -14,14 +14,14 @@ import {auth, checkEmail} from '../store/reducers/userReducer'
 
 class Signup extends Component {
   constructor(props) {
-    super(props);
+    super(props)
     this.state = {
       loading: false,
       email: '',
       password: '',
-      error: '',
-    };
-    this.signup = this.signup.bind(this);
+      error: ''
+    }
+    this.signup = this.signup.bind(this)
   }
 
   async signup() {
@@ -45,7 +45,7 @@ class Signup extends Component {
 
   render() {
     if (this.state.loading) {
-      return <ActivityIndicator />;
+      return <ActivityIndicator />
     }
     return (
       <KeyboardAvoidingView behavior="padding">
@@ -60,7 +60,7 @@ class Signup extends Component {
               <TextInput
                 style={styles.textInput}
                 placeholder="Email"
-                onChangeText={email => this.setState({ email })}
+                onChangeText={email => this.setState({email})}
                 value={this.state.email}
                 returnKeyType="next"
                 keyboardType="email-address"
@@ -72,7 +72,7 @@ class Signup extends Component {
               <TextInput
                 style={styles.textInput}
                 placeholder="Password"
-                onChangeText={password => this.setState({ password })}
+                onChangeText={password => this.setState({password})}
                 value={this.state.password}
                 returnKeyType="go"
                 secureTextEntry
@@ -87,22 +87,13 @@ class Signup extends Component {
           </View>
         </View>
       </KeyboardAvoidingView>
-    );
+    )
   }
 }
 
-const mapSignup = state => ({
-  user: state.user
-})
-
-const mapDispatch = dispatch => ({
-  auth: (email, password, method) => dispatch(auth(email, password, method)),
-  checkEmail: (email, method) => dispatch(checkEmail(email, method))
-})
-
 const styles = StyleSheet.create({
   container: {
-    padding: 20,
+    padding: 20
   },
   inputContainer: {
     backgroundColor: '#D3DCDF',
@@ -111,18 +102,18 @@ const styles = StyleSheet.create({
     color: '#FFF',
     padding: 20,
     paddingHorizontal: 10,
-    fontSize: 16,
+    fontSize: 16
   },
   bold: {
-    fontWeight: 'bold',
+    fontWeight: 'bold'
   },
   logo: {
     fontSize: 50,
     padding: 15,
-    paddingBottom: 50,
+    paddingBottom: 50
   },
   mainButtonView: {
-    alignItems: 'center',
+    alignItems: 'center'
   },
   mainButton: {
     backgroundColor: 'gray',
@@ -131,7 +122,7 @@ const styles = StyleSheet.create({
     height: 40,
     width: 150,
     margin: 5,
-    justifyContent: 'center',
+    justifyContent: 'center'
   },
   button: {
     backgroundColor: 'gray',
@@ -140,30 +131,30 @@ const styles = StyleSheet.create({
     height: 40,
     width: 100,
     margin: 5,
-    justifyContent: 'center',
+    justifyContent: 'center'
   },
   buttonText: {
     color: 'white',
     textAlign: 'center',
-    padding: 5,
+    padding: 5
   },
   textInput: {
     paddingHorizontal: 10,
     marginBottom: 20,
     height: 40,
-    fontSize: 16,
-  },
-});
+    fontSize: 16
+  }
+})
 
 const mapSignup = state => ({
-  user: state.user,
-});
+  user: state.user
+})
 
 const mapDispatch = dispatch => ({
-  auth: (email, password, method) => dispatch(auth(email, password, method)),
-});
+  auth: (email, password, method) => dispatch(auth(email, password, method))
+})
 
 export default connect(
   mapSignup,
   mapDispatch
-)(Signup);
+)(Signup)
