@@ -1,5 +1,12 @@
 import React, { Component } from 'react';
-import { Text, StyleSheet, View, Alert, ScrollView } from 'react-native';
+import {
+  Text,
+  StyleSheet,
+  View,
+  Alert,
+  ScrollView,
+  ActivityIndicator,
+} from 'react-native';
 import { connect } from 'react-redux';
 import { gotGoogleResponse } from '../store/reducers/googleVisionReducer';
 import {
@@ -12,6 +19,7 @@ import ErrorWine from './ErrorWine';
 import LoadingPage from './LoadingPage';
 import googleVisionConfig from '../../googleVisionConfig.js';
 import SingleWine from './SingleWineForConfirm';
+import { fetchingRating } from '../store/reducers/userWinesReducer';
 
 class ConfirmWine extends Component {
   constructor(props) {
@@ -63,26 +71,42 @@ class ConfirmWine extends Component {
     }
   }
 
-  handlePress(wine) {
-    const { comparisons, addedToComparisons, navigation } = this.props;
-    if (comparisons.length === 0) {
-      addedToComparisons(wine);
-    } else {
-      for (let i = 0; i < comparisons.length; i++) {
-        if (comparisons[i].id === wine.id) {
-          Alert.alert(null, 'You already added this wine!', [
-            { text: 'OK', style: 'cancel' },
-          ]);
-          return navigation.navigate('Comparisons');
+  async handlePress(wine) {
+    const {
+      comparisons,
+      addedToComparisons,
+      navigation,
+      fetchRating,
+      loading,
+    } = this.props;
+    await fetchRating(wine.id);
+    const { alreadySavedWine } = this.props;
+    if (loading) {
+      <ActivityIndicator />;
+    } else if (!loading && !alreadySavedWine) {
+      if (comparisons.length === 0) {
+        addedToComparisons(wine);
+      } else {
+        for (let i = 0; i < comparisons.length; i++) {
+          if (comparisons[i].id === wine.id) {
+            Alert.alert(null, 'You already added this wine!', [
+              { text: 'OK', style: 'cancel' },
+            ]);
+            return navigation.navigate('Comparisons');
+          }
         }
+        addedToComparisons(wine);
       }
-      addedToComparisons(wine);
+      return navigation.navigate('Comparisons');
+    } else if (!loading && alreadySavedWine) {
+      return navigation.navigate('AlreadySavedWine', {
+        savedWine: alreadySavedWine,
+      });
     }
-    return navigation.navigate('Comparisons');
   }
 
   render() {
-    const { wines } = this.props;
+    const { wines, loading } = this.props;
 
     if (this.state.loading) {
       return <LoadingPage pronoun={'our'} />;
@@ -99,7 +123,11 @@ class ConfirmWine extends Component {
           <Text style={styles.headerText}>
             Please confirm this is the correct wine:
           </Text>
-          <SingleWine wine={singleWine} handlePress={this.handlePress} />
+          <SingleWine
+            wine={singleWine}
+            handlePress={this.handlePress}
+            loading={loading}
+          />
         </View>
       );
     } else
@@ -114,6 +142,7 @@ class ConfirmWine extends Component {
                 key={wine.id}
                 wine={wine}
                 handlePress={this.handlePress}
+                loading={loading}
               />
             ))}
           </View>
@@ -127,6 +156,8 @@ const mapState = state => ({
   googleResponse: state.googleVision.response,
   wines: state.database.results,
   comparisons: state.comparisons.comparisons,
+  alreadySavedWine: state.userWines.alreadySavedWine,
+  loading: state.userWines.loading,
 });
 
 const mapDispatch = dispatch => ({
@@ -135,6 +166,7 @@ const mapDispatch = dispatch => ({
     dispatch(fetchingWinesFromDb(googleResFormatted)),
   confirmedWine: wine => dispatch(confirmedWine(wine)),
   addedToComparisons: wine => dispatch(addedToComparisons(wine)),
+  fetchRating: wineId => dispatch(fetchingRating(wineId)),
 });
 
 export default connect(

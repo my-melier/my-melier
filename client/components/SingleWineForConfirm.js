@@ -1,8 +1,14 @@
 import React from 'react';
-import { Text, StyleSheet, View, TouchableOpacity } from 'react-native';
+import {
+  Text,
+  StyleSheet,
+  View,
+  TouchableOpacity,
+  ActivityIndicator,
+} from 'react-native';
 
 const SingleWine = props => {
-  const { wine, handlePress } = props;
+  const { wine, handlePress, loading } = props;
 
   return (
     <View style={styles.wine}>
@@ -11,7 +17,11 @@ const SingleWine = props => {
       </View>
       <View style={styles.button}>
         <TouchableOpacity onPress={() => handlePress(wine)}>
-          <Text style={styles.buttonText}>confirm</Text>
+          {loading ? (
+            <ActivityIndicator />
+          ) : (
+            <Text style={styles.buttonText}>confirm</Text>
+          )}
         </TouchableOpacity>
       </View>
     </View>
