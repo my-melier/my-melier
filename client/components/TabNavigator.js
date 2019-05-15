@@ -1,100 +1,102 @@
 /* eslint-disable react/display-name */
-import React from 'react';
+import React from 'react'
 import {
   createBottomTabNavigator,
   createAppContainer,
   createStackNavigator,
-  createSwitchNavigator,
-} from 'react-navigation';
-import { Ionicons } from '@expo/vector-icons';
-import Home from './Home';
-import MyWines from './MyWines';
-import Camera from './Camera';
-import ConfirmWine from './ConfirmWine';
-import Comparisons from './Comparisons';
-import SelectedWine from './SelectedWine';
-import Signup from './Signup';
-import Login from './Login';
-import ErrorWine from './ErrorWine';
-import { LogoTitle } from '../styles/defaultNavigationOptions';
-import SingleWineRating from './SingleWineRating';
+  createSwitchNavigator
+} from 'react-navigation'
+import {Ionicons} from '@expo/vector-icons'
+import Home from './Home'
+import MyWines from './MyWines'
+import Camera from './Camera'
+import ConfirmWine from './ConfirmWine'
+import Comparisons from './Comparisons'
+import SelectedWine from './SelectedWine'
+import Signup from './Signup'
+import Login from './Login'
+import ErrorWine from './ErrorWine'
+import {LogoTitle} from '../styles/defaultNavigationOptions'
+import SingleWineRating from './SingleWineRating'
+import ComparisonWithoutFunctionality from './ComparisonWithoutFunctionality'
 
 const AuthStack = createStackNavigator({
   Login: Login,
-  Signup: Signup,
-});
+  Signup: Signup
+})
 
 const HomeStack = createStackNavigator({
-  Home: Home,
-});
+  Home: Home
+})
 
 const CameraStack = createStackNavigator(
   {
     Camera: Camera,
     ConfirmWine: ConfirmWine,
     Comparisons: Comparisons,
+    ComparisonWithoutFunctionality: ComparisonWithoutFunctionality,
     SelectedWine: SelectedWine,
-    ErrorWine: ErrorWine,
+    ErrorWine: ErrorWine
   },
   {
     defaultNavigationOptions: {
-      headerTitle: <LogoTitle />,
-    },
+      headerTitle: <LogoTitle />
+    }
   }
-);
+)
 
 const myWinesStack = createStackNavigator(
   {
     myWines: MyWines,
-    Rating: SingleWineRating,
+    Rating: SingleWineRating
   },
   {
     defaultNavigationOptions: {
-      headerTitle: <LogoTitle />,
-    },
+      headerTitle: <LogoTitle />
+    }
   }
-);
+)
 
 const TabNavigator = createBottomTabNavigator(
   {
     Home: HomeStack,
     Camera: CameraStack,
-    myWines: myWinesStack,
+    myWines: myWinesStack
   },
   {
-    defaultNavigationOptions: ({ navigation }) => ({
-      tabBarIcon: ({ tintColor }) => {
-        const { routeName } = navigation.state;
-        let IconComponent = Ionicons;
-        let iconName;
+    defaultNavigationOptions: ({navigation}) => ({
+      tabBarIcon: ({tintColor}) => {
+        const {routeName} = navigation.state
+        let IconComponent = Ionicons
+        let iconName
         if (routeName === 'Home') {
-          iconName = 'ios-home';
+          iconName = 'ios-home'
         } else if (routeName === 'myWines') {
-          iconName = 'ios-wine';
+          iconName = 'ios-wine'
         } else if (routeName === 'Camera') {
-          iconName = 'ios-camera';
+          iconName = 'ios-camera'
         }
 
-        return <IconComponent name={iconName} size={25} color={tintColor} />;
-      },
+        return <IconComponent name={iconName} size={25} color={tintColor} />
+      }
     }),
     tabBarOptions: {
       activeTintColor: 'tomato',
-      inactiveTintColor: 'gray',
-    },
+      inactiveTintColor: 'gray'
+    }
   }
-);
+)
 
 const AppContainer = createAppContainer(
   createSwitchNavigator(
     {
       App: TabNavigator,
-      Auth: AuthStack,
+      Auth: AuthStack
     },
     {
-      initialRouteName: 'Auth',
+      initialRouteName: 'Auth'
     }
   )
-);
+)
 
-export default AppContainer;
+export default AppContainer
