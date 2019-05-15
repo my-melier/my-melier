@@ -155,7 +155,14 @@ class MyWines extends Component {
               )
             ) : (
               <View style={styles.text}>
-                <Text style={textStyles.h6}>Your cellar is empty!</Text>
+                <Text
+                  style={textStyles.h6}
+                  onPress={() =>
+                    this.props.fetchingWinesFromDb(this.props.user.id)
+                  }
+                >
+                  Your cellar is empty!
+                </Text>
               </View>
             )}
           </View>
