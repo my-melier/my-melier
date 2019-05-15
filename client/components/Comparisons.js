@@ -12,16 +12,12 @@ import {
   removedWine,
   clearedComparisons
 } from '../store/reducers/comparisonReducer'
-import {saveWineToDb, fetchingRating,} from '../store/reducers/userWinesReducer'
+import {saveWineToDb, fetchingRating} from '../store/reducers/userWinesReducer'
 import {numToLetter} from '../../utils'
 
-import layoutStyles from '../styles/layoutStyles';
-import textStyles from '../styles/textStyles';
-import buttonStyles from '../styles/buttonStyles';
-
-import layoutStyles from '../styles/layoutStyles';
-import textStyles from '../styles/textStyles';
-import buttonStyles from '../styles/buttonStyles';
+import layoutStyles from '../styles/layoutStyles'
+import textStyles from '../styles/textStyles'
+import buttonStyles from '../styles/buttonStyles'
 
 class Comparisons extends Component {
   constructor(props) {
@@ -36,12 +32,12 @@ class Comparisons extends Component {
       saveWineToDb,
       fetchRating,
       user,
-      navigation,
-    } = this.props;
-    saveWineToDb(wine.id, user.id);
-    fetchRating(wine.id);
-    selectedWine(wine);
-    return navigation.navigate('SelectedWine', { wine: wine });
+      navigation
+    } = this.props
+    saveWineToDb(wine.id, user.id)
+    fetchRating(wine.id)
+    selectedWine(wine)
+    return navigation.navigate('SelectedWine', {wine: wine})
   }
 
   handleClear() {
@@ -82,7 +78,9 @@ class Comparisons extends Component {
               <View key={wine.id} style={layoutStyles.bubble}>
                 <Text style={textStyles.h3bold}>{wine.title}</Text>
                 <Text style={textStyles.h5}>{wine.description}</Text>
-                <Text style={textStyles.h5bold}>Score: {numToLetter(wine.points)}</Text>
+                <Text style={textStyles.h5bold}>
+                  Score: {numToLetter(wine.points)}
+                </Text>
                 <View style={buttonStyles.container}>
                   <TouchableOpacity
                     onPress={() => this.handleSelect(wine)}
@@ -116,10 +114,10 @@ const mapDispatch = dispatch => ({
   removedWine: wineId => dispatch(removedWine(wineId)),
   clearedComparisons: () => dispatch(clearedComparisons()),
   saveWineToDb: (userId, wineId) => dispatch(saveWineToDb(userId, wineId)),
-  fetchRating: wineId => dispatch(fetchingRating(wineId)),
-});
+  fetchRating: wineId => dispatch(fetchingRating(wineId))
+})
 
 export default connect(
   mapState,
   mapDispatch
-)(Comparisons);
+)(Comparisons)
