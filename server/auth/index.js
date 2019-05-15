@@ -12,7 +12,6 @@ router.post('/login', async (req, res, next) => {
       console.log('Incorrect password for user:', req.body.email)
       res.status(401).send('Wrong username and/or password')
     } else {
-      console.log('logging user login')
       req.login(user, err => (err ? next(err) : res.json(user)))
     }
   } catch (err) {
@@ -25,11 +24,20 @@ router.post('/signup', async (req, res, next) => {
     const user = await User.create(req.body)
     req.login(user, err => (err ? next(err) : res.json(user)))
   } catch (err) {
-    if ((err.name === 'SequelizeUniqueConstraintError') || !user) {
+    if (err.name === 'SequelizeUniqueConstraintError' || !user) {
       res.status(401).send('User already exists')
     } else {
       next(err)
     }
+  }
+})
+
+router.get('/check/:email', async (req, res, next) => {
+  try {
+    const email = await User.findOne({where: {email: req.params.email}})
+    res.send(email)
+  } catch (error) {
+    next(error)
   }
 })
 
