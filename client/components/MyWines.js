@@ -14,6 +14,10 @@ import {
 import LoadingPage from './LoadingPage';
 import { Ionicons } from '@expo/vector-icons';
 
+import layoutStyles from '../styles/layoutStyles';
+import textStyles from '../styles/textStyles';
+import buttonStyles from '../styles/buttonStyles';
+
 class MyWines extends Component {
   constructor(props) {
     super(props);
@@ -51,57 +55,63 @@ class MyWines extends Component {
     }
     return (
       <ScrollView>
-        <View style={styles.container}>
+        <View style={layoutStyles.container}>
           <View style={styles.titleContainer}>
-            <Text style={styles.title}> myWines </Text>
+            <Text style={textStyles.h1}>
+              {' '}
+              <Text style={textStyles.bold}>my</Text>Wines{' '}
+            </Text>
           </View>
-          <Text style={styles.filterText}> Filter by: </Text>
-          <View style={styles.buttonContainer}>
+          <Text style={textStyles.h3}> Filter by: </Text>
+          <View style={buttonStyles.container}>
             {this.props.activeButton === 'all' ? (
-              <TouchableOpacity style={styles.activeButton}>
-                <Text style={styles.buttonText}>All</Text>
+              <TouchableOpacity style={buttonStyles.active}>
+                <Text style={buttonStyles.text}>All</Text>
               </TouchableOpacity>
             ) : (
               <TouchableOpacity
-                style={styles.button}
+                style={buttonStyles.button}
                 onPress={() => this.filter('all')}
               >
-                <Text style={styles.buttonText}>All</Text>
+                <Text style={buttonStyles.text}>All</Text>
               </TouchableOpacity>
             )}
             {this.props.activeButton === 'true' ? (
-              <TouchableOpacity style={styles.activeButton}>
-                <Text style={styles.buttonText}>Like</Text>
+              <TouchableOpacity style={buttonStyles.active}>
+                <Text style={buttonStyles.text}>Like</Text>
               </TouchableOpacity>
             ) : (
               <TouchableOpacity
-                style={styles.button}
+                style={buttonStyles.button}
                 onPress={() => this.filter(true)}
               >
-                <Text style={styles.buttonText}>Like</Text>
+                <Text style={buttonStyles.text}>Like</Text>
               </TouchableOpacity>
             )}
             {this.props.activeButton === 'false' ? (
-              <TouchableOpacity style={styles.activeButton}>
-                <Text style={styles.buttonText}>Dislike</Text>
+              <TouchableOpacity style={buttonStyles.active}>
+                <Text style={buttonStyles.text}>Dislike</Text>
               </TouchableOpacity>
             ) : (
               <TouchableOpacity
-                style={styles.button}
+                style={buttonStyles.button}
                 onPress={() => this.filter(false)}
               >
-                <Text style={styles.buttonText}>Dislike</Text>
+                <Text style={buttonStyles.text}>Dislike</Text>
               </TouchableOpacity>
             )}
           </View>
-          <View style={styles.wineContainer}>
+          <View>
             {filteredWines.wines ? (
               filteredWines.wines.length ? (
                 filteredWines.wines.map(wine => (
                   <View key={wine.id}>
                     <View style={styles.text}>
                       {wine.savedWine.like ? (
-                        <Text onPress={() => this.selectWine(wine)}>
+                        <Text
+                          onPress={() => this.selectWine(wine)}
+                          style={textStyles.h6}
+                        >
                           <IconComponent
                             name={'ios-checkmark-circle-outline'}
                             size={20}
@@ -110,7 +120,10 @@ class MyWines extends Component {
                           {wine.title}
                         </Text>
                       ) : wine.savedWine.like === false ? (
-                        <Text onPress={() => this.selectWine(wine)}>
+                        <Text
+                          onPress={() => this.selectWine(wine)}
+                          style={textStyles.h6}
+                        >
                           <IconComponent
                             name={'ios-close-circle-outline'}
                             size={20}
@@ -119,7 +132,10 @@ class MyWines extends Component {
                           {wine.title}
                         </Text>
                       ) : (
-                        <Text onPress={() => this.selectWine(wine)}>
+                        <Text
+                          onPress={() => this.selectWine(wine)}
+                          style={textStyles.h6}
+                        >
                           <IconComponent
                             name={'ios-help-circle-outline'}
                             size={20}
@@ -132,14 +148,14 @@ class MyWines extends Component {
                 ))
               ) : (
                 <View style={styles.text}>
-                  <Text>
+                  <Text style={textStyles.h6}>
                     You currently have no {this.state.filterArg} wines
                   </Text>
                 </View>
               )
             ) : (
               <View style={styles.text}>
-                <Text>Your cellar is empty!</Text>
+                <Text style={textStyles.h6}>Your cellar is empty!</Text>
               </View>
             )}
           </View>
@@ -170,37 +186,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     margin: 20,
-  },
-  title: {
-    textAlign: 'center',
-    fontSize: 20,
-    margin: 20,
-  },
-  filterText: {
-    textAlign: 'center',
-  },
-  buttonContainer: {
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'center',
-  },
-  button: {
-    padding: 10,
-    backgroundColor: 'grey',
-    borderRadius: 20,
-    margin: 10,
-    width: 100,
-  },
-  activeButton: {
-    padding: 10,
-    backgroundColor: '#D3DCDF',
-    borderRadius: 20,
-    margin: 10,
-    width: 100,
-  },
-  buttonText: {
-    textAlign: 'center',
-    color: 'white',
   },
   wineContainer: {
     marginTop: 20,

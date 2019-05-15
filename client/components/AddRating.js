@@ -5,6 +5,10 @@ import { rateWineInDb } from '../store/reducers/userWinesReducer';
 import { withNavigation } from 'react-navigation';
 import { Ionicons } from '@expo/vector-icons';
 
+import layoutStyles from '../styles/layoutStyles';
+import textStyles from '../styles/textStyles';
+import buttonStyles from '../styles/buttonStyles';
+
 class AddRating extends Component {
   constructor(props) {
     super(props);
@@ -22,22 +26,26 @@ class AddRating extends Component {
     let IconComponent = Ionicons;
 
     return (
-      <View>
-        <View>
-          <Text>Add your rating:</Text>
-        </View>
-        <View>
-          <TouchableOpacity onPress={() => this.handleUpdate(wine.id, true)}>
+      <View style={layoutStyles.container}>
+        <Text style={textStyles.h3}>Add your rating:</Text>
+        <View style={buttonStyles.container}>
+          <TouchableOpacity
+            onPress={() => this.handleUpdate(wine.id, true)}
+            style={buttonStyles.rating}
+          >
             <IconComponent
               name={'ios-checkmark-circle-outline'}
-              size={50}
+              size={60}
               color={'green'}
             />
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => this.handleUpdate(wine.id, false)}>
+          <TouchableOpacity
+            onPress={() => this.handleUpdate(wine.id, false)}
+            style={buttonStyles.rating}
+          >
             <IconComponent
               name={'ios-close-circle-outline'}
-              size={50}
+              size={60}
               color={'tomato'}
             />
           </TouchableOpacity>
@@ -57,10 +65,3 @@ export default withNavigation(
     mapDispatch
   )(AddRating)
 );
-
-const styles = StyleSheet.create({
-  image: {
-    width: 50,
-    height: 50,
-  },
-});
