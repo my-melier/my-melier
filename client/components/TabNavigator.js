@@ -16,6 +16,7 @@ import SelectedWine from './SelectedWine';
 import Signup from './Signup';
 import Login from './Login';
 import ErrorWine from './ErrorWine';
+import { LogoTitle } from '../styles/defaultNavigationOptions';
 import SingleWineRating from './SingleWineRating';
 
 const AuthStack = createStackNavigator({
@@ -27,18 +28,32 @@ const HomeStack = createStackNavigator({
   Home: Home,
 });
 
-const CameraStack = createStackNavigator({
-  Camera: Camera,
-  ConfirmWine: ConfirmWine,
-  Comparisons: Comparisons,
-  SelectedWine: SelectedWine,
-  ErrorWine: ErrorWine,
-});
+const CameraStack = createStackNavigator(
+  {
+    Camera: Camera,
+    ConfirmWine: ConfirmWine,
+    Comparisons: Comparisons,
+    SelectedWine: SelectedWine,
+    ErrorWine: ErrorWine,
+  },
+  {
+    defaultNavigationOptions: {
+      headerTitle: <LogoTitle />,
+    },
+  }
+);
 
-const myWinesStack = createStackNavigator({
-  myWines: MyWines,
-  Rating: SingleWineRating,
-});
+const myWinesStack = createStackNavigator(
+  {
+    myWines: MyWines,
+    Rating: SingleWineRating,
+  },
+  {
+    defaultNavigationOptions: {
+      headerTitle: <LogoTitle />,
+    },
+  }
+);
 
 const TabNavigator = createBottomTabNavigator(
   {
@@ -52,15 +67,19 @@ const TabNavigator = createBottomTabNavigator(
         const { routeName } = navigation.state;
         let IconComponent = Ionicons;
         let iconName;
+        let size;
         if (routeName === 'Home') {
           iconName = 'ios-home';
+          size = 25;
         } else if (routeName === 'myWines') {
           iconName = 'ios-wine';
+          size = 25;
         } else if (routeName === 'Camera') {
           iconName = 'ios-camera';
+          size = 35;
         }
 
-        return <IconComponent name={iconName} size={25} color={tintColor} />;
+        return <IconComponent name={iconName} size={size} color={tintColor} />;
       },
     }),
     tabBarOptions: {
