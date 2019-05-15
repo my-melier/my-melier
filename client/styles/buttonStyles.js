@@ -45,6 +45,11 @@ const buttonStyles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  confirmWine: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+  },
 });
 
 export default buttonStyles;
