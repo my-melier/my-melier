@@ -1,12 +1,7 @@
 import React, { Component } from 'react';
-import {
-  Text,
-  StyleSheet,
-  View,
-  Image,
-  ScrollView,
-  Button,
-} from 'react-native';
+import { Text, StyleSheet, View, Image } from 'react-native';
+import layoutStyles from '../styles/layoutStyles';
+import textStyles from '../styles/textStyles';
 
 export default class LoadingPage extends Component {
   constructor(props) {
@@ -19,8 +14,8 @@ export default class LoadingPage extends Component {
     };
 
     return (
-      <View style={styles.container}>
-        <Text style={styles.loading}>Searching {pronoun} cellar...</Text>
+      <View style={layoutStyles.container}>
+        <Text style={textStyles.h1}>Searching {pronoun} cellar...</Text>
         <View style={styles.gifView}>
           <Image source={loading} style={styles.gif} />
         </View>
@@ -30,25 +25,13 @@ export default class LoadingPage extends Component {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    padding: 20,
-  },
-  loading: {
-    textAlign: 'center',
-    fontSize: 45,
-    padding: 20,
-  },
   gif: {
-    width: 275,
-    height: 175,
+    width: 500,
+    height: 500,
   },
   gifView: {
     alignItems: 'center',
     paddingBottom: 20,
     paddingTop: 20,
-  },
-  text: {
-    textAlign: 'center',
-    fontSize: 30,
   },
 });
