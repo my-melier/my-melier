@@ -4,7 +4,7 @@ import myIPaddress from '../../../IPaddress';
 
 //action types
 const GETTING_WINES = 'GETTING_WINES';
-const GOT_WINES = 'GOT_WINES';
+const GOT_USER_WINES = 'GOT_USER_WINES';
 const SAVE_WINE = 'SAVE_WINE';
 const FILTER_WINES = 'FILTER_WINES';
 const RATE_WINE = 'RATE_WINE';
@@ -16,7 +16,7 @@ export const gettingWines = () => ({
 });
 
 export const gotWines = wines => ({
-  type: GOT_WINES,
+  type: GOT_USER_WINES,
   wines,
 });
 
@@ -102,7 +102,7 @@ export default (state = initialState, action) => {
   switch (action.type) {
     case GETTING_WINES:
       return { ...state, loading: true };
-    case GOT_WINES:
+    case GOT_USER_WINES:
       return {
         ...state,
         savedWines: action.wines,
@@ -117,7 +117,7 @@ export default (state = initialState, action) => {
       if (action.filter === 'all') {
         return {
           ...state,
-          filteredWines: state.savedWines,
+          filteredWines: { ...state.savedWines },
           activeButton: 'all',
         };
       } else if (action.filter === true) {
@@ -136,7 +136,7 @@ export default (state = initialState, action) => {
     case SAVE_WINE:
       let allWines = action.wine.wines;
       if (state.savedWines.wines) {
-        allWines.concat(state.savedWines.wines);
+        allWines = allWines.concat(state.savedWines.wines);
       }
       return {
         ...state,

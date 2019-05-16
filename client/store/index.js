@@ -4,8 +4,10 @@ import { createLogger } from 'redux-logger';
 
 import rootReducer from './reducers';
 
-const logger = createLogger();
+// const logger = createLogger();
 
-const store = createStore(rootReducer, applyMiddleware(thunk, logger));
+// const store = createStore(rootReducer, applyMiddleware(thunk, logger));
+
+const store = createStore(rootReducer, applyMiddleware(thunk));
 
 export default store;
