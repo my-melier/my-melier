@@ -28,10 +28,10 @@ class MyWines extends Component {
     this.selectWine = this.selectWine.bind(this);
   }
 
-  componentDidMount() {
-    const { fetchingWinesFromDb, user } = this.props;
-    fetchingWinesFromDb(user.id);
-  }
+  // componentDidMount() {
+  //   const { fetchingWinesFromDb, user } = this.props;
+  //   fetchingWinesFromDb(user.id);
+  // }
 
   selectWine(wine) {
     this.props.navigation.navigate('Rating', { wine: wine });

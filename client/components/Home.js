@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Text, StyleSheet, View, Button, TouchableOpacity } from 'react-native';
 import { logout } from '../store/reducers/userReducer';
 import { clearedComparisons } from '../store/reducers/comparisonReducer';
+import { fetchingWinesFromDb } from '../store/reducers/userWinesReducer';
 import { connect } from 'react-redux';
 
 import buttonStyles from '../styles/buttonStyles';
@@ -12,6 +13,11 @@ class Home extends Component {
   constructor(props) {
     super(props);
     this.logout = this.logout.bind(this);
+  }
+
+  componentDidMount() {
+    const { fetchUserWines, user } = this.props;
+    fetchUserWines(user.id);
   }
 
   static navigationOptions = {
@@ -59,12 +65,17 @@ class Home extends Component {
   }
 }
 
+const mapState = state => ({
+  user: state.user,
+});
+
 const mapDispatch = dispatch => ({
   clearedComparisons: () => dispatch(clearedComparisons()),
+  fetchUserWines: userId => dispatch(fetchingWinesFromDb(userId)),
 });
 
 export default connect(
-  null,
+  mapState,
   mapDispatch
 )(Home);
 
