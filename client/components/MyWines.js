@@ -7,10 +7,7 @@ import {
   ScrollView,
   TouchableOpacity,
 } from 'react-native';
-import {
-  fetchingWinesFromDb,
-  filterWines,
-} from '../store/reducers/userWinesReducer';
+import { filterWines } from '../store/reducers/userWinesReducer';
 import LoadingPage from './LoadingPage';
 import { Ionicons } from '@expo/vector-icons';
 
@@ -26,11 +23,6 @@ class MyWines extends Component {
     };
     this.filter = this.filter.bind(this);
     this.selectWine = this.selectWine.bind(this);
-  }
-
-  componentDidMount() {
-    const { fetchingWinesFromDb, user } = this.props;
-    fetchingWinesFromDb(user.id);
   }
 
   selectWine(wine) {
@@ -167,13 +159,11 @@ class MyWines extends Component {
 
 const mapState = state => ({
   loading: state.userWines.loading,
-  user: state.user,
   filteredWines: state.userWines.filteredWines,
   activeButton: state.userWines.activeButton,
 });
 
 const mapDispatch = dispatch => ({
-  fetchingWinesFromDb: userId => dispatch(fetchingWinesFromDb(userId)),
   filterWines: filter => dispatch(filterWines(filter)),
 });
 
