@@ -25,6 +25,13 @@ const layoutStyles = StyleSheet.create({
     marginTop: 10,
     marginBottom: 10,
   },
+  smallBubble: {
+    backgroundColor: '#E3E8EA',
+    borderRadius: 20,
+    padding: 10,
+    marginTop: 5,
+    marginBottom: 5,
+  },
   centerContainer: {
     flex: 1,
     justifyContent: 'center',
