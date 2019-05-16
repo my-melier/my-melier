@@ -127,9 +127,6 @@ class ConfirmWine extends Component {
       const singleWine = wines[0];
       return (
         <View style={layoutStyles.container}>
-          <Text style={textStyles.h3bold}>
-            Please confirm this is the correct wine:
-          </Text>
           <SingleWine
             wine={singleWine}
             handlePress={this.handlePress}
