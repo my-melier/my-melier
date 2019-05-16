@@ -1,11 +1,5 @@
 import React, { Component } from 'react';
-import {
-  Text,
-  StyleSheet,
-  View,
-  ScrollView,
-  TouchableOpacity,
-} from 'react-native';
+import { Text, View, ScrollView, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
 import {
   selectedWine,
@@ -16,7 +10,7 @@ import {
   saveWineToDb,
   fetchingRating,
 } from '../store/reducers/userWinesReducer';
-
+import { MyMenuTitle } from '../styles/defaultNavigationOptions';
 import layoutStyles from '../styles/layoutStyles';
 import textStyles from '../styles/textStyles';
 import buttonStyles from '../styles/buttonStyles';
@@ -27,6 +21,10 @@ class Comparisons extends Component {
     this.handleSelect = this.handleSelect.bind(this);
     this.handleClear = this.handleClear.bind(this);
   }
+
+  static navigationOptions = {
+    headerTitle: <MyMenuTitle />,
+  };
 
   handleSelect(wine) {
     const {
@@ -39,7 +37,7 @@ class Comparisons extends Component {
     saveWineToDb(wine.id, user.id);
     fetchRating(wine.id);
     selectedWine(wine);
-    return navigation.navigate('SelectedWine', { wine: wine });
+    return navigation.navigate('SelectedWine');
   }
 
   handleClear() {
@@ -54,13 +52,6 @@ class Comparisons extends Component {
     return (
       <ScrollView>
         <View style={layoutStyles.container}>
-          <Text style={textStyles.h1}>
-            <Text style={textStyles.bold}>my</Text>Menu
-          </Text>
-          <Text style={textStyles.h3}>
-            Please select which wine you decide to order
-          </Text>
-          <Text style={textStyles.h3}>OR</Text>
           <View style={buttonStyles.container}>
             <TouchableOpacity
               onPress={() => navigate('Camera')}

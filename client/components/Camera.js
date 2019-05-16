@@ -1,14 +1,13 @@
 import { ImagePicker, Permissions } from 'expo';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { StyleSheet, View, Text, Button, TouchableOpacity } from 'react-native';
+import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 import { withNavigation } from 'react-navigation';
 import { setImage } from '../store/reducers/googleVisionReducer';
 import { Ionicons } from '@expo/vector-icons';
-
+import { LogoTitle } from '../styles/defaultNavigationOptions';
 import layoutStyles from '../styles/layoutStyles';
 import textStyles from '../styles/textStyles';
-import buttonStyles from '../styles/buttonStyles';
 
 class Camera extends Component {
   constructor(props) {
@@ -16,6 +15,10 @@ class Camera extends Component {
     this.takePhoto = this.takePhoto.bind(this);
     this.handleImagePicked = this.handleImagePicked.bind(this);
   }
+
+  static navigationOptions = {
+    headerTitle: <LogoTitle />,
+  };
 
   async componentDidMount() {
     await Permissions.askAsync(Permissions.CAMERA_ROLL);

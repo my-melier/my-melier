@@ -10,12 +10,19 @@ import {
 import { connect } from 'react-redux';
 import { rateWineInDb } from '../store/reducers/userWinesReducer';
 import { Ionicons } from '@expo/vector-icons';
+import { LogoTitle } from '../styles/defaultNavigationOptions';
+import layoutStyles from '../styles/layoutStyles';
+import textStyles from '../styles/textStyles';
 
 class SelectedWine extends Component {
   constructor() {
     super();
     this.rateWine = this.rateWine.bind(this);
   }
+
+  static navigationOptions = {
+    headerTitle: <LogoTitle />,
+  };
 
   rateWine(wineId, rating) {
     const { rateWineInDb } = this.props;
@@ -29,16 +36,18 @@ class SelectedWine extends Component {
     const gif = {
       uri: 'https://media.giphy.com/media/3XHMTIqcUev2Vy9ILk/giphy.gif',
     };
-    const wine = this.props.navigation.getParam('wine', 'Not Found');
 
     return (
-      <ScrollView style={styles.container}>
-        <Text style={styles.cheers}>Cheers!</Text>
+      <ScrollView style={layoutStyles.container}>
+        <Text style={textStyles.logo}>Cheers!</Text>
+
         <View style={styles.gifView}>
           <Image source={gif} style={styles.gif} />
         </View>
-        <Text style={styles.text}>Don't forget to rate your selection:</Text>
-        <Text style={styles.wineTitle}>{wine.title}</Text>
+        <Text style={textStyles.h3}>Hope you enjoy {selectedWine.title}</Text>
+        <Text style={textStyles.h3bold}>
+          Don't forget to rate your selection:
+        </Text>
         <View style={styles.thumbsContainer}>
           <View style={styles.imageView}>
             <TouchableOpacity
@@ -82,21 +91,14 @@ export default connect(
 )(SelectedWine);
 
 const styles = StyleSheet.create({
-  container: {
-    padding: 20,
-  },
-  cheers: {
-    textAlign: 'center',
-    fontSize: 60,
-    padding: 20,
-  },
   gif: {
     width: 175,
     height: 175,
   },
   gifView: {
     alignItems: 'center',
-    paddingBottom: 20,
+    paddingTop: 10,
+    paddingBottom: 10,
   },
   text: {
     textAlign: 'center',
