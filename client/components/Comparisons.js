@@ -37,7 +37,7 @@ class Comparisons extends Component {
     saveWineToDb(wine.id, user.id);
     fetchRating(wine.id);
     selectedWine(wine);
-    return navigation.navigate('SelectedWine');
+    return navigation.navigate('SelectedWine', { wine: wine });
   }
 
   handleClear() {
