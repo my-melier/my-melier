@@ -36,6 +36,7 @@ class SelectedWine extends Component {
     const gif = {
       uri: 'https://media.giphy.com/media/3XHMTIqcUev2Vy9ILk/giphy.gif',
     };
+    const wine = this.props.navigation.getParam('wine', 'Not Found');
 
     return (
       <ScrollView style={layoutStyles.container}>
@@ -44,7 +45,7 @@ class SelectedWine extends Component {
         <View style={styles.gifView}>
           <Image source={gif} style={styles.gif} />
         </View>
-        <Text style={textStyles.h3}>Hope you enjoy {selectedWine.title}</Text>
+        <Text style={textStyles.h3}>Hope you enjoy {wine.title}</Text>
         <Text style={textStyles.h3bold}>
           Don't forget to rate your selection:
         </Text>
