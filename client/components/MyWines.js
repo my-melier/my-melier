@@ -10,7 +10,7 @@ import {
 import { filterWines } from '../store/reducers/userWinesReducer';
 import LoadingPage from './LoadingPage';
 import { Ionicons } from '@expo/vector-icons';
-
+import { MyWinesTitle } from '../styles/defaultNavigationOptions';
 import layoutStyles from '../styles/layoutStyles';
 import textStyles from '../styles/textStyles';
 import buttonStyles from '../styles/buttonStyles';
@@ -24,6 +24,10 @@ class MyWines extends Component {
     this.filter = this.filter.bind(this);
     this.selectWine = this.selectWine.bind(this);
   }
+
+  static navigationOptions = {
+    headerTitle: <MyWinesTitle />,
+  };
 
   selectWine(wine) {
     this.props.navigation.navigate('Rating', { wine: wine });
@@ -48,13 +52,6 @@ class MyWines extends Component {
     return (
       <ScrollView>
         <View style={layoutStyles.container}>
-          <View style={styles.titleContainer}>
-            <Text style={textStyles.h1}>
-              {' '}
-              <Text style={textStyles.bold}>my</Text>Wines{' '}
-            </Text>
-          </View>
-          <Text style={textStyles.h3}> Filter by: </Text>
           <View style={buttonStyles.container}>
             {this.props.activeButton === 'all' ? (
               <TouchableOpacity style={buttonStyles.active}>

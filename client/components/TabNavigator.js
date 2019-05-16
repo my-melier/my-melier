@@ -29,33 +29,19 @@ const HomeStack = createStackNavigator({
   Home: Home,
 });
 
-const CameraStack = createStackNavigator(
-  {
-    Camera: Camera,
-    ConfirmWine: ConfirmWine,
-    Comparisons: Comparisons,
-    SelectedWine: SelectedWine,
-    AlreadySavedWine: AlreadySavedWine,
-    ErrorWine: ErrorWine,
-  },
-  {
-    defaultNavigationOptions: {
-      headerTitle: <LogoTitle />,
-    },
-  }
-);
+const CameraStack = createStackNavigator({
+  Camera: Camera,
+  ConfirmWine: ConfirmWine,
+  Comparisons: Comparisons,
+  SelectedWine: SelectedWine,
+  AlreadySavedWine: AlreadySavedWine,
+  ErrorWine: ErrorWine,
+});
 
-const myWinesStack = createStackNavigator(
-  {
-    myWines: MyWines,
-    Rating: SingleWineRating,
-  },
-  {
-    defaultNavigationOptions: {
-      headerTitle: <LogoTitle />,
-    },
-  }
-);
+const myWinesStack = createStackNavigator({
+  myWines: MyWines,
+  Rating: SingleWineRating,
+});
 
 const TabNavigator = createBottomTabNavigator(
   {

@@ -20,10 +20,9 @@ import LoadingPage from './LoadingPage';
 import googleVisionConfig from '../../googleVisionConfig.js';
 import SingleWine from './SingleWineForConfirm';
 import { fetchingRating } from '../store/reducers/userWinesReducer';
-
+import { LogoTitle } from '../styles/defaultNavigationOptions';
 import layoutStyles from '../styles/layoutStyles';
 import textStyles from '../styles/textStyles';
-import buttonStyles from '../styles/buttonStyles';
 
 class ConfirmWine extends Component {
   constructor(props) {
@@ -34,6 +33,10 @@ class ConfirmWine extends Component {
     this.sendToGoogle = this.sendToGoogle.bind(this);
     this.handlePress = this.handlePress.bind(this);
   }
+
+  static navigationOptions = {
+    headerTitle: <LogoTitle />,
+  };
 
   async componentDidMount() {
     await this.sendToGoogle();
@@ -138,9 +141,6 @@ class ConfirmWine extends Component {
       return (
         <ScrollView>
           <View style={layoutStyles.container}>
-            <Text style={textStyles.h3bold}>
-              Please confirm which wine is correct:
-            </Text>
             {wines.map(wine => (
               <SingleWine
                 key={wine.id}

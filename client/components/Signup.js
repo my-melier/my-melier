@@ -56,7 +56,7 @@ class Signup extends Component {
     }
     return (
       <KeyboardAvoidingView behavior="padding">
-        <View style={{ margin: 20, paddingTop: 60 }}>
+        <View style={{ margin: 20 }}>
           <Text style={textStyles.logo}>
             <Text style={textStyles.bold}>my</Text>Melier
           </Text>

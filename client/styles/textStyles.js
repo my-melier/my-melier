@@ -5,6 +5,7 @@ const textStyles = StyleSheet.create({
     fontSize: 50,
     textAlign: 'center',
     padding: 5,
+    fontFamily: 'Helvetica Neue',
   },
   h1: {
     fontSize: 30,
