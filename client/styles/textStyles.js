@@ -34,7 +34,11 @@ const textStyles = StyleSheet.create({
     padding: 5,
     fontWeight: 'bold',
   },
-  h4: {},
+  h4: {
+    fontSize: 10,
+    textAlign: 'center',
+    padding: 10,
+  },
   h5: {
     fontSize: 16,
     textAlign: 'justify',
