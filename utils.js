@@ -1,5 +1,5 @@
 function ocrToUrlTitle(string) {
-  const characters = '1234567890.,!/()$!@#%^&*+-= ';
+  const characters = `1234567890.,:;'"!_~/()$@#%^&*+-=<>|?[]{} `;
   let urlString = '%';
   for (let i = 0; i < string.length; i++) {
     if (characters.includes(string[i])) {
