@@ -40,15 +40,3 @@ export default withNavigation(
     mapDispatch
   )(Logout)
 );
-
-// const styles = StyleSheet.create({
-//   padding: {
-//     paddingTop: 5,
-//     paddingBottom: 100,
-//   },
-//   logout: {
-//     flex: 1,
-//     flexDirection: 'row',
-//     justifyContent: 'flex-end',
-//   },
-// });
